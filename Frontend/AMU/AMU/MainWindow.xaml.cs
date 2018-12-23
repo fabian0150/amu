@@ -52,5 +52,12 @@ namespace AMU_WPF
 
             //save the text edits to persistant storage
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+       
     }
 }

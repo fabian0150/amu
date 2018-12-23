@@ -5,20 +5,40 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Artist Manager Utility - AMU" WindowState="Maximized">
-    
+        Title="Artist Manager Utility - AMU" Height="800" Width="1200">
+
     <Grid>
-    <TabControl HorizontalAlignment="Left" Height="505" VerticalAlignment="Top" Width="762">
+        <TabControl HorizontalAlignment="Left" Height="760" VerticalAlignment="Top" Width="1194" Margin="0,0,-0.4,0">
             <TabItem Header="Termine">
                 <Grid>
-                    <Jarloo:Calendar x:Name="Calendar" DayChanged="Calendar_DayChanged" Margin="0,46,176,0" />
-                    <ComboBox x:Name="cboMonth" HorizontalAlignment="Left" Height="34" Margin="8,8,0,0" VerticalAlignment="Top" Width="152" FontSize="18.667" DisplayMemberPath="{Binding}" />
-                    <ComboBox x:Name="cboYear" Height="34" Margin="164,8,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="87" FontSize="18.667" DisplayMemberPath="{Binding}" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Jarloo:Calendar x:Name="Calendar" DayChanged="Calendar_DayChanged" Margin="0,28,0.2,0" Grid.Column="0"/>
+                    <ComboBox x:Name="cboMonth" HorizontalAlignment="Left" Height="34" Margin="8,8,0,0" VerticalAlignment="Top" Width="152" FontSize="18.667" DisplayMemberPath="{Binding}" Grid.Column="0"/>
+                    <ComboBox x:Name="cboYear" Height="34" Margin="164,8,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="87" FontSize="18.667" DisplayMemberPath="{Binding}" Grid.Column="0"/>
+
+                    <Label Content="Musikgruppe Infos" Grid.Column="1" HorizontalAlignment="Left" Margin="9.8,64,0,0" VerticalAlignment="Top" Height="36" Width="254" FontSize="18"/>
+                    <Label Content="Bandname" Grid.Column="1" HorizontalAlignment="Left" Margin="9.8,90,0,0" VerticalAlignment="Top" Height="36" Width="153" FontSize="18"/>
+
+
+                    <Label Content="Veranstalter Infos" Grid.Column="1" HorizontalAlignment="Left" Margin="9.8,182,0,0" VerticalAlignment="Top" Height="36" Width="237" FontSize="18"/>
+                    <Label Content="Veranstalter" Grid.Column="1" HorizontalAlignment="Left" Margin="9.8,208,0,0" VerticalAlignment="Top" Height="36" Width="167" FontSize="18"/>
+                    <Label Content="Veranstalter Infos" Grid.Column="1" HorizontalAlignment="Left" Margin="9.8,245,0,0" VerticalAlignment="Top" Height="36" Width="237" FontSize="18"/>
+                    <Label Content="Veranstalter" Grid.Column="1" HorizontalAlignment="Left" Margin="9.8,271,0,0" VerticalAlignment="Top" Height="36" Width="167" FontSize="18"/>
+                    <Label Content="Adresse" Grid.Column="1" HorizontalAlignment="Left" Margin="9.8,296,0,0" VerticalAlignment="Top" Height="37" Width="120" FontSize="18"/>
+                    <Label Content="Art der Veranstaltung" Grid.Column="1" HorizontalAlignment="Left" Margin="9.8,322,0,0" VerticalAlignment="Top" Height="36" Width="286" FontSize="18"/>
+                    <Label Content="Kontakt" Grid.Column="1" HorizontalAlignment="Left" Margin="9.8,359,0,0" VerticalAlignment="Top" Height="36" Width="120" FontSize="18"/>
+                    <Label Content="Besetzung" Grid.Column="1" HorizontalAlignment="Left" Margin="9.8,116,0,0" VerticalAlignment="Top" Height="36" Width="148" FontSize="18"/>
+                    <Label Content="Kontakt" Grid.Column="1" HorizontalAlignment="Left" Margin="9.8,145,0,0" VerticalAlignment="Top" Height="37" Width="120" FontSize="18"/>
+                    <Button Content="Termin Anfrage" Grid.Column="1" HorizontalAlignment="Left" Margin="9.8,659,0,0" VerticalAlignment="Top" Width="287" Height="73" Click="Button_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Gruppen">
                 <Grid>
-                    
+
                 </Grid>
             </TabItem>
             <TabItem Header="Veranstalter">
@@ -51,6 +71,8 @@
 
                 </Grid>
             </TabItem>
+
         </TabControl>
+
     </Grid>
 </Window>
