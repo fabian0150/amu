@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AMU.Properties
+namespace AMU_WPF.Properties
 {
 
 

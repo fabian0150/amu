@@ -1,7 +1,7 @@
-﻿<Application x:Class="AMU.App"
+﻿<Application x:Class="AMU_WPF.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:AMU"
+             xmlns:local="clr-namespace:AMU_WPF"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          
