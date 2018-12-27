@@ -60,6 +60,15 @@ namespace Jarloo.Calendar
             for (int box = 1; box <= 42; box++)
             {
                 Day day = new Day {Date = d, Enabled = true, IsTargetMonth = targetDate.Month == d.Month};
+                /* Abfrage nach den Terminen wird hier vorher eingebaut und hier auf das Datum geprüft */
+
+                if (day.Date == DateTime.Today.AddDays(-2)) {
+                    day.Notes = "Heute";
+                }
+                if (day.Date == DateTime.Today)
+                {
+                    day.Notes = "Vorgestern";
+                }
                 day.PropertyChanged += Day_Changed;
                 day.IsToday = d == DateTime.Today; 
                 Days.Add(day);
