@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Windows;
 using System.Linq;
 using Jarloo.Calendar;
+using AMU.Windows;
 
 namespace AMU_WPF
 {
@@ -15,9 +16,10 @@ namespace AMU_WPF
         public MainWindow()
         {
             InitializeComponent();
-
             List<string> months = new List<string> { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
             cboMonth.ItemsSource = months;
+            GruppeHinzufuegenWindow asdf = new GruppeHinzufuegenWindow();
+            asdf.Show();
 
             for (int i = -50; i < 50; i++)
             {

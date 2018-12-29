@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AMU"
         mc:Ignorable="d"
-        Title="Termin Anfrage - AMU" Height="450" Width="800">
+        Title="Termin Anfrage - AMU" Height="450" Width="800"
+        ResizeMode="CanResizeWithGrip">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"></ColumnDefinition>
@@ -15,14 +16,14 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="3*" />
             <!--Height="Auto" Auto macht es so groß wie nötig-->
         </Grid.RowDefinitions>
 
@@ -39,5 +40,13 @@
         <Label Grid.Row="0" Grid.Column="2">Gruppen Infos</Label>
         <Label Grid.Row="1" Grid.Column="2">Bandname</Label>
         <Label Grid.Row="2" Grid.Column="2">Besetzung</Label>
+        <Label Grid.Row="3" Grid.Column="2">Telefon</Label>
+        <Label Grid.Row="4" Grid.Column="2">Email</Label>
+        <Label Grid.Row="5" Grid.Column="2">Website</Label>
+        <TextBlock Grid.Row="6" Grid.Column="2" Grid.RowSpan="2">Notizen</TextBlock>
+
+        <Image Grid.Row="0" Grid.Column="3"></Image>
+
+        <Button Grid.Row="8" Grid.Column="3" Margin="5">Angebot erstellen</Button>
     </Grid>
 </Window>

@@ -63,11 +63,11 @@ namespace Jarloo.Calendar
                 /* Abfrage nach den Terminen wird hier vorher eingebaut und hier auf das Datum geprüft */
 
                 if (day.Date == DateTime.Today.AddDays(-2)) {
-                    day.Notes = "Heute";
+                    day.Notes = "Vorgestern";
                 }
                 if (day.Date == DateTime.Today)
                 {
-                    day.Notes = "Vorgestern";
+                    day.Notes = "Heute";
                 }
                 day.PropertyChanged += Day_Changed;
                 day.IsToday = d == DateTime.Today; 
