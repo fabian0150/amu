@@ -11,30 +11,34 @@
 	$password_2 = "";
 	
 	
-	$username = mysqli_real_escape_string($db, $_GET['username']);
-	$email = mysqli_real_escape_string($db, $_GET['email']);
-	$password_1 = mysqli_real_escape_string($db, $_GET['password_1']);
-	$password_2 = mysqli_real_escape_string($db, $_GET['password_2']);
+	$username = mysqli_real_escape_string($db, $_POST['username']);
+	$email = mysqli_real_escape_string($db, $_POST['email']);
+	$password_1 = mysqli_real_escape_string($db, $_POST['password_1']);
+	$password_2 = mysqli_real_escape_string($db, $_POST['password_2']);
 
 	// form validation: ensure that the form is correctly filled
 	if (empty($username)) { 
+		$row_array['code'] =  2;
 		$row_array['error'] =  "username required";
 		array_push($return_arr, $row_array);
 		logData("register User FAIL", "USER ACTION", basename(__FILE__, '.php') , 0);
 	}
 	
 	if (empty($email)) { 
+		$row_array['code'] =  2;
 		$row_array['error'] =  "password required";
 		array_push($return_arr, $row_array);
 		logData("register User FAIL " . $username , "USER ACTION", basename(__FILE__, '.php') , 0);
 	}
-	if (empty($password_1)) { 
+	if (empty($password_1)) {
+		$row_array['code'] =  2;
 		$row_array['error'] =  "password repeat required";
 		array_push($return_arr, $row_array);
 		logData("register User FAIL " . $username , "USER ACTION", basename(__FILE__, '.php') , 0);
 	}
 
 	if ($password_1 != $password_2) {
+		$row_array['code'] =  2;
 		$row_array['error'] =  "passwords do not match";
 		array_push($return_arr, $row_array);
 		
@@ -49,7 +53,8 @@
 		
 		$result = $db->query($query);
 	
-		if ($result->num_rows > 0) { 
+		if ($result->num_rows > 0) {
+			$row_array['code'] =  5;
 			$row_array['message'] =  "User not registered";
 			$row_array['error'] = "Username already taken";
 			array_push($return_arr, $row_array);
@@ -64,6 +69,7 @@
 		$result = $db->query($query);
 	
 		if ($result->num_rows > 0) {
+			$row_array['code'] =  5;
 			$row_array['message'] =  "User not registered";
 			$row_array['error'] = "E-Mail already taken";
 			array_push($return_arr, $row_array);
@@ -78,6 +84,7 @@
 				  VALUES('$username', '$email', '$password')";
 	
 		if ($db->query($sql) === TRUE) {
+			$row_array['code'] =  1;
 			$row_array['user_id'] =  intval($db->insert_id);
 			$row_array['username'] =  $username;
 			$row_array['status'] =  "User registered";
@@ -86,6 +93,7 @@
 			
 			logData("register User: " . $username , "USER ACTION", basename(__FILE__, '.php') , $db->insert_id);
 		} else {
+			$row_array['code'] =  3;
 			$row_array['message'] =  "User not registered";
 		    $row_array['error'] =  $db->error;
 		    

@@ -26,7 +26,7 @@
 			<label>Passwort</label>
 			<input type="password" name="password" id="password">
 		</div>
-		<div class="input-group">
+		<div class="input-group" id="login_btn">
 			<a  class="btn" name="login_user" id="login_user">Einloggen</a>
 		</div>
 		<hr>
@@ -38,9 +38,7 @@
 		</div>
 	</form>
 	
-	<div class="footer"> 
-		<p>Copyright 2019 © Fabian Ortner & Robin Stehrlein</p>
-	</div>
+	<?php include_once('includes/footer.php'); ?>
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -64,23 +62,23 @@
 		var username_str = document.getElementById("username").value;
 		var password_str = document.getElementById("password").value;
 		$('#result').empty();
-
+		$('#result').removeClass("error");
+		$('#result').removeClass("success");
+		
 		$.post("scripts/user/secure_login.php", {username: username_str, password: password_str}, function(data){
 			if(data.length > 0) {
-				//$('#result').removeClass('loading');
-				//
 				var obj = jQuery.parseJSON(JSON.stringify(data));
-				console.log(obj);
-				console.log(obj.length);
 				if(obj[0].code == 1) {
 					console.log("Login erfolgreich");
-					console.log(obj[0].message);
+				
 					
 					
-					var html_str = "<p>" + obj[0].message + "</p>";
+					var html_str = "<p>" + obj[0].message + "</p><p>Weiterleitung zum Dashboard...</p>";
 					
 					$('#result').html(html_str);
 					$('#result').addClass("success");
+					$('#login_btn').hide();
+					setTimeout(function(){ window.location.replace("https://amu.tkg.ovh/dashboard.php"); }, 1000);
 				} else {
 					console.log("Login nicht erfolgreich");
 					var html_str = "";
