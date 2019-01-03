@@ -7,7 +7,6 @@
 
 */
 using AMU.Dto;
-using Jarloo.Calendar.Dto;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -70,22 +69,25 @@ namespace Jarloo.Calendar
                 Day day = new Day { Date = d, Enabled = true, IsTargetMonth = targetDate.Month == d.Month };
                 /* Abfrage nach den Terminen wird hier vorher eingebaut und hier auf das Datum geprüft */
                 
-                if (day.Date == DateTime.Today.AddDays(-2))
-                {
-                    day.Notes = "Vorgestern";
-                }
+                //if (day.Date == DateTime.Today.AddDays(-2))
+                //{
+                //    day.Notes = "Vorgestern";
+                //}
                 for (int i = 0; i < appointmentList.Count;i++) {
                     if (day.Date.Date == appointmentList[i].appointment_date.Date) {
-                        day.Notes = day.Notes + appointmentList[i].location_name + "\r\n";
+                        day.Notes.Add(appointmentList[i]);
                     }
                 }
                 day.PropertyChanged += Day_Changed;
+                
                 day.IsToday = d == DateTime.Today;
                 Days.Add(day);
                 d = d.AddDays(1);
             }
             
         }
+
+        
 
         private void Day_Changed(object sender, PropertyChangedEventArgs e)
         {

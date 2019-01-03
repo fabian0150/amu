@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AMU.Dto
 {
-    class Appointment
+    public class Appointment
     {
         public int id { get; set; }
         public int band_id { get; set; }
@@ -16,5 +16,10 @@ namespace AMU.Dto
         public string location_name { get; set; }
         public DateTime appointment_date { get; set; }
         public DateTime record_date { get; set; }
+
+        public override string ToString()
+        {
+            return band_name;
+        }
     }
 }

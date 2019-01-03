@@ -6,15 +6,20 @@ using System.Threading.Tasks;
 
 namespace AMU.Dto
 {
-    class Appointment
+    public class Appointment
     {
-        public int ID { get; set; }
-        public int Band_Id { get; set; }
-        public string Band_Name { get; set; }
-        public int Location_ID { get; set; }
-        public string Location_Adresse { get; set; }
-        public string Location_Name { get; set; }
-        public DateTime Appointment_Date { get; set; }
-        public DateTime Record_Date { get; set; }
+        public int id { get; set; }
+        public int band_id { get; set; }
+        public string band_name { get; set; }
+        public int location_id { get; set; }
+        public string location_address { get; set; }
+        public string location_name { get; set; }
+        public DateTime appointment_date { get; set; }
+        public DateTime record_date { get; set; }
+
+        public override string ToString()
+        {
+            return band_name;
+        }
     }
 }

@@ -92,7 +92,8 @@
                                                         </TextBlock>                                                                                                      
                                                     </StackPanel>
 
-                                                    <TextBox IsEnabled="{Binding IsEnabled}" Text="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{x:Null}" Foreground="black" />
+                                                    <!--<TextBox IsEnabled="{Binding IsEnabled}" Text="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{x:Null}" Foreground="black" />
+                                                    --><ListBox Name="Notes_Box" MouseLeftButtonDown="{Binding UpdateSourceTrigger=}" IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{x:Null}" Foreground="black" />
                                                 </DockPanel>
                                             </Border>
                                         </Border>

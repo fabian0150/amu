@@ -72,7 +72,6 @@
     <Compile Include="Converters\DayBorderColorConverter.cs" />
     <Compile Include="Day.cs" />
     <Compile Include="Dto\Appointment.cs" />
-    <Compile Include="Dto\AppointmentCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

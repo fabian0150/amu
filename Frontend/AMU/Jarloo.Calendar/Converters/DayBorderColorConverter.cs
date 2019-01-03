@@ -7,7 +7,9 @@
 
 */
 
+using AMU.Dto;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
@@ -19,11 +21,11 @@ namespace Jarloo.Calendar.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string notes = (string)value;
+            List<Appointment> notes = (List < Appointment > )value;
 
-            if (string.IsNullOrEmpty(notes)) return null;
+            if (notes.Count == 0) return null;
 
-            if (notes.Length > 0) return new LinearGradientBrush(Color.FromRgb(220, 74, 56), Color.FromRgb(198, 56, 40), new Point(0.5, 0), new Point(0.5, 1));
+            if (notes.Count > 0) return new LinearGradientBrush(Color.FromRgb(220, 74, 56), Color.FromRgb(198, 56, 40), new Point(0.5, 0), new Point(0.5, 1));
 
             return null;
         }
