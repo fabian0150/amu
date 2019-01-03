@@ -45,6 +45,20 @@
 	if(isset($_GET['leader_id'])) {
 		$leader_id = $_GET['leader_id'];
 		$leader_id = mysqli_real_escape_string($db, $leader_id);
+		
+		$query = "SELECT ID FROM TBL_USERS WHERE ID=" . $leader_id . " LIMIT 1;";
+		
+		
+		$result = $db->query($query);
+	
+		if ($result->num_rows > 0) { } else {
+			$row_array['message'] =  "Band not created";
+			$row_array['error'] = "Leader ID not found";
+			array_push($return_arr, $row_array);
+			echo json_encode($return_arr);
+			exit();
+		} 
+
 	}
 	
 	$sql = "INSERT INTO TBL_BANDINFO (name, logo_path, website_url, leader_id) 
@@ -52,7 +66,7 @@
 
 	if ($db->query($sql) === TRUE) {
 	    $row_array['message'] =  "Band created";
-	    $row_array['band_id'] =  $db->insert_id;
+	    $row_array['band_id'] =  intval($db->insert_id);
 	    logData("inserted Band ID: " . $db->insert_id, "ADDED", basename(__FILE__, '.php') , 0);
 		array_push($return_arr, $row_array);
 
