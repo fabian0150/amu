@@ -20,10 +20,10 @@
 	$result = $db->query($query);
 
 	if ($result->num_rows > 0) { } else {
-		$row_array['message'] =  "Band not created";
 		$row_array['error'] = "User not secure logged in";
 		array_push($return_arr, $row_array);
 		echo json_encode($return_arr);
+		header('Location: ../index.php');
 		exit();
 	} 
 
