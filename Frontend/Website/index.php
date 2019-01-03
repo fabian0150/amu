@@ -16,7 +16,7 @@
 	
 	<form action="" id="#loginForm">
 
-		<?php include('errors.php'); ?>
+		
 
 		<div class="input-group">
 			<label>Username</label>
@@ -33,6 +33,9 @@
 		<p>
 			Noch nicht registriert? <a href="register.php">Registrieren</a>
 		</p>
+		<div id="result">
+		
+		</div>
 	</form>
 	
 	<div class="footer"> 
@@ -60,20 +63,33 @@
 		//$('#result').addClass('loading');
 		var username_str = document.getElementById("username").value;
 		var password_str = document.getElementById("password").value;
-		
+		$('#result').empty();
 
 		$.post("scripts/user/secure_login.php", {username: username_str, password: password_str}, function(data){
 			if(data.length > 0) {
 				//$('#result').removeClass('loading');
-				//$('#result').html(data);
+				//
 				var obj = jQuery.parseJSON(JSON.stringify(data));
-				if(obj[0].error !== 'undefined') {
-					
-					console.log("Error: " + obj[0].error);
-				} else {
+				console.log(obj);
+				console.log(obj.length);
+				if(obj[0].code == 1) {
+					console.log("Login erfolgreich");
 					console.log(obj[0].message);
+					
+					
+					var html_str = "<p>" + obj[0].message + "</p>";
+					
+					$('#result').html(html_str);
+					$('#result').addClass("success");
+				} else {
+					console.log("Login nicht erfolgreich");
+					var html_str = "";
+					for(var i = 0; i < obj.length; i++) {
+						html_str += "<p>" + obj[i].error + "</p>";
+					}
+					$('#result').html(html_str);
+					$('#result').addClass("error");
 				}
-				
 			}
 		});
     }

@@ -53,6 +53,15 @@ form, .content {
 	border-radius: 5px;
 	margin:0 auto;
     display:block;
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+}
+
+.btn:hover {
+	background-color: #86111e;
+}
+.btn:active {
+	background-color: #4a0a11;
 }
 
 

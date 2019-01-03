@@ -17,10 +17,12 @@
 	$password = mysqli_real_escape_string($db, $_POST['password']);
 
 	if (empty($username)) {
+		$row_array['code'] =  2;
 		$row_array['error'] =  "username required";
 		array_push($return_arr, $row_array);
 	}
 	if (empty($password)) {
+		$row_array['code'] =  2;
 		$row_array['error'] =  "password required";
 		array_push($return_arr, $row_array);
 	}
@@ -51,6 +53,7 @@
 				$_SESSION['session_loggedin'] = true;
 				$_SESSION['session_user'] = intval($id);
 				
+				$row_array['code'] =  1;
 				$row_array['message'] =  "Login successful";
 				$row_array['session_key'] =  $session_key;
 				$row_array['user_id'] = intval($id);
@@ -60,6 +63,7 @@
 			} else {
 				$row_array['message'] =  "Secure login unsuccessful";
 				$row_array['error'] =  $db->error;
+				$row_array['code'] =  3;
 				
 				array_push($return_arr, $row_array);
 			}
@@ -67,6 +71,7 @@
 
 			
 		}else {
+			$row_array['code'] =  4;
 			$row_array['error'] =  "wrong username or password";
 			array_push($return_arr, $row_array);
 			logData("failed login User: " . $username , "USER ACTION", basename(__FILE__, '.php') , 0);
