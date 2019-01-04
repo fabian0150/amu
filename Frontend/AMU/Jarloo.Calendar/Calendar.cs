@@ -74,7 +74,7 @@ namespace Jarloo.Calendar
                 //    day.Notes = "Vorgestern";
                 //}
                 for (int i = 0; i < appointmentList.Count;i++) {
-                    if (day.Date.Date == appointmentList[i].appointment_date.Date) {
+                    if (day.Date.Date == appointmentList[i].Appointment_Date.Date) {
                         day.Notes.Add(appointmentList[i]);
                     }
                 }
@@ -118,18 +118,17 @@ namespace Jarloo.Calendar
                
                 appointment = new Appointment
                 {
-                    id = (int)item.GetValue("ID"),
-                    band_id = (int)item.GetValue("band_id"),
-                    band_name = (string)item.GetValue("band_name"),
-                    location_id = (int)item.GetValue("location_id"),
-                    location_address = (string)item.GetValue("location_address"),
-                    location_name = (string)item.GetValue("location_name"),
-                    appointment_date = (DateTime)item.GetValue("appointment_date"),
-                    record_date = (DateTime)item.GetValue("record_date")
+                    ID = (int)item.GetValue("ID"),
+                    Band_ID = (int)item.GetValue("band_id"),
+                    Band_Name = (string)item.GetValue("band_name"),
+                    Location_ID = (int)item.GetValue("location_id"),
+                    Location_Address = (string)item.GetValue("location_address"),
+                    Location_Name = (string)item.GetValue("location_name"),
+                    Appointment_Date = (DateTime)item.GetValue("appointment_date"),
+                    Record_Date = (DateTime)item.GetValue("record_date")
 
                 };
                 appointmentList.Add(appointment);
-                Console.WriteLine("-------------" + appointment.id);
             }
 
 
