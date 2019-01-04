@@ -7,7 +7,9 @@
 
 */
 
+using AMU.Dto;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Jarloo.Calendar
@@ -17,7 +19,7 @@ namespace Jarloo.Calendar
         public event PropertyChangedEventHandler PropertyChanged;
 
         private DateTime date;
-        private string notes;
+        private List<Appointment> notes = new List<Appointment>();
         private bool enabled;
         private bool isTargetMonth;
         private bool isToday;
@@ -52,7 +54,7 @@ namespace Jarloo.Calendar
             }
         }
 
-        public string Notes
+        public List<Appointment> Notes
         {
             get { return notes; }
             set
