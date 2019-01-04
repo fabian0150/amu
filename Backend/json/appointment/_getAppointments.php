@@ -7,6 +7,13 @@
 					FROM TBL_APPOINTMENTS a 
 					LEFT JOIN TBL_BANDINFO b ON a.band_id = b.ID
 				    LEFT JOIN TBL_LOCATIONS l ON a.location_id = l.ID";
+					
+	if(isset($_GET['band_id'])) {
+		$id = $_GET['band_id'];
+		$id = mysqli_real_escape_string($db, $id);
+		$query .= " WHERE a.band_id = " . $id . ";";
+		
+	}
 	
 	if ($result = mysqli_query($db, $query)){
 	    while ($row = mysqli_fetch_assoc($result)) {

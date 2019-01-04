@@ -3,7 +3,7 @@
 <html>
 <head>
 	<title>Music Live AMU</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
 </head>
 <body>
@@ -38,10 +38,12 @@
 		</div>
 	</form>
 	
-	<?php include_once('includes/footer.php'); ?>
+	
 
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<?php include_once('includes/footer.php'); ?>
+
+ <?php include_once('includes/js.php'); ?>
 <script>
 	$(function() {
 		init();
@@ -56,41 +58,6 @@
 			login();
 		});
 	}
-	
-	function login() {
-		//$('#result').addClass('loading');
-		var username_str = document.getElementById("username").value;
-		var password_str = document.getElementById("password").value;
-		$('#result').empty();
-		$('#result').removeClass("error");
-		$('#result').removeClass("success");
-		
-		$.post("scripts/user/secure_login.php", {username: username_str, password: password_str}, function(data){
-			if(data.length > 0) {
-				var obj = jQuery.parseJSON(JSON.stringify(data));
-				if(obj[0].code == 1) {
-					console.log("Login erfolgreich");
-				
-					
-					
-					var html_str = "<p>" + obj[0].message + "</p><p>Weiterleitung zum Dashboard...</p>";
-					
-					$('#result').html(html_str);
-					$('#result').addClass("success");
-					$('#login_btn').hide();
-					setTimeout(function(){ window.location.replace("https://amu.tkg.ovh/dashboard.php"); }, 1000);
-				} else {
-					console.log("Login nicht erfolgreich");
-					var html_str = "";
-					for(var i = 0; i < obj.length; i++) {
-						html_str += "<p>" + obj[i].error + "</p>";
-					}
-					$('#result').html(html_str);
-					$('#result').addClass("error");
-				}
-			}
-		});
-    }
 
 </script>
 

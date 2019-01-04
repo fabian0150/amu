@@ -13,11 +13,12 @@
 		$_SESSION['session_loggedin'] = false;
 		$_SESSION['session_user'] = null;
 		session_destroy();
-		
-		$row_array['error'] =  "logged out";
+		$row_array['code'] =  1;
+		$row_array['message'] =  "Ausgeloggt";
 		array_push($return_arr, $row_array);
 	} else {
-		$row_array['error'] =  "error logging out";
+		$row_array['code'] =  3;
+		$row_array['error'] =  "Fehler beim Ausloggen";
 		array_push($return_arr, $row_array);
 	}
 		

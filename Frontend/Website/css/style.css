@@ -1,13 +1,31 @@
-* {
-	margin: 0px;
-	padding: 0px;
-}
+
+/* General */
 body {
 	font-size: 120%;
 	background: #F8F8FF;
 	font-family: 'Muli', sans-serif;
 }
 
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+.swal-button {
+  background-color: #AC0114 !important;
+}
+
+.footer {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;
+  border-top: 1px solid #AC0114;
+  color: #AC0114;
+}
+
+/* Login / Register */
 .header {
 	width: 30%;
 	margin: 50px auto 0px;
@@ -89,16 +107,11 @@ p {
 	text-align: center;
 }
 
-.footer {
-  position: fixed;
-  left: 50%;
-  bottom: 20px;
-  transform: translate(-50%, -50%);
-  margin: 0 auto;
-  border-top: 1px solid #AC0114;
-  color: #AC0114;
 
-  
+
+/* Dashboard */
+
+.nav-red {
+	background-color: #AC0114;
 }
-
 

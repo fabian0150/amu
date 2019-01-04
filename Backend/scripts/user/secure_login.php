@@ -18,12 +18,12 @@
 
 	if (empty($username)) {
 		$row_array['code'] =  2;
-		$row_array['error'] =  "username required";
+		$row_array['error'] =  "Username nicht angegeben";
 		array_push($return_arr, $row_array);
 	}
 	if (empty($password)) {
 		$row_array['code'] =  2;
-		$row_array['error'] =  "password required";
+		$row_array['error'] =  "Passwort nicht angegeben";
 		array_push($return_arr, $row_array);
 	}
 
@@ -54,14 +54,14 @@
 				$_SESSION['session_user'] = intval($id);
 				
 				$row_array['code'] =  1;
-				$row_array['message'] =  "Login successful";
+				$row_array['message'] =  "Login erfolgreich";
 				$row_array['session_key'] =  $session_key;
 				$row_array['user_id'] = intval($id);
 				$row_array['user_name'] = $username;
 				
 				array_push($return_arr, $row_array);
 			} else {
-				$row_array['message'] =  "Secure login unsuccessful";
+				$row_array['message'] =  "Login nicht erfolgreich";
 				$row_array['error'] =  $db->error;
 				$row_array['code'] =  3;
 				
@@ -72,7 +72,7 @@
 			
 		}else {
 			$row_array['code'] =  4;
-			$row_array['error'] =  "wrong username or password";
+			$row_array['error'] =  "Falscher Username und/oder falsches Passwort";
 			array_push($return_arr, $row_array);
 			logData("failed login User: " . $username , "USER ACTION", basename(__FILE__, '.php') , 0);
 			
