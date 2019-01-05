@@ -14,7 +14,7 @@
 		<h1>Login</h1>
 	</div>
 	
-	<form action="" id="#loginForm">
+	<form action="" id="#loginForm" class="form-style">
 
 		
 

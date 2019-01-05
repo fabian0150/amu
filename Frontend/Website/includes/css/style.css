@@ -15,7 +15,13 @@ body {
   background-color: #AC0114 !important;
 }
 
-
+.card {
+	margin: 20px;
+}
+.card-inline {
+	margin: 20px;
+	display:inline-block;
+}
 
 .footer {
   position: fixed;
@@ -39,7 +45,7 @@ body {
 	border-radius: 10px 10px 0px 0px;
 	padding: 20px;
 }
-.form-style, .content {
+form, .content {
 	width: 30%;
 	margin: 0px auto;
 	padding: 20px;
@@ -66,42 +72,18 @@ body {
 }
 .btn {
 	padding: 10px;
-	margin: 10px;
 	font-size: 15px;
 	color: white;
 	background: #AC0114;
 	border: none;
 	border-radius: 5px;
-
+	margin:0 auto;
     display:block;
 	-webkit-transition-duration: 0.4s; /* Safari */
 	transition-duration: 0.4s;
 	text-align: center;
-	 text-decoration: none;
 }
 
-.btn-blue {
-	padding: 10px;
-	margin: 10px;
-	font-size: 15px;
-	color: white;
-	background: #0f1e60;
-	border: none;
-	border-radius: 5px;
-
-    display:block;
-	-webkit-transition-duration: 0.4s; /* Safari */
-	transition-duration: 0.4s;
-	text-align: center;
-	text-decoration: none;
-}
-
-.btn-blue:hover {
-	background-color: #86111e;
-}
-.btn-blue:active {
-	background-color: #4a0a11;
-}
 .btn:hover {
 	background-color: #86111e;
 }
@@ -141,16 +123,3 @@ p {
 	background-color: #AC0114;
 }
 
-.span-bold {
-	font-weight: bold;
-}
-
-/* Bands */
-.card {
-	margin: 10px;
-}
-.card-inline {
-	margin: 20px;
-	display:inline-block;
-	width:100%;
-}

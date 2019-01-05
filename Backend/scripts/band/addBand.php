@@ -43,13 +43,19 @@
 		$website_url = "'$website_url'";
 	}
 	
+	if(isset($_GET['notes'])) {
+		$notes = $_GET['notes'];
+		$notes = mysqli_real_escape_string($db, $notes);
+		$notes = "'$notes'";
+	}
+	
 	if(isset($_GET['leader_id'])) {
 		$leader_id = $_GET['leader_id'];
 		$leader_id = mysqli_real_escape_string($db, $leader_id);
 	}
 	
-	$sql = "INSERT INTO TBL_BANDINFO (name, logo_path, website_url, leader_id) 
-			VALUES (" . $name . ", " . $logo_path . ", " . $website_url . ", " . $leader_id . ")";
+	$sql = "INSERT INTO TBL_BANDINFO (name, logo_path, website_url, notes, leader_id) 
+			VALUES (" . $name . ", " . $logo_path . ", " . $website_url . ", " . $notes . ", " . $leader_id . ")";
 
 	if ($db->query($sql) === TRUE) {
 	    $row_array['message'] =  "Band created";

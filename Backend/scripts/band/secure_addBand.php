@@ -6,6 +6,7 @@
 	$name = "NULL";
 	$logo_path = "NULL";
 	$website_url = "NULL";
+	$notes = "NULL";
 	$leader_id = "NULL";
 	
 
@@ -16,6 +17,7 @@
 		$name = mysqli_real_escape_string($db, $name);
 		$name = "'$name'";
 		if($name == ""){
+			$row_array['code'] =  2;
 			$row_array['message'] =  "Band not created";
 			$row_array['error'] = "Name not given";
 			array_push($return_arr, $row_array);
@@ -23,6 +25,7 @@
 			exit();
 		} 
 	} else {
+		$row_array['code'] =  2;
 		$row_array['message'] =  "Band not created";
 		$row_array['error'] = "Name not given";
 		array_push($return_arr, $row_array);
@@ -42,6 +45,12 @@
 		$website_url = "'$website_url'";
 	}
 	
+	if(isset($_GET['notes'])) {
+		$notes = $_GET['notes'];
+		$notes = mysqli_real_escape_string($db, $notes);
+		$notes = "'$notes'";
+	}
+	
 	if(isset($_GET['leader_id'])) {
 		$leader_id = $_GET['leader_id'];
 		$leader_id = mysqli_real_escape_string($db, $leader_id);
@@ -52,6 +61,7 @@
 		$result = $db->query($query);
 	
 		if ($result->num_rows > 0) { } else {
+			$row_array['code'] =  2;
 			$row_array['message'] =  "Band not created";
 			$row_array['error'] = "Leader ID not found";
 			array_push($return_arr, $row_array);
@@ -61,16 +71,18 @@
 
 	}
 	
-	$sql = "INSERT INTO TBL_BANDINFO (name, logo_path, website_url, leader_id) 
-			VALUES (" . $name . ", " . $logo_path . ", " . $website_url . ", " . $leader_id . ")";
+	$sql = "INSERT INTO TBL_BANDINFO (name, logo_path, website_url, notes, leader_id) 
+			VALUES (" . $name . ", " . $logo_path . ", " . $website_url . ", " . $notes . ", " . $leader_id . ")";
 
 	if ($db->query($sql) === TRUE) {
+		$row_array['code'] =  1;
 	    $row_array['message'] =  "Band created";
 	    $row_array['band_id'] =  intval($db->insert_id);
 	    logData("inserted Band ID: " . $db->insert_id, "ADDED", basename(__FILE__, '.php') , 0);
 		array_push($return_arr, $row_array);
 
 	} else {
+		$row_array['code'] =  3;
 		$row_array['message'] =  "Band not created";
 	    $row_array['error'] =  $db->error;
 	    

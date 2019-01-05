@@ -8,7 +8,7 @@
   <head>
 
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -42,29 +42,69 @@
 
     <!-- Page Content -->
     <div class="container">
-    
-       <div class="card">
-		  <div class="card-body">
-		  	<h1 class="mt-5">Kalender</h1>
-			This is some text within a card body.
-		  </div>
+		<h2 class="mt-5">Deine Bands</h2>
+		<div class="row" id="user_bands">
+		 
+		  
 		</div>
-    </div>
+		
+		<h2 class="mt-5">Band beitreten</h2>
+		<div class="row" id="user_joinband">
+		
+		
+				<div class='col-md-12'>
+					<form>
+						<div class="form-group">
+							<label for="bands_select">Bands</label>
+							<select class="form-control" id="bands_select">
+							 
+							</select>
+							
+						</div>
+						
+						<a href='#user_joinband' class='btn float-right' onClick="addUserToBand(<?php echo $_SESSION['session_user']; ?>);">Beitreten</a>
+				  </form>
+						<!--<div class='card card-inline'>
+							<div class='card-body'>
+								
+								<h5 class='card-title' style='height: 80px;'>${obj_info[0].name}</h5>
+								<div class='card-text'>
+									<p><span class='span-bold'>Website: </span><br>
+									<span class='span-bold'>Besitzer: </span>${obj_info[0].leader_username}</p>
+								</div>
+								
+								<a href='#' class='btn btn-primary'>Verlassen</a>
+							</div>
+						</div>-->
+				</div>
+		
+		</div>
+		
+		<h2 class="mt-5">Band erstellen</h2>
+		<div class="row" id="user_createband">
+		 
+		  
+		</div>
+	</div>
+		
     <!-- /.container -->
 
     <!-- Bootstrap core JavaScript -->
     <?php include_once('includes/js.php'); ?>
-	<script src="js/dashboard.js"></script>
+	<script src="js/bands.js"></script>
   </body>
   <?php include_once('includes/footer.php'); ?>
   <script>
+	var session_user_id = <?php echo $_SESSION['session_user']; ?>;
+	
 	$(function() {
 		init();
 	});
 	
 	function init() { 
-		$("#dashboard").addClass("active");
-		loadAppointments();
+		$("#groups").addClass("active");
+		loadUserBands(session_user_id);
+		loadBandsSelect();
 	}
 </script>
 </html>

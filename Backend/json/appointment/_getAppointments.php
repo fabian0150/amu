@@ -17,6 +17,7 @@
 	
 	if ($result = mysqli_query($db, $query)){
 	    while ($row = mysqli_fetch_assoc($result)) {
+			$row_array['code'] =  1;
 		    $row_array['ID'] = $row['ID'];
 		    $row_array['band_id'] = $row['band_id'];
 		    $row_array['band_name'] = $row['band_name'];
@@ -30,10 +31,12 @@
 		    array_push($return_arr, $row_array);
 	   }
 	    if(mysqli_num_rows($result) == 0) {
+				$row_array['code'] =  6;
 			    $row_array['error'] = "No Appointments found";
 			    array_push($return_arr, $row_array);
 		   }
 	} else {
+		$row_array['code'] =  3;
 		 $row_array['error'] = "Execution error";
 		  array_push($return_arr, $row_array);
 	}

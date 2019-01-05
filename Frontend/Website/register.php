@@ -14,7 +14,7 @@
 		<h1>Registrieren</h1>
 	</div>
 	
-	<form method="post" action="scripts/user/_login.php" id="registerForm">
+	<form method="post" action="scripts/user/_login.php" id="registerForm" class="form-style">
 
 	
 

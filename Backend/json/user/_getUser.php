@@ -11,6 +11,7 @@
 		
 		if ($result = mysqli_query($db, $query)){
 		    while ($row = mysqli_fetch_assoc($result)) {
+				$row_array['code'] =  1;
 				$row_array['ID'] = $row['ID'];
 			    $row_array['name'] = $row['name'];
 			    $row_array['phone_number'] = $row['phone_number'];
@@ -26,16 +27,19 @@
 		   }
 		   
 		   if(mysqli_num_rows($result) == 0) {
+			   $row_array['code'] =  6;
 			    $row_array['error'] = "No User found";
 			    array_push($return_arr, $row_array);
 		   }
 		   
 		 } else {
+			 $row_array['code'] =  3;
 			$row_array['error'] = "Execution error";
 			array_push($return_arr, $row_array);
 		 }
 
 	} else {
+		$row_array['code'] =  2;
 		$row_array['error'] = "No ID given";
 		array_push($return_arr, $row_array);
 	}
