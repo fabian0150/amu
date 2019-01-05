@@ -30,14 +30,14 @@
 
 	if ($db->query($sql) === TRUE) {
 		$row_array['code'] =  1;
-	    $row_array['message'] =  "Location created";
+	    $row_array['message'] =  $location_created;
 	    $row_array['location_id'] =  $db->insert_id;
 	     logData("inserted Location ID: " . $db->insert_id, "ADDED", basename(__FILE__, '.php') , 0);
 		array_push($return_arr, $row_array);
 
 	} else {
 		$row_array['code'] =  3;
-		$row_array['message'] =  "Location not created";
+		$row_array['message'] =  $location_not_created;
 	    $row_array['error'] =  $db->error;
 	    
 		array_push($return_arr, $row_array);

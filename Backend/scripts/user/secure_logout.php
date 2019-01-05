@@ -14,11 +14,11 @@
 		$_SESSION['session_user'] = null;
 		session_destroy();
 		$row_array['code'] =  1;
-		$row_array['message'] =  "Ausgeloggt";
+		$row_array['message'] =  $user_logout;
 		array_push($return_arr, $row_array);
 	} else {
 		$row_array['code'] =  3;
-		$row_array['error'] =  "Fehler beim Ausloggen";
+		$row_array['error'] =  $user_no_logout;
 		array_push($return_arr, $row_array);
 	}
 		

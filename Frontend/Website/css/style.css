@@ -15,6 +15,17 @@ body {
   background-color: #AC0114 !important;
 }
 
+.row-centered {
+text-align:center;
+}
+.col-centered {
+display:inline-block;
+float:none;
+/* reset the text-align */
+text-align:left;
+/* inline-block space fix */
+margin-right:-4px;
+}
 
 
 .footer {
@@ -146,11 +157,7 @@ p {
 }
 
 /* Bands */
-.card {
-	margin: 10px;
-}
-.card-inline {
-	margin: 20px;
-	display:inline-block;
-	width:100%;
+
+#bands_select {
+	margin-top: 15px;
 }

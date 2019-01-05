@@ -32,12 +32,12 @@
 	   }
 	    if(mysqli_num_rows($result) == 0) {
 				$row_array['code'] =  6;
-			    $row_array['error'] = "No Appointments found";
+			    $row_array['error'] = $appointments_no_exist;
 			    array_push($return_arr, $row_array);
 		   }
 	} else {
 		$row_array['code'] =  3;
-		 $row_array['error'] = "Execution error";
+		 $row_array['error'] = $server_error;
 		  array_push($return_arr, $row_array);
 	}
 	

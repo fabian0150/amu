@@ -12,16 +12,16 @@
 		$user_id = mysqli_real_escape_string($db, $user_id);
 		if($user_id == ""){
 			$row_array['code'] =  2;
-			$row_array['message'] =  "Bandmember not deleted";
-			$row_array['error'] = "User ID not given";
+			$row_array['message'] =  $bandmember_not_deleted;
+			$row_array['error'] = $user_not_given;
 			array_push($return_arr, $row_array);
 			echo json_encode($return_arr);
 			exit();
 		} 
 	} else {
 		$row_array['code'] =  2;
-		$row_array['message'] =  "Bandmember not deleted";
-		$row_array['error'] = "Band ID not given";
+		$row_array['message'] =  $bandmember_not_deleted;
+		$row_array['error'] = $band_not_given;
 		array_push($return_arr, $row_array);
 		echo json_encode($return_arr);
 		exit();
@@ -33,8 +33,8 @@
 		$band_id = mysqli_real_escape_string($db, $band_id);
 		if($band_id == ""){
 			$row_array['code'] =  2;
-			$row_array['message'] =  "Bandmember not deleted";
-			$row_array['error'] = "Band ID not given";
+			$row_array['message'] =  $bandmember_not_deleted;
+			$row_array['error'] = $band_not_given;
 			array_push($return_arr, $row_array);
 			echo json_encode($return_arr);
 			exit();
@@ -42,7 +42,7 @@
 	} else {
 		$row_array['code'] =  2;
 		$row_array['message'] =  "Bandmember not deleted";
-		$row_array['error'] = "Band ID not given";
+		$row_array['error'] = $band_not_given;
 		array_push($return_arr, $row_array);
 		echo json_encode($return_arr);
 		exit();
@@ -57,8 +57,8 @@
 
 	if ($result->num_rows > 0) { } else {
 		$row_array['code'] =  2;
-		$row_array['message'] =  "Bandmember not deleted";
-		$row_array['error'] = "User ID not found";
+		$row_array['message'] =  $bandmember_not_deleted;
+		$row_array['error'] = $user_no_exist;
 		array_push($return_arr, $row_array);
 		echo json_encode($return_arr);
 		exit();
@@ -71,8 +71,8 @@
 
 	if ($result->num_rows > 0) { } else {
 		$row_array['code'] =  2;
-		$row_array['message'] =  "Bandmember not deleted";
-		$row_array['error'] = "Band ID not found";
+		$row_array['message'] =  $bandmember_not_deleted;
+		$row_array['error'] = $band_no_exist;
 		array_push($return_arr, $row_array);
 		echo json_encode($return_arr);
 		exit();
@@ -85,7 +85,7 @@
 
 	if ($result->num_rows > 0) {} else {
 		$row_array['code'] =  2;
-		$row_array['message'] =  "Bandmember not deleted";
+		$row_array['message'] =  $bandmember_not_deleted;
 		$row_array['error'] = "Member not in band";
 		array_push($return_arr, $row_array);
 		echo json_encode($return_arr);
@@ -99,7 +99,7 @@
 
 	if ($db->query($sql) === TRUE) {
 		$row_array['code'] =  1;
-	    $row_array['message'] =  "Bandmember deleted";
+	    $row_array['message'] =  $bandmember_deleted;
 	    $row_array['member_id'] =  intval($user_id);
 		$row_array['band_id'] =  intval($band_id);
 	    logData("deleted Bandmember ID: " . $user_id . " IN Band: " . $band_id, "ADDED", basename(__FILE__, '.php') , 0);
@@ -107,7 +107,7 @@
 
 	} else {
 		$row_array['code'] =  3;
-		$row_array['message'] =  "Bandmember not deleted";
+		$row_array['message'] =  $bandmember_not_deleted;
 	    $row_array['error'] =  $db->error;
 	    
 		array_push($return_arr, $row_array);

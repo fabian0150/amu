@@ -18,11 +18,11 @@
 		    array_push($return_arr, $row_array);
 	   }
 	   if(mysqli_num_rows($result) == 0) {
-			    $row_array['error'] = "No Log found";
+			    $row_array['error'] = $log_no_exist;
 			    array_push($return_arr, $row_array);
 		   }
 	} else {
-		 $row_array['error'] = "Execution error";
+		 $row_array['error'] = $server_error;
 		  array_push($return_arr, $row_array);
 	}
 	

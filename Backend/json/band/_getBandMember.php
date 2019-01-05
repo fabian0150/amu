@@ -31,13 +31,13 @@
 		   }
 		   if(mysqli_num_rows($result) == 0) {
 			   $row_array['code'] =  6;
-			    $row_array['error'] = "No Bandmembers";
+			    $row_array['error'] = $bandmember_no_users;
 			    array_push($return_arr, $row_array);
 		   } 
 		   
 		 } else {
 			 $row_array['code'] =  3;
-			$row_array['error'] = "Execution error";
+			$row_array['error'] = $server_error;
 			array_push($return_arr, $row_array);
 		 }
 	} else {
@@ -62,13 +62,13 @@
 		   }
 		   if(mysqli_num_rows($result) == 0) {
 			   $row_array['code'] =  6;
-			    $row_array['error'] = "No Bandmembers";
+			    $row_array['error'] = $bandmember_no_users;
 			    array_push($return_arr, $row_array);
 		   } 
 		   
 		 } else {
 			 $row_array['code'] =  3;
-			$row_array['error'] = "Execution error";
+			$row_array['error'] = $server_error;
 			array_push($return_arr, $row_array);
 		 }	
 	}

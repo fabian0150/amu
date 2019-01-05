@@ -28,19 +28,19 @@
 		   
 		   if(mysqli_num_rows($result) == 0) {
 			   $row_array['code'] =  6;
-			    $row_array['error'] = "No User found";
+			    $row_array['error'] = $user_no_exist;
 			    array_push($return_arr, $row_array);
 		   }
 		   
 		 } else {
 			 $row_array['code'] =  3;
-			$row_array['error'] = "Execution error";
+			$row_array['error'] = $server_error;
 			array_push($return_arr, $row_array);
 		 }
 
 	} else {
 		$row_array['code'] =  2;
-		$row_array['error'] = "No ID given";
+		$row_array['error'] = $user_not_given;
 		array_push($return_arr, $row_array);
 	}
 

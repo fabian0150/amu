@@ -17,13 +17,14 @@ function loadUserBands(php_user_id) {
 					var obj_info = jQuery.parseJSON(JSON.stringify(data_info));
 					
 					if (obj_info[0].website_url == null) { obj_info[0].website_url = "Keine Website vorhanden"; }
-					if (obj_info[0].leader_username == null) { obj_info[0].leader_username = "Keine Besitzer vorhanden"; }  					
+					if (obj_info[0].leader_username == null) { obj_info[0].leader_username = "Keine Besitzer vorhanden"; }  
+					if (obj_info[0].logo_path == null) { obj_info[0].logo_path = "default.jpg"; }					
 					html_str += `
-					<div class='col-sm'>
-						<div class='card card-inline' style='width: 18rem;'>
+					<div class='col'>
+						<div class='card'>
 							<div class='card-body'>
 								
-								<h5 class='card-title' style='height: 80px;'><img src='img/bands/${obj_info[0].logo_path}' class='rounded-circle' alt='${obj_info[0].name}' heigth='80px' width='80px'> ${obj_info[0].name}</h5>
+								<h5 class='card-title' style='height: 80px;'><img src='img/bands/${obj_info[0].logo_path}' class='rounded-circle' alt=''  height='80px' width='80px'> ${obj_info[0].name}</h5>
 								<div class='card-text'>
 									<p><span class='span-bold'>Website: </span><a href='${obj_info[0].website_url}'>${obj_info[0].website_url}</a><br>
 									<span class='span-bold'>Besitzer: </span>${obj_info[0].leader_username}</p>
@@ -48,7 +49,7 @@ function loadUserBands(php_user_id) {
 			}
 			} else {
 				$('#user_bands').html(`<div class='col-sm'>
-										<div class='card card-inline' style='width: 18rem;'>
+										<div class='card'>
 											<div class='card-body'>
 												<h5 class='card-title' style='height: 80px;'>Keine Bands</h5>
 												<div class='card-text'>
@@ -79,7 +80,9 @@ function loadBandsSelect() {
 				}));
 			}
 		}
-	});	
+		
+		changeBandImage($('#bands_select').val());
+	});
 }
 
 function addUserToBand(php_user_id) {
@@ -145,4 +148,51 @@ function deleteUserFromBand(php_user_id, php_band_id) {
 		}
 	});
 	
+}
+
+function changeBandImage(band_id) {
+	var band_logo_path = "img/bands/";
+	$.ajax({url: "json/band/_getBand.php?id=" + band_id}).done(function( data ) {
+		if(data.length > 0) {
+			var obj = jQuery.parseJSON(JSON.stringify(data));
+			if (obj[0].logo_path == null) { obj[0].logo_path = "default.jpg"; }	
+			band_logo_path += obj[0].logo_path;
+			document.getElementById('band_image').setAttribute("src", band_logo_path);
+		}
+		
+	});	
+}
+
+
+function createBand(php_user_id) {
+	var name_str = document.getElementById("band_name").value;
+	var website_str = document.getElementById("website_url").value;
+	
+	$.post("scripts/band/secure_addBand.php", {name: name_str, website_url: website_str, leader_id: php_user_id}, function(data){
+		if(data.length > 0) {
+			var obj = jQuery.parseJSON(JSON.stringify(data));
+			console.log(obj);
+			if(obj[0].code == 1) {
+				swal("Band wurde erstellte!", "Die Band '" + name_str + "' wurde erfolgreich erstellt", "success");
+				loadBandsSelect();
+				loadUserBands(php_user_id);
+			} else {
+				console.log("nicht erfolgreich");
+				var error_str = "";
+				for(var i = 0; i < obj.length; i++) {
+					error_str += obj[i].error + " \n ";
+				}
+			
+				swal({
+					title: "Fehler beim Erstellen der Band!",
+					icon: "error",
+					content: {
+						element: "span",
+						attributes: { innerText: error_str }
+					}
+				});
+			}
+		}
+		
+	});
 }

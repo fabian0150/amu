@@ -49,14 +49,15 @@
 		</div>
 		
 		<h2 class="mt-5">Band beitreten</h2>
-		<div class="row" id="user_joinband">
-		
+		<div class="row row-centered" id="user_joinband">
+			
 		
 				<div class='col-md-12'>
+				
 					<form>
 						<div class="form-group">
-							<label for="bands_select">Bands</label>
-							<select class="form-control" id="bands_select">
+							<img src='img/bands/testband.jpg' class='rounded-circle' alt='' height='150px' width='200px' id="band_image">
+							<select class="form-control" id="bands_select" onChange="changeBandImage(this.value);">
 							 
 							</select>
 							
@@ -81,10 +82,33 @@
 		</div>
 		
 		<h2 class="mt-5">Band erstellen</h2>
-		<div class="row" id="user_createband">
-		 
+	
+			<form>
+			  <div class="form-group row">
+				<label for="band_name" class="col-sm-2 col-form-label">Bandname</label>
+				<div class="col-sm-10">
+				  <input type="text" class="form-control" id="band_name" placeholder="Bandname">
+				</div>
+			  </div>
+			  <div class="form-group row">
+				<label for="website_url" class="col-sm-2 col-form-label">Website</label>
+				<div class="col-sm-10">
+				  <input type="text" class="form-control" id="website_url" placeholder="Website">
+				</div>
+			  </div>
+			  <div class="form-group row">
+				<label for="band_logo" class="col-sm-2 col-form-label">Bandlogo</label>
+				<div class="col-sm-10">
+				  <input type="text" class="form-control" id="band_logo" placeholder="Bandlogo">
+				</div>
+			  </div>
+
+				<a href='#user_createband' class='btn float-right' onClick="createBand(<?php echo $_SESSION['session_user']; ?>);">Erstellen</a>
+				
+		
+			</form>
 		  
-		</div>
+	
 	</div>
 		
     <!-- /.container -->

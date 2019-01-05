@@ -1,5 +1,8 @@
 <?php
 	session_start();
+	
+	include_once('text.php');
+	
 	$db = new mysqli('localhost', 'amu_admin', '0Km#3u4b', 'amu_db');
 	if($db === false){
     	die("ERROR: Could not connect. " . mysqli_connect_error());
