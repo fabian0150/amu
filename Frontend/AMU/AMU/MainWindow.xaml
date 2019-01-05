@@ -93,11 +93,11 @@
                         <!--Height="Auto" Auto macht es so groß wie nötig-->
                     </Grid.RowDefinitions>
                     <!--#endregion-->
-                    <ListBox Name="gruppen_listbox" Grid.Row="1" Grid.Column="1" Grid.RowSpan="22" Grid.ColumnSpan="6" SelectionChanged="Gruppen_listbox_SelectionChanged">Gruppen sortiert nach Besetzung und Alphabet</ListBox>
+                    <ListBox Name="gruppen_listbox" Grid.Row="1" Grid.Column="1" Grid.RowSpan="22" Grid.ColumnSpan="6" SelectionChanged="Gruppen_listbox_SelectionChanged"/>
 
                     <Label Grid.Row="1" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="20">Gruppen Infos</Label>
                     <TextBox Name="txtbx_bandname" Grid.Row="3" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="2">Bandname</TextBox>
-                    <TextBox Name="txtbx_besetzung" Grid.Row="5" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="2">Besetzung</TextBox>
+                    <Label Name="lbl_besetzung" Grid.Row="5" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="2">Besetzung</Label>
                     <TextBox Name="txtbx_telefon" Grid.Row="7" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="2">Telefon</TextBox>
                     <TextBox Name="txtbx_email" Grid.Row="9" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="2">Email</TextBox>
                     <TextBox Name="txtbx_website" Grid.Row="11" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="2">Website</TextBox>

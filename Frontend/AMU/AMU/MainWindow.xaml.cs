@@ -20,6 +20,8 @@ namespace AMU_WPF
     public partial class MainWindow : Window
     {
         public List<Band> bandList;
+        User user;
+        Band band;
         public MainWindow()
         {
             InitializeComponent();
@@ -38,8 +40,9 @@ namespace AMU_WPF
 
             cboMonth.SelectionChanged += (o, e) => RefreshCalendar();
             cboYear.SelectionChanged += (o, e) => RefreshCalendar();
-            
+            //Tabs
             LoadBands();
+            //Tabs end
         }
 
         private void LoadBands()
@@ -47,25 +50,20 @@ namespace AMU_WPF
             bandList = new List<Band>();
             var rawJSON = new WebClient().DownloadString("https://amu.tkg.ovh/json/band/_getBands.php");
             var resultObjects = JsonConvert.DeserializeObject(rawJSON);
-            JArray asdf = JArray.Parse(rawJSON);
+            JArray arrayJSON = JArray.Parse(rawJSON);
 
-            Band band;
-            Console.WriteLine("--------------");
-            //AppointmentCollection appointmentCollection = JsonConvert.DeserializeObject<AppointmentCollection>(obj);
-            for (int i = 0; i < asdf.Count; i++)
+            for (int i = 0; i < arrayJSON.Count; i++)
             {
-                JObject item = (JObject)asdf[i];
+                JObject item = (JObject)arrayJSON[i];
 
                 band = new Band
                 {
-
-
                     Name = (string)item.GetValue("name"),
                     Logo_Path = (string)item.GetValue("logo_path"),
                     Website_Url = (string)item.GetValue("website_url"),
+                    Notes = (string)item.GetValue("notes"),
                     Leader_Username = (string)item.GetValue("leader_username"),
                     Record_Date = (DateTime)item.GetValue("record_date")
-
                 };
                 if (item.GetValue("ID") != null)
                 {
@@ -75,15 +73,8 @@ namespace AMU_WPF
                 {
                     band.ID = -1;
                 }
-                if (item.GetValue("leader_id").Equals(null))
-                {
-                    band.Leader_ID = item.GetValue("leader_id").ToObject<int>();
-                }
-                else
-                {
-                    band.Leader_ID = -1;
-                }
-
+                
+                band.Leader_ID = item.Value<int?>("leader_id") ?? -1;
 
                 bandList.Add(band);
                 gruppen_listbox.Items.Add(band);
@@ -117,14 +108,68 @@ namespace AMU_WPF
 
         }
 
-   
-
         private void Gruppen_listbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Console.WriteLine();
             Band band = (Band)gruppen_listbox.SelectedItem;
+            if (!(band.Leader_ID == -1))
+            {
+                var rawJSON = new WebClient().DownloadString("https://amu.tkg.ovh/json/user/_getUser.php?id=" + band.Leader_ID);
+                var resultObjects = JsonConvert.DeserializeObject(rawJSON);
+                JArray arrayJSON = JArray.Parse(rawJSON);
+
+                JObject item = (JObject)arrayJSON[0];
+
+                user = new User
+                {
+                    Name = (string)item.GetValue("name"),
+                    Mail = (string)item.GetValue("mail"),
+                    Phone_Number = (string)item.GetValue("phone_number"),
+                    Address = (string)item.GetValue("address"),
+                    Website_Url = (string)item.GetValue("website_url"),
+                    Notes = (string)item.GetValue("notes"),
+                    User_Description = (string)item.GetValue("user_description"),
+                    Record_Date = (DateTime)item.GetValue("record_date")
+                };
+                if (item.GetValue("ID") != null)
+                {
+                    user.ID = item.GetValue("ID").ToObject<int>();
+                }
+                else
+                {
+                    user.ID = -1;
+                }
+                if (item.GetValue("user_type").Equals(null))
+                {
+                    user.User_Type = item.GetValue("user_type").ToObject<int>();
+                }
+                else
+                {
+                    user.User_Type = -1;
+                }
+
+                
+                txtbx_email.Text = user.Mail;
+                txtbx_telefon.Text = user.Phone_Number;
+                txtbx_website.Text = user.Website_Url;
+                
+                
+                }
+            else
+            {
+                txtbx_email.Text = "Keine Ansprechperson";
+                txtbx_telefon.Text = "Keine Ansprechperson";
+                txtbx_website.Text = "Keine Ansprechperson";
+            }
+            var rawJSONBandMembers = new WebClient().DownloadString("https://amu.tkg.ovh/json/band/_getBandMember.php?id=" + band.ID);
+            var resultObjectsBandMembers = JsonConvert.DeserializeObject(rawJSONBandMembers);
+            JArray arrayJSONBandMembers = JArray.Parse(rawJSONBandMembers);
             txtbx_bandname.Text = band.Name;
-            txtbx_website.Text = band.Website_Url;
+            lbl_besetzung.Content = arrayJSONBandMembers.Count;
+            txtblock_notizen.Text = band.Notes;
+
         }
+
     }
 }
+
