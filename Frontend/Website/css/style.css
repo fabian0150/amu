@@ -1,15 +1,28 @@
 
 /* General */
 body {
+	width:100%;
+	height:100%;
 	font-size: 120%;
 	background: #F8F8FF;
 	font-family: 'Muli', sans-serif;
+	padding-bottom: 70px;
 }
 
 * {
 	margin: 0px;
 	padding: 0px;
 }
+
+#Datepickk .dp-header {
+	background-color: #0f1e60;
+}
+
+#Datepickk .dp-week {
+	background-color: #AC0114;
+}
+
+
 
 .swal-button {
   background-color: #AC0114 !important;
@@ -25,17 +38,6 @@ float:none;
 text-align:left;
 /* inline-block space fix */
 margin-right:-4px;
-}
-
-
-.footer {
-  position: fixed;
-  left: 50%;
-  bottom: 20px;
-  transform: translate(-50%, -50%);
-  margin: 0 auto;
-  border-top: 1px solid #AC0114;
-  color: #AC0114;
 }
 
 /* Login / Register */
@@ -108,16 +110,24 @@ margin-right:-4px;
 }
 
 .btn-blue:hover {
-	background-color: #86111e;
+	background-color: #AC0114;
+	color: white;
+	text-decoration: none;
 }
 .btn-blue:active {
-	background-color: #4a0a11;
+	background-color: #0f1e60;
+	color: white;
+	text-decoration: none;
 }
 .btn:hover {
-	background-color: #86111e;
+	background-color: #0f1e60;
+	color: white;
+	text-decoration: none;
 }
 .btn:active {
-	background-color: #4a0a11;
+	background-color: #0f1e60;
+	color: white;
+	text-decoration: none;
 }
 
 
@@ -154,6 +164,17 @@ p {
 
 .span-bold {
 	font-weight: bold;
+}
+
+#calendar {
+	min-height: 900px;
+	height: 900px;
+}
+
+.table .thead-blue th {
+	color: #fff;
+	background-color: #0f1e60;
+    border-color: #0f1e60;
 }
 
 /* Bands */

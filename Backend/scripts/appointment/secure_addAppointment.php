@@ -8,9 +8,9 @@
 	$appointment_date = "NULL";
 	
 	
-	if(isset($_GET['band_id'])) {
+	if(isset($_POST['band_id'])) {
 		
-		$band_id = $_GET['band_id'];
+		$band_id = $_POST['band_id'];
 		$band_id = mysqli_real_escape_string($db, $band_id);
 		$band_id = "$band_id";
 		if($band_id == ""){
@@ -44,8 +44,8 @@
 		exit();
 	}
 	
-	if(isset($_GET['location_id'])) {
-		$location_id = $_GET['location_id'];
+	if(isset($_POST['location_id'])) {
+		$location_id = $_POST['location_id'];
 		$location_id = mysqli_real_escape_string($db, $location_id);
 		$location_id = "$location_id";
 		
@@ -64,8 +64,8 @@
 		} 
 
 	}
-	if(isset($_GET['appointment_date'])) {
-		$appointment_date = $_GET['appointment_date'];
+	if(isset($_POST['appointment_date'])) {
+		$appointment_date = $_POST['appointment_date'];
 		$appointment_date = mysqli_real_escape_string($db, $appointment_date);
 		$appointment_date = "'$appointment_date'";		
 	}

@@ -23,7 +23,7 @@
 		$row_array['error'] = "User not secure logged in";
 		array_push($return_arr, $row_array);
 		echo json_encode($return_arr);
-		header('Location: ../index.php');
+		//header('Location: ../../index.php');
 		exit();
 	} 
 

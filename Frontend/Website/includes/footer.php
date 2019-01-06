@@ -1,3 +1,3 @@
-<div class="footer"> 
-	<p>Copyright 2019 © Fabian Ortner & Robin Stehrlein</p>
+<div class="navbar fixed-bottom">
+<p>TEXT</p>
 </div>

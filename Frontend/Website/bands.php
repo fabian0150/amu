@@ -43,17 +43,13 @@
     <!-- Page Content -->
     <div class="container">
 		<h2 class="mt-5">Deine Bands</h2>
-		<div class="row" id="user_bands">
-		 
-		  
-		</div>
+		<hr>
+		<div class="row" id="user_bands"></div>
 		
 		<h2 class="mt-5">Band beitreten</h2>
+		<hr>
 		<div class="row row-centered" id="user_joinband">
-			
-		
 				<div class='col-md-12'>
-				
 					<form>
 						<div class="form-group">
 							<img src='img/bands/testband.jpg' class='rounded-circle' alt='' height='150px' width='200px' id="band_image">
@@ -82,42 +78,41 @@
 		</div>
 		
 		<h2 class="mt-5">Band erstellen</h2>
-	
-			<form>
-			  <div class="form-group row">
-				<label for="band_name" class="col-sm-2 col-form-label">Bandname</label>
-				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="band_name" placeholder="Bandname">
-				</div>
-			  </div>
-			  <div class="form-group row">
-				<label for="website_url" class="col-sm-2 col-form-label">Website</label>
-				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="website_url" placeholder="Website">
-				</div>
-			  </div>
-			  <div class="form-group row">
-				<label for="band_logo" class="col-sm-2 col-form-label">Bandlogo</label>
-				<div class="col-sm-10">
-				  <input type="text" class="form-control" id="band_logo" placeholder="Bandlogo">
-				</div>
-			  </div>
+		<hr>
+		<form>
+		  <div class="form-group row">
+			<label for="band_name" class="col-sm-2 col-form-label">Bandname</label>
+			<div class="col-sm-10">
+			  <input type="text" class="form-control" id="band_name" placeholder="Bandname">
+			</div>
+		  </div>
+		  <div class="form-group row">
+			<label for="website_url" class="col-sm-2 col-form-label">Website</label>
+			<div class="col-sm-10">
+			  <input type="text" class="form-control" id="website_url" placeholder="Website">
+			</div>
+		  </div>
+		  <div class="form-group row">
+			<label for="band_logo" class="col-sm-2 col-form-label">Bandlogo</label>
+			<div class="col-sm-10">
+			  <input type="text" class="form-control" id="band_logo" placeholder="Bandlogo">
+			</div>
+		  </div>
 
-				<a href='#user_createband' class='btn float-right' onClick="createBand(<?php echo $_SESSION['session_user']; ?>);">Erstellen</a>
-				
-		
-			</form>
-		  
+			<a href='#user_createband' class='btn float-right' onClick="createBand(<?php echo $_SESSION['session_user']; ?>);">Erstellen</a>
+			
 	
+		</form>
+		<?php include_once('includes/footer.php'); ?>
 	</div>
 		
     <!-- /.container -->
-
+	
     <!-- Bootstrap core JavaScript -->
     <?php include_once('includes/js.php'); ?>
 	<script src="js/bands.js"></script>
   </body>
-  <?php include_once('includes/footer.php'); ?>
+  
   <script>
 	var session_user_id = <?php echo $_SESSION['session_user']; ?>;
 	

@@ -14,8 +14,10 @@
 
     <title>Music Live AMU</title>
 
+	<link rel="stylesheet" href="dist/datepickk.min.css">
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
 
     <!-- Custom styles for this template -->
     <link href="css/logo-nav.css" rel="stylesheet">
@@ -24,7 +26,7 @@
   </head>
 
   <body>
-
+	<script src="dist/datepickk.min.js"></script>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark nav-red fixed-top">
       <div class="container">
@@ -42,29 +44,61 @@
 
     <!-- Page Content -->
     <div class="container">
-    
-       <div class="card">
-		  <div class="card-body">
-		  	<h1 class="mt-5">Kalender</h1>
-			This is some text within a card body.
-		  </div>
+  
+		
+		<div class="row" id="#">
+		
+			<div class='col-md-12'>
+			<h2 class="mt-5">Nächste Termine</h2>
+			<hr>
+				<table class="table">
+				  <thead class="thead-blue">
+					<tr>
+					  <th scope="col">Veranstaltungsort</th>
+					  <th scope="col">Datum</th>
+					  <th scope="col"></th>
+					</tr>
+				  </thead>
+				  <tbody id="next_appointments">
+					<!--<tr>
+					  <th scope="row">Sporthalle Wels</th>
+					  <td>15.01.2019 18:00</td>
+					  <td><a href='#' class='btn btn-primary' onClick="">Absagen</a></td>
+					</tr>-->
+					
+				  </tbody>
+				</table>
+				<a href='#' class='btn-blue float-right' onClick="">Alle Termine</a>
+			</div>
+			<div class='col-md-12'>
+			
+			<h2 class="mt-5">Kalender</h2>
+			<hr>
+			<div id="calendar" ></div>
+				
+			</div>
+			
 		</div>
+	<?php include_once('includes/footer.php'); ?>
     </div>
     <!-- /.container -->
-
+	
     <!-- Bootstrap core JavaScript -->
     <?php include_once('includes/js.php'); ?>
 	<script src="js/dashboard.js"></script>
   </body>
-  <?php include_once('includes/footer.php'); ?>
+  
   <script>
+	var session_user_id = <?php echo $_SESSION['session_user']; ?>;
+	
 	$(function() {
 		init();
 	});
 	
 	function init() { 
 		$("#dashboard").addClass("active");
-		loadAppointments();
+		loadAppointments(session_user_id);
+		initCalendar();
 	}
 </script>
 </html>

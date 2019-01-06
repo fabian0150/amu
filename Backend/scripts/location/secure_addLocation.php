@@ -7,19 +7,19 @@
 	$address = "NULL";
 	$contact_person_id = "NULL";
 	
-	if(isset($_GET['name'])) {	
-		$name = $_GET['name'];
+	if(isset($_POST['name'])) {	
+		$name = $_POST['name'];
 		$name = mysqli_real_escape_string($db, $name);
 		$name = "'$name'";
 	}
 	
-	if(isset($_GET['address'])) {
-		$address = $_GET['address'];
+	if(isset($_POST['address'])) {
+		$address = $_POST['address'];
 		$address = mysqli_real_escape_string($db, $address);
 		$address = "'$address'";
 	}
-	if(isset($_GET['contact_person_id'])) {
-		$contact_person_id = $_GET['contact_person_id'];
+	if(isset($_POST['contact_person_id'])) {
+		$contact_person_id = $_POST['contact_person_id'];
 		$contact_person_id = mysqli_real_escape_string($db, $contact_person_id);
 		$contact_person_id = "'$contact_person_id'";		
 	}
