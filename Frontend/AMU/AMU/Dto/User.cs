@@ -13,7 +13,6 @@ namespace AMU.Dto
         public string Phone_Number { get; set; }
         public string Address { get; set; }
         public string Mail { get; set; }
-        public string Website_Url { get; set; }
         public string Notes { get; set; }
         public int User_Type { get; set; }
         public string User_Description { get; set; }

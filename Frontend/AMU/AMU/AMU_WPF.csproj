@@ -78,6 +78,7 @@
     </Page>
     <Compile Include="Dto\Appointment.cs" />
     <Compile Include="Dto\Band.cs" />
+    <Compile Include="Dto\Location.cs" />
     <Compile Include="Dto\User.cs" />
     <Compile Include="Windows\AngebotErstellenWindow.xaml.cs">
       <DependentUpon>AngebotErstellenWindow.xaml</DependentUpon>
