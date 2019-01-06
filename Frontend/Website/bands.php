@@ -1,4 +1,5 @@
 <?php
+	$web = true;
 	include_once("scripts/config.php");
 	include_once("scripts/secure.php");
 ?>

@@ -3,10 +3,15 @@
 	$session_key = "";
 	$id = -1;
 	
+	
 	if(isset($_GET['session_key'])) {
 		$session_key = $_GET['session_key'];
 	} else {
 		$session_key = $_SESSION['session_key'];
+	}
+	
+	if(isset($_GET['web'])) {
+		$session_key = $_GET['session_key'];
 	}
 	
 	if(isset($_GET['session_user'])) {
@@ -23,7 +28,11 @@
 		$row_array['error'] = "User not secure logged in";
 		array_push($return_arr, $row_array);
 		echo json_encode($return_arr);
-		//header('Location: ../../index.php');
+		if(isset($web)) {
+			if($web == true) {
+				header('Location: ../../index.php');
+			}
+		}
 		exit();
 	} 
 
