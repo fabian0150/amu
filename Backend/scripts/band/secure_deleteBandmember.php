@@ -102,7 +102,11 @@
 	    $row_array['message'] =  $bandmember_deleted;
 	    $row_array['member_id'] =  intval($user_id);
 		$row_array['band_id'] =  intval($band_id);
-	    logData("deleted Bandmember ID: " . $user_id . " IN Band: " . $band_id, "ADDED", basename(__FILE__, '.php') , 0);
+		$log_user_id = 0;
+		if(isset($_SESSION['session_user'])) {
+			$log_user_id = $_SESSION['session_user'];
+		}
+	    logData("deleted Bandmember ID: " . $user_id . " IN Band: " . $band_id, "ADDED", basename(__FILE__, '.php') , $log_user_id);
 		array_push($return_arr, $row_array);
 
 	} else {

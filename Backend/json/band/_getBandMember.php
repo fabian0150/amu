@@ -72,7 +72,10 @@
 			array_push($return_arr, $row_array);
 		 }	
 	}
-
-	
+	$log_user_id = 0;
+	if(isset($_SESSION['session_user'])) {
+		$log_user_id = $_SESSION['session_user'];
+	}
+	logData("load BandMembers of Band ID: " . $id , "JSON", basename(__FILE__, '.php') , $log_user_id);
 	echo json_encode($return_arr);
 ?>

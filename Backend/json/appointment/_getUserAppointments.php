@@ -59,7 +59,10 @@
 		$row_array['error'] = $user_not_given;
 		array_push($return_arr, $row_array);
 	}
-
-	logData("load Appointments for User ID: " . $id , "JSON", basename(__FILE__, '.php') , 0);
+	$log_user_id = 0;
+	if(isset($_SESSION['session_user'])) {
+		$log_user_id = $_SESSION['session_user'];
+	}
+	logData("load Appointments for User ID: " . $id , "JSON", basename(__FILE__, '.php') , $log_user_id);
 	echo json_encode($return_arr);
 ?>

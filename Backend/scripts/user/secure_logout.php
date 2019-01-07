@@ -9,6 +9,12 @@
 
 	if ($db->query($sql) === TRUE) {
 		
+		$log_user_id = 0;
+		if(isset($_SESSION['session_user'])) {
+			$log_user_id = $_SESSION['session_user'];
+		}
+		logData("logout User: " . $log_user_id , "USER ACTION", basename(__FILE__, '.php') , $log_user_id);
+		
 		$_SESSION['session_key'] = null;
 		$_SESSION['session_loggedin'] = false;
 		$_SESSION['session_user'] = null;

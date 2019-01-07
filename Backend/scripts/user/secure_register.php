@@ -91,7 +91,7 @@
 	
 			array_push($return_arr, $row_array);
 			
-			logData("register User: " . $username , "USER ACTION", basename(__FILE__, '.php') , $db->insert_id);
+			logData("register User: " . $username , "USER ACTION", basename(__FILE__, '.php') , intval($db->insert_id));
 		} else {
 			$row_array['code'] =  3;
 			$row_array['message'] =   $user_no_registered;
