@@ -182,3 +182,9 @@ p {
 #bands_select {
 	margin-top: 15px;
 }
+
+/* Appointments */
+.old-appointment {
+	color: #00000080;
+    background-color: #d6d0d03d;
+}
