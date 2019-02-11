@@ -69,7 +69,7 @@
 					
 				  </tbody>
 				</table>
-				<a href='#' class='btn-blue float-right' onClick="">Alle Termine</a>
+				<a href='appointments.php' class='btn-blue float-right' onClick="">Alle Termine</a>
 			</div>
 			<div class='col-md-12'>
 			
