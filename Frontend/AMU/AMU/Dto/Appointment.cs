@@ -19,7 +19,7 @@ namespace AMU.Dto
 
         public override string ToString()
         {
-            return Band_Name;
+            return Location_Name + ": "+Appointment_Date;
         }
     }
 }
