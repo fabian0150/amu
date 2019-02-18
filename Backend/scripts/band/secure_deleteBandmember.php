@@ -106,7 +106,7 @@
 		if(isset($_SESSION['session_user'])) {
 			$log_user_id = $_SESSION['session_user'];
 		}
-	    logData("deleted Bandmember ID: " . $user_id . " IN Band: " . $band_id, "ADDED", basename(__FILE__, '.php') , $log_user_id);
+	    logData("deleted Bandmember ID: " . $user_id . " in Band: " . $band_id, "DELETED", basename(__FILE__, '.php') , $log_user_id);
 		array_push($return_arr, $row_array);
 
 	} else {
