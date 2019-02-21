@@ -28,8 +28,8 @@ namespace AMU_WPF
         Band band;
         Appointment appointment;
         Location location;
-        string session_key = "-1";
-        string session_user = "-1";
+        public string session_key = "-1";
+        public string session_user = "-1";
 
         public MainWindow()
         {
@@ -52,29 +52,17 @@ namespace AMU_WPF
             LoadBands();
             LoadVeranstalter();
             //Tabs end
-            LoginUserAsync();
+            LoginUser();
         }
 
-        private async void LoginUserAsync()
+        private void LoginUser()
         {
-            //IEnumerable<KeyValuePair<string, string>> queries = new List<KeyValuePair<string, string>>() {
-            //    new KeyValuePair<string, string>("username","robin"),
-            //    new KeyValuePair<string, string>("password","1234")
-            //};
-            //HttpContent q = new FormUrlEncodedContent(queries);
-            //using (HttpClient client = new HttpClient()) {
-            //    using (HttpResponseMessage response = await client.PostAsync("https://amu.tkg.ovh/scripts/user/secure_login.php", q)) {
-            //        using (HttpContent content = response.Content) {
-            //            string mycontent = await content.ReadAsStringAsync();
-            //            HttpContentHeaders headers = content.Headers;
-            //            Console.WriteLine(mycontent);
-            //        }
-            //    }
-            //}
-
-
             using (WebClient webClient = new WebClient())
             {
+                NameValueCollection nvc = new NameValueCollection {
+                    {"username", "robin"},
+                    {"password", "1234"}
+                };
                 string response = Encoding.ASCII.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/user/secure_login.php", new NameValueCollection() {
                     {"username", "robin"},
                     {"password", "1234"}
@@ -87,7 +75,7 @@ namespace AMU_WPF
                 {
                     item = (JObject)arrayJSON[i];
                     session_key = (string)item.GetValue("session_key");
-                    session_user = (string)item.GetValue("user_name"); //username ist redundant, weil ja nur ein User Applikation hat
+                    session_user = (string)item.GetValue("user_id"); //username ist redundant, weil ja nur ein User Applikation hat
                 }
             }
         }
@@ -307,7 +295,7 @@ namespace AMU_WPF
 
         private void Add_New_Band(object sender, RoutedEventArgs e)
         {
-            GruppeHinzufuegenWindow gruppeHinzufuegenWindow = new GruppeHinzufuegenWindow();
+            GruppeHinzufuegenWindow gruppeHinzufuegenWindow = new GruppeHinzufuegenWindow(session_key, session_user);
             gruppeHinzufuegenWindow.Show();
         }
 

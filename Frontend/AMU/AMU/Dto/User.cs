@@ -19,5 +19,9 @@ namespace AMU.Dto
         public string Username { get; set; }
         public DateTime Record_Date { get; set; }
 
+        public override string ToString()
+        {
+            return Name + ": " + Mail;
+        }
     }
 }
