@@ -48,22 +48,19 @@ namespace AMU_WPF
 
             cboMonth.SelectionChanged += (o, e) => RefreshCalendar();
             cboYear.SelectionChanged += (o, e) => RefreshCalendar();
+            LoginUser();
             //Tabs
             LoadBands();
             LoadVeranstalter();
             //Tabs end
-            LoginUser();
+            
         }
 
         private void LoginUser()
         {
             using (WebClient webClient = new WebClient())
             {
-                NameValueCollection nvc = new NameValueCollection {
-                    {"username", "robin"},
-                    {"password", "1234"}
-                };
-                string response = Encoding.ASCII.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/user/secure_login.php", new NameValueCollection() {
+                    string response = Encoding.ASCII.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/user/secure_login.php", new NameValueCollection() {
                     {"username", "robin"},
                     {"password", "1234"}
                 }));
@@ -78,6 +75,7 @@ namespace AMU_WPF
                     session_user = (string)item.GetValue("user_id"); //username ist redundant, weil ja nur ein User Applikation hat
                 }
             }
+            Console.WriteLine("---");
         }
 
         private void LoadVeranstalter()
@@ -307,15 +305,15 @@ namespace AMU_WPF
 
             using (WebClient webClient = new WebClient())
             {
-                string response = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/appointment/addAppointment.php", new NameValueCollection() {
+                string response = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/appointment/addAppointment.php?session_key=" + session_key + "&session_user=" + session_user, new NameValueCollection() {
                     {"band_id", band.ID.ToString()},
                     {"location_id", "-1"},
                     {"appointment_date", date.ToString()},
-                    {"session_key", session_key},
-                    {"session_user", session_user}
-                    //,{"location_name","Externe Veranstaltung" } //Externe Veranstaltung -> Termin wurde von Gruppe selber vermittelt
+                    { "location_name","Externe Veranstaltung" } //Externe Veranstaltung -> Termin wurde von Gruppe selber vermittelt
                 }));
+                Console.WriteLine(response);
             }
+                LoadAppointments();
             }
         }
     }
