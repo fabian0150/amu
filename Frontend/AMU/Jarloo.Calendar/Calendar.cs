@@ -115,19 +115,16 @@ namespace Jarloo.Calendar
             for(int i = 0; i < asdf.Count; i++)
             {
                 JObject item = (JObject)asdf[i];
-               
-                appointment = new Appointment
-                {
-                    ID = (int)item.GetValue("ID"),
-                    Band_ID = (int)item.GetValue("band_id"),
-                    Band_Name = (string)item.GetValue("band_name"),
-                    Location_ID = (int)item.GetValue("location_id"),
-                    Location_Address = (string)item.GetValue("location_address"),
-                    Location_Name = (string)item.GetValue("location_name"),
-                    Appointment_Date = (DateTime)item.GetValue("appointment_date"),
-                    Record_Date = (DateTime)item.GetValue("record_date")
 
-                };
+                appointment = new Appointment();
+                appointment.ID = (int)item.GetValue("ID");
+                appointment.Band_ID = (int)item.GetValue("band_id");
+                appointment.Band_Name = (string)item.GetValue("band_name");
+                appointment.Location_ID = (int)item.GetValue("location_id");
+                appointment.Location_Address = (string)item.GetValue("location_address");
+                appointment.Location_Name = (string)item.GetValue("location_name");
+                //appointment.Appointment_Date = (DateTime)item.GetValue("appointment_date");
+                appointment.Record_Date = (DateTime)item.GetValue("record_date");
                 appointmentList.Add(appointment);
             }
 

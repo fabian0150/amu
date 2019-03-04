@@ -94,7 +94,7 @@ namespace AMU.Windows
                 Notes = txtbx_notes.Text,
                 Logo_Path = logo_path
             };
-
+            //dummy Bandmembers adden
             POST_GruppeAsync(band);
 
 

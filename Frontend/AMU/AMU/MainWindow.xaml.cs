@@ -16,6 +16,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using AMU;
 
 namespace AMU_WPF
 {
@@ -95,7 +96,7 @@ namespace AMU_WPF
                 };
                 veranstaltungen_listbox.Items.Add(location);
             }
-        }
+        } //Veranstalter Tab
 
         private void LoadBands()
         {
@@ -125,11 +126,11 @@ namespace AMU_WPF
 
 
 
-        }
+        } //Gruppen Tab
 
         private void LoadAppointments() //lstbx_appointments
         {
-
+            lstbx_appointments.Items.Clear();
             List<Appointment> appointmentList = new List<Appointment>();
             JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/appointment/_getAppointments.php?band_id=", band.ID.ToString());
 
@@ -173,7 +174,7 @@ namespace AMU_WPF
 
             Calendar.BuildCalendar(targetDate);
 
-        }
+        } //Termine Tab
 
         private void Calendar_DayChanged(object sender, DayChangedEventArgs e)
         {
@@ -181,8 +182,10 @@ namespace AMU_WPF
             //save the text edits to persistant storage
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Termin_Anfrage_Button_Clicked(object sender, RoutedEventArgs e)
         {
+            TerminAnfrageWindow taw = new TerminAnfrageWindow();
+            taw.Show();
 
         }
 
@@ -231,6 +234,7 @@ namespace AMU_WPF
 
         private void Veranstaltungen_listbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            lstbx_veranstalter_gruppen.Items.Clear();
             //Zum Testen contact_person_id = 1 gesetzt, in der DB = null
             location.Contact_Person_ID = 1;
             if (!(location.Contact_Person_ID == -1))
@@ -257,6 +261,7 @@ namespace AMU_WPF
                 txtbx_veranstalter_telefon.Text = contactPerson.Phone_Number;
                 txtblck_veranstalter_notizen.Text = contactPerson.Notes;
 
+                //lstbx_veranstalter_gruppen Gruppen anzeigen
                 arrayJSON = GET_Request("https://amu.tkg.ovh/json/appointment/_getLocationAppointments.php?id=", location.ID.ToString());
                 JArray arrayJSONBands;
                 JObject itemBand;
@@ -266,18 +271,18 @@ namespace AMU_WPF
 
                     arrayJSONBands = GET_Request("https://amu.tkg.ovh/json/band/_getBand.php?id=", (string)item.GetValue("band_id"));
                     itemBand = (JObject)arrayJSONBands[0];
-                    if ((item.Value<int?>("code") ?? -1) == 1)
+                    if ((itemBand.Value<int?>("code") ?? -1) == 1)
                     {
                         Band bandPlayedAtAppointment = new Band
                         {
-                            Name = (string)item.GetValue("name"),
-                            Logo_Path = (string)item.GetValue("logo_path"),
-                            Website_Url = (string)item.GetValue("website_url"),
-                            Notes = (string)item.GetValue("notes"),
-                            Leader_Username = (string)item.GetValue("leader_username"),
-                            Record_Date = (DateTime)item.GetValue("record_date"),
-                            ID = item.Value<int?>("ID") ?? -1,
-                            Leader_ID = item.Value<int?>("leader_id") ?? -1
+                            Name = (string)itemBand.GetValue("name"),
+                            Logo_Path = (string)itemBand.GetValue("logo_path"),
+                            Website_Url = (string)itemBand.GetValue("website_url"),
+                            Notes = (string)itemBand.GetValue("notes"),
+                            Leader_Username = (string)itemBand.GetValue("leader_username"),
+                            Record_Date = (DateTime)itemBand.GetValue("record_date"),
+                            ID = itemBand.Value<int?>("ID") ?? -1,
+                            Leader_ID = itemBand.Value<int?>("leader_id") ?? -1
                         };
                         lstbx_veranstalter_gruppen.Items.Add(bandPlayedAtAppointment);
                     }
@@ -300,22 +305,24 @@ namespace AMU_WPF
         private void Btn_add_default_appointment_Click(object sender, RoutedEventArgs e)
         {
             if (!datepicker_default_appointment.Text.Equals("")) {
-            DateTime date = DateTime.Parse(datepicker_default_appointment.Text);
-            //https://amu.tkg.ovh/scripts/appointment/addAppointment.php?band_id=1&location_id=1&appointment_date=2018-05-02%2013:22:22
-
-            using (WebClient webClient = new WebClient())
-            {
-                string response = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/appointment/addAppointment.php?session_key=" + session_key + "&session_user=" + session_user, new NameValueCollection() {
+                string date = DateTime.ParseExact(datepicker_default_appointment.Text, "dd.MM.yyyy",
+                                CultureInfo.InvariantCulture
+                                ).ToString("yyyy-MM-dd HH:mm:ss");
+                using (WebClient webClient = new WebClient())
+                {
+                    string response = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/appointment/secure_addAppointment.php?session_key=" + session_key + "&session_user=" + session_user, new NameValueCollection() {
                     {"band_id", band.ID.ToString()},
-                    {"location_id", "-1"},
-                    {"appointment_date", date.ToString()},
-                    { "location_name","Externe Veranstaltung" } //Externe Veranstaltung -> Termin wurde von Gruppe selber vermittelt
+                    {"location_id", "5"}, //5 steht für externe Veranstaltung
+                    {"appointment_date", date},
+                    { "location_name","[EXT.]" } //Externe Veranstaltung -> Termin wurde von Gruppe selber vermittelt
                 }));
-                Console.WriteLine(response);
-            }
+                    Console.WriteLine(response);
+                }
+
+
                 LoadAppointments();
             }
-        }
+        } //Externe Veranstaltung hinzufügen
     }
 }
 //POST REQUEST CODE

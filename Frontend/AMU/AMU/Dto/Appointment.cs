@@ -19,7 +19,7 @@ namespace AMU.Dto
 
         public override string ToString()
         {
-            return Location_Name + ": "+Appointment_Date;
+            return Appointment_Date.ToString("dd.MM.yyyy") + ": "+Location_Name;
         }
     }
 }
