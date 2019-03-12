@@ -1,11 +1,15 @@
 <?php
 	$server_error						= "Serverfehler, bitte erneut probieren";
+	$search_error						= "Suche nicht erfolgreich";
 
 	$appointment_not_created 			= "Termin wurde nicht erstellt";
 	$appointment_created 				= "Termin erstellt";
+	$appointment_deleted				= "Termin wurde gelöscht";
 	$appointment_no_exist				= "Termin exisitiert nicht";
 	$appointment_not_given				= "Termin nicht angegeben";
+	$appointment_date_not_given			= "Datum nicht angegeben";
 	$appointments_no_exist				= "Keine Termine vorhanden";
+	$appointment_not_deleted			= "Termin nicht gelöscht";
 
 	$bandmember_no_users				= "Keine Mitglieder";
 	$bandmember_not_created 			= "Mitglied wurde nicht hinzugefügt";
@@ -13,6 +17,7 @@
 	$bandmember_deleted					= "Mitglied wurde entfernt";
 	$bandmember_created 				= "Mitglied wurde hinzugefügt";
 	$bandmember_already_member			= "User ist bereits Mitglied der Band";
+	$bandmember_count_not_given			= "Anzahl der Bandmitglieder nicht angegeben";
 
 	$bandinfo_no_exist					= "Info zu dieser Band exisitiert nicht";
 
@@ -22,6 +27,8 @@
 	$band_not_given						= "Band nicht angegeben";
 	$band_name_not_given				= "Bandname nicht angegeben";
 	$band_leader_no_exist				= "Bandleiter exisitiert nicht";
+	$band_none_found 					= "Es wurden keine Bands zu den angegebenen Filtern gefunden";
+	
 
 	$location_created 					= "Veranstaltungsort wurde erstellt";
 	$location_not_created 				= "Veranstaltungsort wurde nicht erstellt";
