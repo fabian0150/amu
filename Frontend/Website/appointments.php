@@ -50,11 +50,12 @@
 		<div class="row" id="#">
 		
 			<div class='col-md-12'>
-			<h2 class="mt-5">Nächste Termine</h2>
+			<h2 class="mt-5">Termine</h2>
 			<hr>
 				<table class="table">
 				  <thead class="thead-blue">
 					<tr>
+					  <th scope="col">Band</th>
 					  <th scope="col">Veranstaltungsort</th>
 					  <th scope="col">Datum</th>
 					  <th scope="col"></th>
@@ -62,23 +63,15 @@
 				  </thead>
 				  <tbody id="next_appointments">
 					<!--<tr>
-					  <th scope="row">Sporthalle Wels</th>
+					  <th scope="row">Rocketbitter</th>
+					  <td>Sporthalle Wels</td>
 					  <td>15.01.2019 18:00</td>
 					  <td><a href='#' class='btn btn-primary' onClick="">Absagen</a></td>
 					</tr>-->
 					
 				  </tbody>
 				</table>
-				<a href='appointments.php' class='btn-blue float-right' onClick="">Alle Termine</a>
 			</div>
-			<div class='col-md-12'>
-			
-			<h2 class="mt-5">Kalender</h2>
-			<hr>
-			<div id="calendar" ></div>
-				
-			</div>
-			
 		</div>
 	<?php include_once('includes/footer.php'); ?>
     </div>
@@ -86,7 +79,7 @@
 	
     <!-- Bootstrap core JavaScript -->
     <?php include_once('includes/js.php'); ?>
-	<script src="js/dashboard.js"></script>
+	<script src="js/appointments.js"></script>
   </body>
   
   <script>
@@ -97,9 +90,9 @@
 	});
 	
 	function init() { 
-		$("#dashboard").addClass("active");
-		loadAppointments(session_user_id, 5);
-		initCalendar();
+		$("#appointment").addClass("active");
+		loadAppointments(session_user_id, 0);
+		
 	}
 </script>
 </html>

@@ -1,12 +1,16 @@
 var calendar;
 var date_arr;
 var date_disabled_arr;
-function loadAppointments(php_user_id) {
+function loadAppointments(php_user_id, limit) {
 	var user_id = php_user_id;
 	date_arr = [];
 	date_disabled_arr = [];
-	
-	$.ajax({url: "json/appointment/_getUserAppointments.php?id=" + user_id + "&limit=5"}).done(function( data ) {
+	var json_url = "json/appointment/_getUserAppointments.php?id=" + user_id;
+	if(limit > 0){
+		json_url += "&limit=" + limit;
+	}	
+	console.log(json_url);
+	$.ajax({url: json_url}).done(function( data ) {
 			if(data.length > 0) {
 				var obj = jQuery.parseJSON(JSON.stringify(data));
 			
@@ -22,7 +26,6 @@ function loadAppointments(php_user_id) {
 					var now = new Date();
 					var json_date = new Date(obj[i].appointment_date);
 					if(now > json_date) {
-						console.log(json_date);
 						date_disabled_arr.push(json_date);
 					} else {
 					
