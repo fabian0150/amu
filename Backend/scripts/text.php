@@ -55,4 +55,13 @@
 	$user_registered					= "User registriert";
 	$user_no_registered					= "User nicht registriert";
 	$user_no_bands						= "Kein Mitglied einer Band";
+
+	$offer_not_created 					= "Angebot nicht erstellt";
+	$offer_created 						= "Angebot erstellt";
+	$offer_not_given 					= "Angebot nicht angegebent";
+	$offer_no_exist 					= "Angebot existiert nicht";
+
+	$offer_band_not_created 			= "Band nicht zum Angebot hinzugefügt";
+	$offer_band_created 				= "Band zum Angebot hinzugefügt";
+	$offer_band_already_in_offer		= "Band bereits im Angebot";
 ?>
