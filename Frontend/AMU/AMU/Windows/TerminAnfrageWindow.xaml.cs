@@ -31,12 +31,12 @@ namespace AMU
         {
             lstbx_gruppen_verfuegbar.Items.Clear();
             //Hier werden die Bands gesucht und angezeigt sobald die Abfrage fertig ist.
-            LoadBands();
+            LoadAvailableBands();
         }
-        private void LoadBands()
+        private void LoadAvailableBands()//Lädt Bands, die den Kriterien entsprechen (Anzahl BandMembers & freier Termin)
         {
             List<Band> bandList = new List<Band>();
-            JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/band/_getBands.php", "");
+            JArray arrayJSON = GET_Request($"https://amu.tkg.ovh/json/band/_getAvailableBands.php?members_cnt="+ +"&date=2019-03-02", "");
             Band band;
             for (int i = 0; i < arrayJSON.Count; i++)
             {

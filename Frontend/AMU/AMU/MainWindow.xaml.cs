@@ -323,6 +323,24 @@ namespace AMU_WPF
                 LoadAppointments();
             }
         } //Externe Veranstaltung hinzufügen
+
+        private void Delete_Appointment_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Veranstaltung löschen?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+            {
+                //nein, nichts tun
+            }
+            else
+            {
+                using (WebClient webClient = new WebClient())
+                {
+                    string response = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/appointment/secure_deleteAppointment.php?session_key="+session_key+"&session_user="+session_user, new NameValueCollection() {
+                        {"appointment_id", ((Appointment)lstbx_appointments.SelectedItem).ID.ToString()}
+                    }));
+                }
+            }
+            
+        }
     }
 }
 //POST REQUEST CODE
