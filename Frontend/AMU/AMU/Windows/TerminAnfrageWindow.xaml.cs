@@ -1,4 +1,5 @@
 ﻿using AMU.Dto;
+using AMU.Windows;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -22,9 +23,15 @@ namespace AMU
     /// </summary>
     public partial class TerminAnfrageWindow : Window
     {
-        public TerminAnfrageWindow()
+        private string session_key = "-1";
+        private string session_user = "-1";
+        List<Band> bandList = new List<Band>();
+        public TerminAnfrageWindow(string sessionKey, string sessionUser)
         {
             InitializeComponent();
+            session_key = sessionKey;
+            session_user = sessionUser;
+            lstbx_gruppen_verfuegbar.SelectionMode = SelectionMode.Extended;
         }
 
         private void Suche_Gruppen_Clicked(object sender, RoutedEventArgs e)
@@ -36,7 +43,9 @@ namespace AMU
         private void LoadAvailableBands()//Lädt Bands, die den Kriterien entsprechen (Anzahl BandMembers & freier Termin)
         {
             List<Band> bandList = new List<Band>();
-            JArray arrayJSON = GET_Request($"https://amu.tkg.ovh/json/band/_getAvailableBands.php?members_cnt="+ +"&date=2019-03-02", "");
+            JArray arrayJSON = GET_Request($"https://amu.tkg.ovh/json/band/_getBands.php", "");
+
+            //JArray arrayJSON = GET_Request($"https://amu.tkg.ovh/json/band/_getAvailableBands.php?members_cnt="+1 +"&date=2019-03-02", "");
             Band band;
             for (int i = 0; i < arrayJSON.Count; i++)
             {
@@ -106,6 +115,17 @@ namespace AMU
             txtblck_notes.Text = user.Notes;
 
 
+        }
+
+        private void AngebotErstellen(object sender, RoutedEventArgs e)
+        {
+            bandList.Clear();
+            foreach (var item in lstbx_gruppen_verfuegbar.SelectedItems)
+            {
+                bandList.Add((Band)item);
+            }
+            AngebotErstellenWindow angebotErstellenWindow = new AngebotErstellenWindow(bandList, session_key, session_user);
+            angebotErstellenWindow.Show();
         }
     }
 }

@@ -52,7 +52,7 @@ namespace AMU_WPF
             LoginUser();
             //Tabs
             LoadBands();
-            LoadVeranstalter();
+            LoadVeranstaltungen();
             //Tabs end
             
         }
@@ -79,7 +79,7 @@ namespace AMU_WPF
             Console.WriteLine("---");
         }
 
-        private void LoadVeranstalter()
+        private void LoadVeranstaltungen()
         {
             JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/location/_getLocations.php", "");
             JObject item;
@@ -184,7 +184,7 @@ namespace AMU_WPF
 
         private void Termin_Anfrage_Button_Clicked(object sender, RoutedEventArgs e)
         {
-            TerminAnfrageWindow taw = new TerminAnfrageWindow();
+            TerminAnfrageWindow taw = new TerminAnfrageWindow(session_key, session_user);
             taw.Show();
 
         }
@@ -195,6 +195,7 @@ namespace AMU_WPF
             band = (Band)gruppen_listbox.SelectedItem;
             if (!(band.Leader_ID == -1))
             {
+                //Get Users
                 JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/user/_getUser.php?id=", band.Leader_ID.ToString());
                 JObject item = (JObject)arrayJSON[0];
 
@@ -223,6 +224,7 @@ namespace AMU_WPF
                 txtbx_telefon.Text = "Keine Ansprechperson";
                 txtbx_website.Text = "Keine Ansprechperson";
             }
+            //Anzahl der Bandmembers
             var rawJSONBandMembers = new WebClient().DownloadString("https://amu.tkg.ovh/json/band/_getBandMember.php?id=" + band.ID);
             var resultObjectsBandMembers = JsonConvert.DeserializeObject(rawJSONBandMembers);
             JArray arrayJSONBandMembers = JArray.Parse(rawJSONBandMembers);
