@@ -60,6 +60,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Dto\BandGage.cs" />
     <Compile Include="Windows\VeranstalterHinzufuegenWindow.xaml.cs">
       <DependentUpon>VeranstalterHinzufuegenWindow.xaml</DependentUpon>
     </Compile>

@@ -16,7 +16,7 @@ namespace AMU.Dto
         public int Leader_ID { get; set; }
         public string Leader_Username { get; set; }
         public DateTime Record_Date { get; set; }
-
+        
         public override string ToString()
         {
             return Name;

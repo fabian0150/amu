@@ -225,11 +225,8 @@ namespace AMU_WPF
                 txtbx_website.Text = "Keine Ansprechperson";
             }
             //Anzahl der Bandmembers
-            var rawJSONBandMembers = new WebClient().DownloadString("https://amu.tkg.ovh/json/band/_getBandMember.php?id=" + band.ID);
-            var resultObjectsBandMembers = JsonConvert.DeserializeObject(rawJSONBandMembers);
-            JArray arrayJSONBandMembers = JArray.Parse(rawJSONBandMembers);
             txtbx_bandname.Text = band.Name;
-            lbl_besetzung.Content = "Besetzung: " + arrayJSONBandMembers.Count;
+            lbl_besetzung.Content = "Besetzung: " + GetBandMembersCount(band.ID);
             txtblock_notizen.Text = band.Notes;
             LoadAppointments(); //lstbx_appointments
         }
@@ -342,6 +339,12 @@ namespace AMU_WPF
                 }
             }
             
+        }
+        private int GetBandMembersCount(int id) {
+            var rawJSONBandMembers = new WebClient().DownloadString("https://amu.tkg.ovh/json/band/_getBandMember.php?id=" + id);
+            var resultObjectsBandMembers = JsonConvert.DeserializeObject(rawJSONBandMembers);
+            JArray arrayJSONBandMembers = JArray.Parse(rawJSONBandMembers);
+            return arrayJSONBandMembers.Count;
         }
     }
 }

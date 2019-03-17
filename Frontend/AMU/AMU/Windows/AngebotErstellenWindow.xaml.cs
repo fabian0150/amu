@@ -1,4 +1,5 @@
 ﻿using AMU.Dto;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -25,21 +27,32 @@ namespace AMU.Windows
     {
         private string session_key = "-1";
         private string session_user = "-1";
-        List<Band> bandList = new List<Band>();
+        List<BandGage> bandGageList = new List<BandGage>();
         public AngebotErstellenWindow(List<Band> bands, string sessionKey, string sessionUser)
         {
             InitializeComponent();
             session_key = sessionKey;
             session_user = sessionUser;
-            bandList = bands;
+            FillBandList(bands);
             LoadBands();
             LoadUsers();
             LoadVeranstaltungsorte();
         }
 
+        private void FillBandList(List<Band> bands)
+        {
+            foreach (Band item in bands)
+            {
+                bandGageList.Add(new BandGage
+                {
+                    Band = item
+                });
+            }
+        }
+
         private void LoadBands()
         {
-            foreach (Band item in bandList)
+            foreach (BandGage item in bandGageList)
             {
                 lstbxBand.Items.Add(item);
             }
@@ -58,10 +71,20 @@ namespace AMU.Windows
 
         private void VeranstaltungsortErstellen(object sender, RoutedEventArgs e)
         {
-            int contactPersonID = ((User)lstbxVeranstalter.SelectedItem).ID;
-            VeranstaltungsortHinzufuegenWindow veranstaltungsortHinzufuegenWindow = new VeranstaltungsortHinzufuegenWindow(contactPersonID, session_key, session_user);
-            veranstaltungsortHinzufuegenWindow.Show();
-            veranstaltungsortHinzufuegenWindow.Closing += VeranstaltungsortHinzufuegenWindowClosed;
+            if (lstbxVeranstalter.SelectedItem == null)
+            {
+                string message = "Es wurde kein Veranstalter ausgewählt";
+                string caption = "Bitte einen Veranstalter auswählen";
+                MessageBoxButtons buttons = MessageBoxButtons.OK;
+                DialogResult result = System.Windows.Forms.MessageBox.Show(message, caption, buttons);
+            }
+            else
+            {
+                int contactPersonID = ((User)lstbxVeranstalter.SelectedItem).ID;
+                VeranstaltungsortHinzufuegenWindow veranstaltungsortHinzufuegenWindow = new VeranstaltungsortHinzufuegenWindow(contactPersonID, session_key, session_user);
+                veranstaltungsortHinzufuegenWindow.Show();
+                veranstaltungsortHinzufuegenWindow.Closing += VeranstaltungsortHinzufuegenWindowClosed;
+            }
         }
 
         private void VeranstaltungsortHinzufuegenWindowClosed(object sender, CancelEventArgs e)
@@ -77,20 +100,20 @@ namespace AMU.Windows
             {
                 item = (JObject)arrayJSON[i];
                 //if (item.Value<int?>("user_type") == 2) { //wieder auskommentieren
-                    User user = new User
-                    {
-                        ID = (int)item.GetValue("ID"),
-                        Name = (string)item.GetValue("name") ?? "Kein Bandname",
-                        Address = (string)item.GetValue("address"),
-                        Mail = (string)item.GetValue("mail"),
-                        Notes = (string)item.GetValue("notes"),
-                        Phone_Number = (string)item.GetValue("phone_number"),
-                        Username = (string)item.GetValue("username"),
-                        User_Description = (string)item.GetValue("user_description"),
-                        User_Type = item.Value<int?>("user_type") ?? -1,
-                        Record_Date = (DateTime)item.GetValue("record_date")
-                    };
-                    lstbxVeranstalter.Items.Add(user);
+                User user = new User
+                {
+                    ID = (int)item.GetValue("ID"),
+                    Name = (string)item.GetValue("name") ?? "Kein Bandname",
+                    Address = (string)item.GetValue("address"),
+                    Mail = (string)item.GetValue("mail"),
+                    Notes = (string)item.GetValue("notes"),
+                    Phone_Number = (string)item.GetValue("phone_number"),
+                    Username = (string)item.GetValue("username"),
+                    User_Description = (string)item.GetValue("user_description"),
+                    User_Type = item.Value<int?>("user_type") ?? -1,
+                    Record_Date = (DateTime)item.GetValue("record_date")
+                };
+                lstbxVeranstalter.Items.Add(user);
                 //}
             }
 
@@ -121,7 +144,94 @@ namespace AMU.Windows
 
         private void LstbxBandSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (!(lstbxBand.SelectedItem == null))
+            {
+                BandGage bandGage = ((BandGage)lstbxBand.SelectedItem);
+                LoadUser(bandGage.Band.Leader_ID);
+                lblWebsite.Content = bandGage.Band.Website_Url;
+                lblBesetzung.Content = GetBandMembersCount(bandGage.Band.ID);
+                txtbxGage.Text = bandGage.Gage ?? "";
+            }
+        }
+        public void LoadUser(int userID)
+        {
+            JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/user/_getUser.php?id=", userID.ToString());
+            JObject item;
 
+            item = (JObject)arrayJSON[0];
+            //if (item.Value<int?>("user_type") == 2) { //wieder auskommentieren
+            User user = new User
+            {
+                ID = (int)item.GetValue("ID"),
+                Name = (string)item.GetValue("name") ?? "Kein Bandname",
+                Address = (string)item.GetValue("address"),
+                Mail = (string)item.GetValue("mail"),
+                Notes = (string)item.GetValue("notes"),
+                Phone_Number = (string)item.GetValue("phone_number"),
+                Username = (string)item.GetValue("username"),
+                User_Description = (string)item.GetValue("user_description"),
+                User_Type = item.Value<int?>("user_type") ?? -1,
+                Record_Date = (DateTime)item.GetValue("record_date")
+            };
+            lblAnsprechperson.Content = user.Name;
+            lblEmail.Content = user.Mail;
+            lblTelefonnummer.Content = user.Phone_Number;
+
+            //}
+
+
+        }
+
+        private int GetBandMembersCount(int id)
+        {
+            var rawJSONBandMembers = new WebClient().DownloadString("https://amu.tkg.ovh/json/band/_getBandMember.php?id=" + id);
+            var resultObjectsBandMembers = JsonConvert.DeserializeObject(rawJSONBandMembers);
+            JArray arrayJSONBandMembers = JArray.Parse(rawJSONBandMembers);
+            return arrayJSONBandMembers.Count;
+        }
+
+        private void BandGageSpeichern(object sender, RoutedEventArgs e)
+        {
+            BandGage selectedBand = ((BandGage)lstbxBand.SelectedItem);
+            for (int i = 0; i < bandGageList.Count; i++)
+            {
+                if (bandGageList[i].Band.ID.Equals(selectedBand.Band.ID))
+                {
+                    bandGageList[i].Gage = txtbxGage.Text;
+                    lstbxBand.Items.Clear();
+                    foreach (BandGage item in bandGageList)
+                    {
+                        lstbxBand.Items.Add(item);
+                    }
+                    txtbxGage.Text = "";
+                }
+            }
+        }
+
+        private void AngebotErstellen(object sender, RoutedEventArgs e)
+        {
+            bandGageList.ForEach(x => {
+                if (x.Gage.Equals("")) {
+                    string message = "Bitte Gage zu den Gruppen hinzufügen";
+                    string caption = "Fehlende Daten";
+                    MessageBoxButtons buttons = MessageBoxButtons.OK;
+                    DialogResult result = System.Windows.Forms.MessageBox.Show(message, caption, buttons);
+                    return;
+                }
+            });
+            if (lstbxVeranstalter.SelectedItem==null | lstbxVeranstaltungsort.SelectedItem==null)
+            {
+                string message = "Bitte einen Veranstalter/Veranstaltungsort auswählen";
+                string caption = "Fehlende Daten";
+                MessageBoxButtons buttons = MessageBoxButtons.OK;
+                DialogResult result = System.Windows.Forms.MessageBox.Show(message, caption, buttons);
+            }
+            if (txtbxFußtext.Text != "" | txtbxKopftext.Text != "" | txtbxGage.Text != "") {
+                string message = "Bitte Uhrzeit/Kopftext/Fußtext eingeben";
+                string caption = "Fehlende Daten";
+                MessageBoxButtons buttons = MessageBoxButtons.OK;
+                DialogResult result = System.Windows.Forms.MessageBox.Show(message, caption, buttons);
+            }
         }
     }
 }

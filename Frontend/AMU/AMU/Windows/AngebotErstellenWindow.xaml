@@ -66,8 +66,8 @@
 
         <Label Grid.Row="1" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="35" Padding="0">Gruppen</Label>
         <ListBox Name="lstbxBand" Grid.Row="3" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="3" SelectionChanged="LstbxBandSelectionChanged"></ListBox>
-        <TextBox Grid.Row="7" Grid.Column="8" Grid.ColumnSpan="3" Grid.RowSpan="1" Padding="0">Gage</TextBox>
-        <Button Grid.Row="7" Grid.Column="11" Grid.ColumnSpan="3" Grid.RowSpan="1" Padding="0">Speichern</Button>
+        <TextBox Name="txtbxGage" Grid.Row="7" Grid.Column="8" Grid.ColumnSpan="3" Grid.RowSpan="1" Padding="0">Gage</TextBox>
+        <Button Grid.Row="7" Grid.Column="11" Grid.ColumnSpan="3" Grid.RowSpan="1" Padding="0" Click="BandGageSpeichern">Speichern</Button>
         <Label Grid.Row="9" Grid.Column="8" Grid.ColumnSpan="1" Grid.RowSpan="1" Padding="0">Dauer</Label>
         <TextBox Grid.Row="9" Grid.Column="9" Grid.ColumnSpan="5" Grid.RowSpan="1" Padding="0"></TextBox>
         <Label Name="lblBesetzung" Grid.Row="11" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0">Besetzung</Label><!--Anzahl der Besetzung + String "Besetzung" setzen-->
@@ -79,9 +79,12 @@
         <Label Name="lblEmail" Grid.Row="16" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0">Email</Label>
         <Label Name="lblWebsite" Grid.Row="17" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0">Website</Label>
 
-        <Label Grid.Row="1" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="35" Padding="0">Gruppen Infos</Label>
+        <Label Grid.Row="1" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="35" Padding="0">Kopftext</Label>
+        <TextBox Name="txtbxKopftext" Grid.Row="3" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="5" AcceptsReturn="True" AcceptsTab="true" TextWrapping="Wrap"></TextBox>
+        <Label Grid.Row="8" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="35" Padding="0">Fußtext</Label>
+        <TextBox Name="txtbxFußtext" Grid.Row="10" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="5" AcceptsReturn="True" AcceptsTab="true"></TextBox>
         
-        <Button Grid.Row="18" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2">Angebot erstellen</Button>
+        <Button Grid.Row="16" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2" Click="AngebotErstellen">Angebot erstellen</Button>
         
         <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="35" Content="Veranstalter" Padding="0"/>
         <ListBox Name="lstbxVeranstalter" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="3"></ListBox>

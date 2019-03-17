@@ -58,12 +58,11 @@ namespace AMU
                     Website_Url = (string)item.GetValue("website_url"),
                     Notes = (string)item.GetValue("notes"),
                     Leader_Username = (string)item.GetValue("leader_username"),
-                    Record_Date = (DateTime)item.GetValue("record_date")
+                    Record_Date = (DateTime)item.GetValue("record_date"),
+                    ID = item.Value<int?>("ID") ?? -1,
+                    Leader_ID = item.Value<int?>("leader_id") ?? -1
                 };
-
-                band.ID = item.Value<int?>("ID") ?? -1;
-                band.Leader_ID = item.Value<int?>("leader_id") ?? -1;
-
+                
                 bandList.Add(band);
                 lstbx_gruppen_verfuegbar.Items.Add(band);
             }
