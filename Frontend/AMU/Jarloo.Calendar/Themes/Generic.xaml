@@ -4,12 +4,17 @@
  
     This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License  
     http://creativecommons.org/licenses/by-sa/3.0/ 
+    
+    Add reference to System.Windows.Interactivity in your project
+in XAML add xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 
 -->
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"    
-    xmlns:Jarloo="clr-namespace:Jarloo.Calendar" xmlns:Converters="clr-namespace:Jarloo.Calendar.Converters">
+    xmlns:Jarloo="clr-namespace:Jarloo.Calendar" xmlns:Converters="clr-namespace:Jarloo.Calendar.Converters"
+    x:Class="AMU.Dto.MainWindow"
+>
     
     <Converters:DateConverter x:Key="DateConverter"></Converters:DateConverter>
     <Converters:DayBorderColorConverter x:Key="DayBorderColorConverter"></Converters:DayBorderColorConverter> 
@@ -93,7 +98,10 @@
                                                     </StackPanel>
 
                                                     <!--<TextBox IsEnabled="{Binding IsEnabled}" Text="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{x:Null}" Foreground="black" />
-                                                    --><ListBox Name="Notes_Box" IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{x:Null}" Foreground="black" />
+                                                    -->
+                                                    <ListBox SelectionChanged="TestEventVonRobin" Name="Notes_Box" IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{x:Null}" Foreground="Black">
+                                                        
+                                                    </ListBox>
                                                 </DockPanel>
                                             </Border>
                                         </Border>
