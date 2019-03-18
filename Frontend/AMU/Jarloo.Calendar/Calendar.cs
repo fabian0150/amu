@@ -123,7 +123,7 @@ namespace Jarloo.Calendar
                 appointment.Location_ID = (int)item.GetValue("location_id");
                 appointment.Location_Address = (string)item.GetValue("location_address");
                 appointment.Location_Name = (string)item.GetValue("location_name");
-                //appointment.Appointment_Date = (DateTime)item.GetValue("appointment_date");
+                appointment.Appointment_Date = (DateTime)item.GetValue("appointment_date");
                 appointment.Record_Date = (DateTime)item.GetValue("record_date");
                 appointmentList.Add(appointment);
             }
