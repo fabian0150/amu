@@ -70,7 +70,7 @@
         <Button Grid.Row="7" Grid.Column="11" Grid.ColumnSpan="3" Grid.RowSpan="1" Padding="0" Click="BandGageSpeichern">Speichern</Button>
         <Label Grid.Row="9" Grid.Column="8" Grid.ColumnSpan="1" Grid.RowSpan="1" Padding="0">Dauer</Label>
         <TextBox Grid.Row="9" Grid.Column="9" Grid.ColumnSpan="5" Grid.RowSpan="1" Padding="0"></TextBox>
-        <Label Name="lblBesetzung" Grid.Row="11" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0">Besetzung</Label><!--Anzahl der Besetzung + String "Besetzung" setzen-->
+        <Label Name="lblBesetzung" Grid.Row="11" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0">Besetzung:</Label>
 
         <Label Grid.Row="12" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="35" Padding="0">Ansprechperson</Label>
 

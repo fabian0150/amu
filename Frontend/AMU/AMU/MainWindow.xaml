@@ -94,29 +94,30 @@
                         <!--Height="Auto" Auto macht es so groß wie nötig-->
                     </Grid.RowDefinitions>
                     <!--#endregion-->
-                    <ListBox Name="gruppen_listbox" Grid.Row="1" Grid.Column="1" Grid.RowSpan="22" Grid.ColumnSpan="6" SelectionChanged="Gruppen_listbox_SelectionChanged"/>
+                    <ListBox Name="gruppen_listbox" Grid.Row="3" Grid.Column="1" Grid.RowSpan="20" Grid.ColumnSpan="6" SelectionChanged="Gruppen_listbox_SelectionChanged" Padding="0"/>
+                    <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="30" Padding="0">Gruppen</Label>
+                    <Label Grid.Row="1" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="30" Padding="0">Band Infos</Label>
+                    <Button Grid.Row="1" Grid.Column="13" Grid.ColumnSpan="1" Grid.RowSpan="2" FontSize="20" Click="GruppeSpeichern">Save</Button>
+                    <Label Grid.Row="3" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0">Bandname</Label>
+                    <TextBox Name="txtbx_bandname" Grid.Row="4" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0">Bandname</TextBox>
+                    <Label VerticalContentAlignment="Top" Name="lbl_besetzung" Grid.Row="5" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0">Besetzung</Label>
+                    <Label Grid.Row="16" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0">Telefon</Label>
+                    <TextBox Name="txtbx_telefon" Grid.Row="17" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0">Telefon</TextBox>
+                    <Label Grid.Row="18" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0">E-Mail</Label>
+                    <TextBox Name="txtbx_email" Grid.Row="19" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0">Email</TextBox>
+                    <Label Grid.Row="5" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="3" Margin="0,30,0,30.2" Padding="0">Website</Label>
+                    <TextBox Name="txtbx_website" Grid.Row="7" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0">Website</TextBox>
+                    <Label Grid.Row="8" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0">Notizen</Label>
+                    <TextBox Name="txtblock_notizen" Grid.Row="9" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="3" Padding="0">Notizen</TextBox>
 
-                    <Label Grid.Row="1" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="30">Band Infos</Label>
-                    <Label Grid.Row="3" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1">Bandname</Label>
-                    <TextBox Name="txtbx_bandname" Grid.Row="4" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1">Bandname</TextBox>
-                    <Label VerticalContentAlignment="Top" Name="lbl_besetzung" Grid.Row="5" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1">Besetzung</Label>
-                    <Label Grid.Row="16" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1" >Telefon</Label>
-                    <TextBox Name="txtbx_telefon" Grid.Row="17" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1">Telefon</TextBox>
-                    <Label Grid.Row="18" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="2" >E-Mail</Label>
-                    <TextBox Name="txtbx_email" Grid.Row="19" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1">Email</TextBox>
-                    <Label Grid.Row="5" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="3" Margin="0,30,0,30.2">Website</Label>
-                    <TextBox Name="txtbx_website" Grid.Row="7" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1">Website</TextBox>
-                    <Label Grid.Row="8" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1" >Notizen</Label>
-                    <TextBox Name="txtblock_notizen" Grid.Row="9" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="3">Notizen</TextBox>
+                    <Label Grid.Row="12" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="30" Content="Ansprechperson" Padding="0" />
+                    <Label Grid.Row="14" Grid.Column="8" Grid.ColumnSpan="6"  Content="Name" Padding="0"/>
+                    <TextBox x:Name="txtbx_ansprechperson" Grid.Row="15" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1" Text="Name" Padding="0"/>
+                    <Label Grid.Row="20" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1" Content="Notizen" Padding="0"/>
+                    <TextBox x:Name="txtblock_ansprechperson_notizen" Grid.Row="21" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="2" Text="Notizen" Padding="0"/>
 
-                    <Label Grid.Row="12" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="30" Content="Ansprechperson" />
-                    <Label Grid.Row="14" Grid.Column="8" Grid.ColumnSpan="6"  Content="Name"/>
-                    <TextBox x:Name="txtbx_ansprechperson" Grid.Row="15" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1" Text="Name"/>
-                    <Label Grid.Row="20" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="1" Content="Notizen" />
-                    <TextBox x:Name="txtblock_ansprechperson_notizen" Grid.Row="21" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="2" Text="Notizen"/>
-
-                    <Label Grid.Row="1" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2">Besetztes Datum hinzufügen</Label>
-                    <DatePicker Name="datepicker_default_appointment" Grid.Row="3" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2"></DatePicker>
+                    <Label Grid.Row="1" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0">Besetztes Datum hinzufügen</Label>
+                    <DatePicker Name="datepicker_default_appointment" Grid.Row="3" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0"></DatePicker>
                     <Button Name="btn_add_default_appointment" Grid.Row="6" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2" Click="Btn_add_default_appointment_Click">Hinzufügen</Button>
                     <ListBox Name="lstbx_appointments" Grid.Row="9" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="6"></ListBox>
                     <Button Grid.Row="16" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2" Click="Delete_Appointment_Click">Eintrag löschen</Button>
@@ -182,16 +183,22 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <!--#endregion-->
-                    <ListBox Name="veranstaltungen_listbox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="22" SelectionChanged="Veranstaltungen_listbox_SelectionChanged"/>
-                    <Label Grid.Row="1" Grid.Column="9" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="20">Veranstaltung Infos</Label>
-                    <TextBox Name="txtbx_veranstalter_name" Grid.Row="3" Grid.Column="9" Grid.ColumnSpan="6">Veranstalter</TextBox>
-                    <TextBox Name="txtbx_veranstalter_adresse" Grid.Row="5" Grid.Column="9" Grid.ColumnSpan="6">Adresse</TextBox>
-                    <TextBox Name="txtbx_veranstalter_telefon" Grid.Row="7" Grid.Column="9" Grid.ColumnSpan="6">Telefon</TextBox>
-                    <TextBox Name="txtbx_veranstalter_email" Grid.Row="9" Grid.Column="9" Grid.ColumnSpan="6">Email</TextBox>
-                    <TextBox Name="txtbx_veranstalter_website" Grid.Row="11" Grid.Column="9" Grid.ColumnSpan="6">Website -> weg</TextBox>
-                    <TextBlock Name="txtblck_veranstalter_notizen" Grid.Row="13" Grid.Column="9" Grid.ColumnSpan="6" Grid.RowSpan="10">Notizen</TextBlock>
-
-                    <ListBox Name="lstbx_veranstalter_gruppen" Grid.Row="1" Grid.Column="17" Grid.ColumnSpan="6" Grid.RowSpan="22">Gruppen die mit Veranstalter gearbeitet haben</ListBox>
+                    <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="30" Padding="0">Veranstaltungen</Label>
+                    <ListBox Name="veranstaltungen_listbox" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="20" SelectionChanged="Veranstaltungen_listbox_SelectionChanged"/>
+                    <Label Grid.Row="1" Grid.Column="9" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="30" Padding="0">Veranstaltung Infos</Label>
+                    <Label Grid.Row="3" Grid.Column="9" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0">Veranstalter</Label>
+                    <TextBox Name="txtbx_veranstalter_name" Grid.Row="4" Grid.Column="9" Grid.ColumnSpan="6" Padding="0">Veranstalter</TextBox>
+                    <Label Grid.Row="5" Grid.Column="9" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0">Adresse</Label>
+                    <TextBox Name="txtbx_veranstalter_adresse" Grid.Row="6" Grid.Column="9" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0">Adresse</TextBox>
+                    <Label Grid.Row="8" Grid.Column="9" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0">Telefon</Label>
+                    <TextBox Name="txtbx_veranstalter_telefon" Grid.Row="9" Grid.Column="9" Grid.ColumnSpan="6" Padding="0">Telefon</TextBox>
+                    <Label Grid.Row="10" Grid.Column="9" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0">Email</Label>
+                    <TextBox Name="txtbx_veranstalter_email" Grid.Row="11" Grid.Column="9" Grid.ColumnSpan="6" Padding="0">Email</TextBox>
+                    <Label Grid.Row="12" Grid.Column="9" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0">Notizen</Label>
+                    <TextBox Name="txtblck_veranstalter_notizen" Grid.Row="13" Grid.Column="9" Grid.ColumnSpan="6" Grid.RowSpan="7" Padding="0">Notizen</TextBox>
+                    <Button Grid.Row="21" Grid.Column="9" Grid.ColumnSpan="6" Grid.RowSpan="2">Speichern</Button>
+                    <Label Grid.Row="1" Grid.Column="17" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="30" Padding="0">Gruppen</Label>
+                    <ListBox Name="lstbx_veranstalter_gruppen" Grid.Row="3" Grid.Column="17" Grid.ColumnSpan="6" Grid.RowSpan="20"></ListBox>
                 </Grid>
             </TabItem>
             <TabItem Header="Rechnungen">
@@ -259,7 +266,7 @@
                     <Label Grid.Row="5" Grid.Column="9" Grid.ColumnSpan="6">Datum</Label>
                     <Label Grid.Row="7" Grid.Column="9" Grid.ColumnSpan="6">Veranstaltung</Label>
                     <Label Grid.Row="9" Grid.Column="9" Grid.ColumnSpan="6">Gruppe</Label>
-                    <ListBox Grid.Row="11" Grid.Column="9" Grid.ColumnSpan="6">Betrag (updaten wenn neue Eingabe)</ListBox>
+                    <Label Grid.Row="11" Grid.Column="9" Grid.ColumnSpan="6">Betrag</Label>
 
                     <Button Grid.Row="13" Grid.Column="9" Grid.ColumnSpan="6" Grid.RowSpan="2">Rechnung öffnen</Button>
 
@@ -323,6 +330,7 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <!--#endregion-->
+                    
                 </Grid>
             </TabItem>
             <TabItem Header="Verträge">

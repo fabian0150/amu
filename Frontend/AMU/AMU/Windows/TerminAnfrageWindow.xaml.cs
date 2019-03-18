@@ -1,5 +1,6 @@
 ﻿using AMU.Dto;
 using AMU.Windows;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,10 @@ namespace AMU
 
             if (datePickerAnfrage.SelectedDate == null)
             {
-                //Fehlerfenster anzeigen
+                string message = "Bitte ein Datum auswählen";
+                string caption = "Fehlende Daten";
+                System.Windows.Forms.MessageBoxButtons buttons = System.Windows.Forms.MessageBoxButtons.OK;
+                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(message, caption, buttons);
                 return;
             }
             else
@@ -90,10 +94,13 @@ namespace AMU
         private void LoadAvailableBands(int bandMembersNr, string date)//Lädt Bands, die den Kriterien entsprechen (Anzahl BandMembers & freier Termin)
         {
             JArray arrayJSON = GET_Request($"https://amu.tkg.ovh/json/band/_getAvailableBands.php?members_cnt=" + bandMembersNr + "&date=", date);
-            for (int i = 0; i < arrayJSON.Count; i++)
+            if (((string)((JObject)arrayJSON[0]).GetValue("code")).Equals("1"))
             {
-                JObject item = (JObject)arrayJSON[i];
-                LoadBand(item);
+                for (int i = 0; i < arrayJSON.Count; i++)
+                {
+                    JObject item = (JObject)arrayJSON[i];
+                    LoadBand(item);
+                }
             }
         }
 
@@ -101,19 +108,22 @@ namespace AMU
         {
             JArray arrayJSON = GET_Request($"https://amu.tkg.ovh/json/band/_getBand.php?id=", (string)item.GetValue("ID"));
             JObject bandItem = (JObject)arrayJSON[0];
-            Band band = new Band
+            if (((string)bandItem.GetValue("code")).Equals("1"))
             {
-                Name = (string)bandItem.GetValue("name"),
-                Logo_Path = (string)bandItem.GetValue("logo_path"),
-                Website_Url = (string)bandItem.GetValue("website_url"),
-                Notes = (string)bandItem.GetValue("notes"),
-                Leader_Username = (string)bandItem.GetValue("leader_username"),
-                Record_Date = (DateTime)bandItem.GetValue("record_date"),
-                ID = bandItem.Value<int?>("ID") ?? -1,
-                Leader_ID = bandItem.Value<int?>("leader_id") ?? -1
-            };
-            bandList.Add(band);
-            lstbx_gruppen_verfuegbar.Items.Add(band);
+                Band band = new Band
+                {
+                    Name = (string)bandItem.GetValue("name"),
+                    Logo_Path = (string)bandItem.GetValue("logo_path"),
+                    Website_Url = (string)bandItem.GetValue("website_url"),
+                    Notes = (string)bandItem.GetValue("notes"),
+                    Leader_Username = (string)bandItem.GetValue("leader_username"),
+                    Record_Date = (DateTime)bandItem.GetValue("record_date"),
+                    ID = bandItem.Value<int?>("ID") ?? -1,
+                    Leader_ID = bandItem.Value<int?>("leader_id") ?? -1
+                };
+                bandList.Add(band);
+                lstbx_gruppen_verfuegbar.Items.Add(band);
+            }
         }
 
         private JArray GET_Request(string url, string parameter)
@@ -154,7 +164,7 @@ namespace AMU
                 };
 
                 lbl_bandname.Content = band.Name;
-                lbl_bandmembers.Content = 0;
+                lbl_bandmembers.Content = GetBandMembersCount(band.ID);
                 lbl_contact_person_name.Content = user.Name;
                 lbl_phone_number.Content = user.Phone_Number;
                 lbl_email.Content = user.Mail;
@@ -173,6 +183,13 @@ namespace AMU
             }
             AngebotErstellenWindow angebotErstellenWindow = new AngebotErstellenWindow(bandList, session_key, session_user);
             angebotErstellenWindow.Show();
+        }
+        private int GetBandMembersCount(int id)
+        {
+            var rawJSONBandMembers = new WebClient().DownloadString("https://amu.tkg.ovh/json/band/_getBandMember.php?id=" + id);
+            var resultObjectsBandMembers = JsonConvert.DeserializeObject(rawJSONBandMembers);
+            JArray arrayJSONBandMembers = JArray.Parse(rawJSONBandMembers);
+            return arrayJSONBandMembers.Count;
         }
     }
 }

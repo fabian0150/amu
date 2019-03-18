@@ -149,7 +149,7 @@ namespace AMU.Windows
                 BandGage bandGage = ((BandGage)lstbxBand.SelectedItem);
                 LoadUser(bandGage.Band.Leader_ID);
                 lblWebsite.Content = bandGage.Band.Website_Url;
-                lblBesetzung.Content = GetBandMembersCount(bandGage.Band.ID);
+                lblBesetzung.Content = "Besetzung: "+GetBandMembersCount(bandGage.Band.ID);
                 txtbxGage.Text = bandGage.Gage ?? "";
             }
         }

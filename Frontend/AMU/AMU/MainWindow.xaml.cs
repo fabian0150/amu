@@ -346,6 +346,11 @@ namespace AMU_WPF
             JArray arrayJSONBandMembers = JArray.Parse(rawJSONBandMembers);
             return arrayJSONBandMembers.Count;
         }
+
+        private void GruppeSpeichern(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
 //POST REQUEST CODE
