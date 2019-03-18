@@ -351,6 +351,10 @@ namespace AMU_WPF
         {
 
         }
+
+        public void TestEventVonRobin(object sender, RoutedEventArgs e) {
+            Console.WriteLine("Test");
+        }
     }
 }
 //POST REQUEST CODE
