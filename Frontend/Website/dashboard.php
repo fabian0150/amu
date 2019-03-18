@@ -98,7 +98,7 @@
 	
 	function init() { 
 		$("#dashboard").addClass("active");
-		loadAppointments(session_user_id, 5);
+		loadAppointments(session_user_id);
 		initCalendar();
 	}
 </script>
