@@ -28,9 +28,9 @@
 		exit();
 	}
 
-	if(isset($_GET['available_date'])) {
+	if(isset($_GET['date'])) {
 		
-		$available_date = $_GET['available_date'];
+		$available_date = $_GET['date'];
 		$available_date = mysqli_real_escape_string($db, $available_date);
 		if($available_date == ""){
 			$row_array['code'] =  2;
@@ -49,18 +49,23 @@
 		exit();
 	}
 
-	$query = "SELECT bm.*, u.username, b.name 
-	FROM TBL_BANDMEMBERS bm
-	LEFT JOIN TBL_BANDINFO b ON bm.band_id = b.ID
-	LEFT JOIN TBL_USERS u ON bm.user_id = u.ID
-	WHERE bm.user_id = " . $id . ";";
+	$query = "SELECT bi.ID, bi.name
+	FROM TBL_BANDINFO bi INNER JOIN TBL_BANDMEMBERS bm ON bi.ID = bm.band_id 
+	WHERE NOT EXISTS (
+		SELECT * 
+		FROM TBL_APPOINTMENTS a 
+		WHERE a.band_id = bi.ID AND DATE(appointment_date) = '" . $available_date . "'
+	)
+	GROUP BY bi.ID, bi.name
+	HAVING COUNT(bi.ID) = " . $members_cnt . ";";
 
 
 if ($result = mysqli_query($db, $query)){
 
 	while ($row = mysqli_fetch_assoc($result)) {
 		$row_array['code'] =  1;
-
+		$row_array['ID'] =  intval($row['ID']);
+		$row_array['name'] =  $row['name'];
 
 
 		array_push($return_arr, $row_array);

@@ -11,9 +11,9 @@
 					FROM TBL_APPOINTMENTS a
 					JOIN TBL_LOCATIONS l ON a.location_id = l.ID
 					JOIN TBL_BANDINFO b ON a.band_id = b.ID
-					WHERE a.location_id = " . $id . ") 
+					WHERE a.location_id = " . $id . " 
 					ORDER BY a.appointment_date DESC";
-					
+		
 		if(isset($_GET['limit'])) {
 			$limit = $_GET['limit'];
 			$limit = mysqli_real_escape_string($db, $limit);
