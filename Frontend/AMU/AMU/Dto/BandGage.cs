@@ -10,6 +10,7 @@ namespace AMU.Dto
     {
         public Band Band { get; set; }
         public string Gage { get; set; } = "";
+        public DateTime Record_Date { get; set; }
         public override string ToString()
         {
             return Band.Name;

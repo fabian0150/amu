@@ -61,6 +61,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Dto\BandGage.cs" />
+    <Compile Include="Dto\Contract.cs" />
+    <Compile Include="Dto\Offer.cs" />
     <Compile Include="Windows\VeranstalterHinzufuegenWindow.xaml.cs">
       <DependentUpon>VeranstalterHinzufuegenWindow.xaml</DependentUpon>
     </Compile>
@@ -69,6 +71,9 @@
     </Compile>
     <Compile Include="Windows\VeranstaltungsortHinzufuegenWindow.xaml.cs">
       <DependentUpon>VeranstaltungsortHinzufuegenWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\VertragErstellenWindow.xaml.cs">
+      <DependentUpon>VertragErstellenWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Windows\AngebotErstellenWindow.xaml">
       <SubType>Designer</SubType>
@@ -116,6 +121,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\VeranstaltungsortHinzufuegenWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\VertragErstellenWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

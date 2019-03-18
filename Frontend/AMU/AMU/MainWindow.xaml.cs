@@ -17,6 +17,7 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using AMU;
+using System.Windows.Forms;
 
 namespace AMU_WPF
 {
@@ -53,15 +54,74 @@ namespace AMU_WPF
             //Tabs
             LoadBands();
             LoadVeranstaltungen();
+            LoadAngebote();
+            LoadVertraege();
             //Tabs end
-            
+
+        }
+
+        private void LoadVertraege()
+        {
+            //lstbxVertraege
+            //https://amu.tkg.ovh/json/contract/_getContracts.php 
+            JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/contract/_getContracts.php", "");
+            Contract contract;
+            for (int i = 0; i < arrayJSON.Count; i++)
+            {
+                JObject item = (JObject)arrayJSON[i];
+                contract = new Contract
+                {
+                    ID = item.Value<int?>("contract") ?? -1,
+                    BandID = item.Value<int?>("band_id") ?? -1,
+                    LocationID = item.Value<int?>("location_id") ?? -1,
+                    UserID = item.Value<int?>("user_id") ?? -1,
+                    OfferState = item.Value<int?>("offer_state") ?? -1,
+                    OfferDate = (string)item.GetValue("offer_date"),
+                    Price = item.Value<double?>("price") ?? -1,
+                    RecordDate = (DateTime)item.GetValue("record_date"),
+                    VeranstaltungName = GetVeranstaltungName((string)item.GetValue("location_id"))
+                };
+                lstbxVertraege.Items.Add(contract);
+
+            }
+        }
+
+        private void LoadAngebote()
+        {
+            //List<Offer> offerList = new List<Offer>();
+            JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/offer/_getOffers.php?type=", "1");
+            Offer offer;
+            for (int i = 0; i < arrayJSON.Count; i++)
+            {
+                JObject item = (JObject)arrayJSON[i];
+
+                offer = new Offer
+                {
+                    ID = item.Value<int?>("offer_id") ?? -1,
+                    LocationID = item.Value<int?>("location_id") ?? -1,
+                    UserID = item.Value<int?>("user_id") ?? -1,
+                    OfferDate = (string)item.GetValue("offer_date"),
+                    Record_Date = (DateTime)item.GetValue("record_date"),
+                    VeranstaltungName = GetVeranstaltungName((string)item.GetValue("location_id")),
+                };
+
+                //offerList.Add(offer);
+                lstbxOffeneAngebote.Items.Add(offer);
+            }
+        }
+
+        private string GetVeranstaltungName(string v)
+        {
+            JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/location/_getLocation.php?id=", v);
+            JObject item = (JObject)arrayJSON[0];
+            return (string)item.GetValue("name");
         }
 
         private void LoginUser()
         {
             using (WebClient webClient = new WebClient())
             {
-                    string response = Encoding.ASCII.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/user/secure_login.php", new NameValueCollection() {
+                string response = Encoding.ASCII.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/user/secure_login.php", new NameValueCollection() {
                     {"username", "robin"},
                     {"password", "1234"}
                 }));
@@ -303,7 +363,8 @@ namespace AMU_WPF
 
         private void Btn_add_default_appointment_Click(object sender, RoutedEventArgs e)
         {
-            if (!datepicker_default_appointment.Text.Equals("")) {
+            if (!datepicker_default_appointment.Text.Equals(""))
+            {
                 string date = DateTime.ParseExact(datepicker_default_appointment.Text, "dd.MM.yyyy",
                                 CultureInfo.InvariantCulture
                                 ).ToString("yyyy-MM-dd HH:mm:ss");
@@ -325,7 +386,7 @@ namespace AMU_WPF
 
         private void Delete_Appointment_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Veranstaltung löschen?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+            if (System.Windows.MessageBox.Show("Veranstaltung löschen?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
             {
                 //nein, nichts tun
             }
@@ -333,14 +394,15 @@ namespace AMU_WPF
             {
                 using (WebClient webClient = new WebClient())
                 {
-                    string response = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/appointment/secure_deleteAppointment.php?session_key="+session_key+"&session_user="+session_user, new NameValueCollection() {
+                    string response = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/appointment/secure_deleteAppointment.php?session_key=" + session_key + "&session_user=" + session_user, new NameValueCollection() {
                         {"appointment_id", ((Appointment)lstbx_appointments.SelectedItem).ID.ToString()}
                     }));
                 }
             }
-            
+
         }
-        private int GetBandMembersCount(int id) {
+        private int GetBandMembersCount(int id)
+        {
             var rawJSONBandMembers = new WebClient().DownloadString("https://amu.tkg.ovh/json/band/_getBandMember.php?id=" + id);
             var resultObjectsBandMembers = JsonConvert.DeserializeObject(rawJSONBandMembers);
             JArray arrayJSONBandMembers = JArray.Parse(rawJSONBandMembers);
@@ -352,8 +414,23 @@ namespace AMU_WPF
 
         }
 
-        public void TestEventVonRobin(object sender, RoutedEventArgs e) {
-            Console.WriteLine("Test");
+        private void VertragErstellen(object sender, RoutedEventArgs e)
+        {
+            if (!(lstbxOffeneAngebote.SelectedItem == null))
+            {
+                Offer offer = ((Offer)lstbxVertraege.SelectedItem);
+                VertragErstellenWindow vertragErstellenWindow = new VertragErstellenWindow(offer);
+                vertragErstellenWindow.Show();
+                
+            }
+            else {
+                string message = "Bitte ein Angebot auswählen";
+                string caption = "Kein Angebot ausgewählt";
+                MessageBoxButtons buttons = MessageBoxButtons.OK;
+                DialogResult result = System.Windows.Forms.MessageBox.Show(message, caption, buttons);
+                return;
+            }
+            
         }
     }
 }
