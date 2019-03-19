@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AMU.Dto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace AMU.Windows
     /// </summary>
     public partial class VertragErstellenWindow : Window
     {
-        public VertragErstellenWindow()
+        public VertragErstellenWindow(Offer offer)
         {
             InitializeComponent();
         }

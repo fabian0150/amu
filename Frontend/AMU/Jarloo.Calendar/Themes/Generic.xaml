@@ -99,7 +99,7 @@ in XAML add xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 
                                                     <!--<TextBox IsEnabled="{Binding IsEnabled}" Text="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{x:Null}" Foreground="black" />
                                                     -->
-                                                    <ListBox SelectionChanged="TestEventVonRobin" Name="Notes_Box" IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{x:Null}" Foreground="Black">
+                                                    <ListBox Name="Notes_Box" IsEnabled="{Binding IsEnabled}" ItemsSource="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{x:Null}" Foreground="Black">
                                                         
                                                     </ListBox>
                                                 </DockPanel>
