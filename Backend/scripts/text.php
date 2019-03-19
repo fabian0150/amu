@@ -76,6 +76,7 @@
 	$contract_price_not_given	 		= "Vertragsbandpreis nicht angegeben";
 	$contract_band_not_given	 		= "Vertragsband nicht angegeben";
 	$contract_band_no_exist	 			= "Vertragsbandpreis existiert nicht";
+	$contract_text_not_given	 		= "Ein Text wurde nicht angegeben";
 
 	$invoice_not_found 					= "Rechnung existiert nicht";
 	$invoice_not_created				= "Rechnung nicht erstellt";
