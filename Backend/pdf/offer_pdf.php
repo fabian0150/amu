@@ -4,13 +4,14 @@
 
     require_once('../scripts/config.php');
 
-    $mpdf = new \Mpdf\Mpdf(['tempDir' => '../pdf/offers']);
+    $mpdf = new \Mpdf\Mpdf(['tempDir' => '../pdf']);
 
     if(isset($_GET['id'])) {
 		$id = $_GET['id'];
         $id = mysqli_real_escape_string($db, $id);
         
         $offer_date = "";
+        $offer_time = "";
         $location_id = "";
         $location_name = "";
         $user_id = "";
@@ -27,8 +28,11 @@
                 $location_id = $row['location_id'];
                 $user_id = $row['user_id'];
                 $offer_date = $row['offer_date'];
+                $offer_time = strstr($offer_date, ' ');
+                $offer_date = strstr($offer_date, ' ', true);
+                $offer_date = date("d.m.Y", strtotime($offer_date));
                 $record_date = $row['record_date'];
-               
+                $record_date = date("d.m.Y", strtotime($record_date));
                 break;
             }
         }
@@ -80,7 +84,7 @@
             }
         }
 
-        $date_location_str = $offer_date . ' - ' . $location_name;
+        $date_location_str = $offer_date . ' ' . $offer_time . ' - ' . $location_name;
 
         $add_arr = preg_split('/\r\n|\r|\n/', $user_address);
 
@@ -122,9 +126,10 @@
             
            
             <p>&nbsp;</p>
-            <p>N&auml;here Infos und Demos finden Sie auf den angef&uuml;hrten Hompages der Bands. Ton -und Lichtechnik ist im Preis inkludiert. Au&szlig;er Verk&ouml;stigung der Musiker kommen keine weiteren Kosten auf Sie zu!</p>
+            <p>N&auml;here Infos und Demos finden Sie auf den angef&uuml;hrten Hompages der Bands. Ton -und Lichttechnik ist im Preis inkludiert. Au&szlig;er Verk&ouml;stigung der Musiker kommen keine weiteren Kosten auf Sie zu!</p>
             <p>F&uuml;r genaue Ausk&uuml;nfte &uuml;ber die einzelnen Bands stehe ich jederzeit gerne unter der Nummer</p>
-            <p><strong>0664 161&nbsp;334 0 </strong>zur Verf&uuml;gung.</p>
+            <p><strong>0664 161&nbsp;334 0 </strong></p>
+            <p>zur Verf&uuml;gung.</p>
             <p>&nbsp;</p>
             <p>Mit freundlichen Gr&uuml;&szlig;en,</p>
             <table style="height: 140px;" width="280">
@@ -159,7 +164,7 @@
 
 
 
-
+        $mpdf->SetTitle('Angebot - ' . $location_name . ' -' . $offer_date);
         $mpdf->WriteHTML($document);
         $mpdf->Output();
 

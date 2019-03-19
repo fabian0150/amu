@@ -8,6 +8,134 @@
 	$offer_band_id = "NULL";
 	$price = "NULL";
 	
+	$text_gage = "NULL";
+	$text_paytype = "NULL";
+	$text_more_hours = "NULL";
+	$text_breakfast = "NULL";
+	$text_food = "NULL";
+	$text_punitive = "NULL";
+	$text_fees = "NULL";
+	$text_replacement = "NULL";
+	$text_other = "NULL";
+
+	if(isset($_POST['text_gage'])) { 
+		$text_gage = $_POST['text_gage'];
+		$text_gage = mysqli_real_escape_string($db, $text_gage);
+		$text_gage = "'$text_gage'";
+	} else {
+		$row_array['code'] =  2;
+		$row_array['message'] =  $contract_not_created;
+		$row_array['error'] = $contract_text_not_given;
+		array_push($return_arr, $row_array);
+		echo json_encode($return_arr);
+		exit();
+	}
+
+	if(isset($_POST['text_paytype'])) { 
+		$text_paytype = $_POST['text_paytype'];
+		$text_paytype = mysqli_real_escape_string($db, $text_paytype);
+		$text_paytype = "'$text_paytype'";
+	} else {
+		$row_array['code'] =  2;
+		$row_array['message'] =  $contract_not_created;
+		$row_array['error'] = $contract_text_not_given;
+		array_push($return_arr, $row_array);
+		echo json_encode($return_arr);
+		exit();
+	}
+
+	if(isset($_POST['text_more_hours'])) { 
+		$text_more_hours = $_POST['text_more_hours'];
+		$text_more_hours = mysqli_real_escape_string($db, $text_more_hours);
+		$text_more_hours = "'$text_more_hours'";
+	} else {
+		$row_array['code'] =  2;
+		$row_array['message'] =  $contract_not_created;
+		$row_array['error'] = $contract_text_not_given;
+		array_push($return_arr, $row_array);
+		echo json_encode($return_arr);
+		exit();
+	}
+
+	if(isset($_POST['text_breakfast'])) { 
+		$text_breakfast = $_POST['text_breakfast'];
+		$text_breakfast = mysqli_real_escape_string($db, $text_breakfast);
+		$text_breakfast = "'$text_breakfast'";
+	} else {
+		$row_array['code'] =  2;
+		$row_array['message'] =  $contract_not_created;
+		$row_array['error'] = $contract_text_not_given;
+		array_push($return_arr, $row_array);
+		echo json_encode($return_arr);
+		exit();
+	}
+
+	if(isset($_POST['text_food'])) { 
+		$text_food = $_POST['text_food'];
+		$text_food = mysqli_real_escape_string($db, $text_food);
+		$text_food = "'$text_food'";
+	} else {
+		$row_array['code'] =  2;
+		$row_array['message'] =  $contract_not_created;
+		$row_array['error'] = $contract_text_not_given;
+		array_push($return_arr, $row_array);
+		echo json_encode($return_arr);
+		exit();
+	}
+
+	if(isset($_POST['text_punitive'])) { 
+		$text_punitive = $_POST['text_punitive'];
+		$text_punitive = mysqli_real_escape_string($db, $text_punitive);
+		$text_punitive = "'$text_punitive'";
+	} else {
+		$row_array['code'] =  2;
+		$row_array['message'] =  $contract_not_created;
+		$row_array['error'] = $contract_text_not_given;
+		array_push($return_arr, $row_array);
+		echo json_encode($return_arr);
+		exit();
+	}
+
+	if(isset($_POST['text_fees'])) { 
+		$text_fees = $_POST['text_fees'];
+		$text_fees = mysqli_real_escape_string($db, $text_fees);
+		$text_fees = "'$text_fees'";
+	} else {
+		$row_array['code'] =  2;
+		$row_array['message'] =  $contract_not_created;
+		$row_array['error'] = $contract_text_not_given;
+		array_push($return_arr, $row_array);
+		echo json_encode($return_arr);
+		exit();
+	}
+
+	if(isset($_POST['text_replacement'])) { 
+		$text_replacement = $_POST['text_replacement'];
+		$text_replacement = mysqli_real_escape_string($db, $text_replacement);
+		$text_replacement = "'$text_replacement'";
+	} else {
+		$row_array['code'] =  2;
+		$row_array['message'] =  $contract_not_created;
+		$row_array['error'] = $contract_text_not_given;
+		array_push($return_arr, $row_array);
+		echo json_encode($return_arr);
+		exit();
+	}
+
+	if(isset($_POST['text_other'])) { 
+		$text_other = $_POST['text_food'];
+		$text_other = mysqli_real_escape_string($db, $text_other);
+		$text_other = "'$text_other'";
+	} else {
+		$row_array['code'] =  2;
+		$row_array['message'] =  $contract_not_created;
+		$row_array['error'] = $contract_text_not_given;
+		array_push($return_arr, $row_array);
+		echo json_encode($return_arr);
+		exit();
+	}
+
+
 
 	
 	if(isset($_POST['price'])) {
@@ -95,7 +223,17 @@
 	} else {
 		$error = true;
 	}
-	$sql = "UPDATE TBL_OFFER_BANDS SET price = " . $price . ", offer_band_chosen = 1 WHERE offer_id = " . $offer_id . " AND band_id = " . $offer_band_id . ";";
+	$sql = "UPDATE TBL_OFFER_BANDS SET price = " . $price . ", offer_band_chosen = 1,
+				text_gage = " . $text_gage . ",
+				text_paytype = " . $text_paytype . ",
+				text_more_hours = " . $text_more_hours . ",
+				text_breakfast = " . $text_breakfast . ",
+				text_food = " . $text_food . ",
+				text_punitive = " . $text_punitive . ",
+				text_fees = " . $text_fees . ",
+				text_replacement = " . $text_replacement . ",
+				text_other = " . $text_other . "
+			WHERE offer_id = " . $offer_id . " AND band_id = " . $offer_band_id . ";";
 	if ($db->query($sql) === TRUE) {
 
 	} else {
