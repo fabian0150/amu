@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
@@ -28,11 +29,13 @@ namespace AMU.Windows
         private string session_key = "-1";
         private string session_user = "-1";
         List<BandGage> bandGageList = new List<BandGage>();
-        public AngebotErstellenWindow(List<Band> bands, string sessionKey, string sessionUser)
+        private string date;
+        public AngebotErstellenWindow(string dateParam, List<Band> bands, string sessionKey, string sessionUser)
         {
             InitializeComponent();
             session_key = sessionKey;
             session_user = sessionUser;
+            date = dateParam;
             FillBandList(bands);
             LoadBands();
             LoadUsers();
@@ -219,18 +222,44 @@ namespace AMU.Windows
                     return;
                 }
             });
-            if (lstbxVeranstalter.SelectedItem==null | lstbxVeranstaltungsort.SelectedItem==null)
+            if (lstbxVeranstalter.SelectedItem == null | lstbxVeranstaltungsort.SelectedItem == null)
             {
                 string message = "Bitte einen Veranstalter/Veranstaltungsort auswählen";
                 string caption = "Fehlende Daten";
                 MessageBoxButtons buttons = MessageBoxButtons.OK;
                 DialogResult result = System.Windows.Forms.MessageBox.Show(message, caption, buttons);
             }
-            if (txtbxFußtext.Text != "" | txtbxKopftext.Text != "" | txtbxGage.Text != "") {
+            else if (!(txtbxFußtext.Text != "" | txtbxKopftext.Text != "" | txtbxGage.Text != ""))
+            {
                 string message = "Bitte Uhrzeit/Kopftext/Fußtext eingeben";
                 string caption = "Fehlende Daten";
                 MessageBoxButtons buttons = MessageBoxButtons.OK;
                 DialogResult result = System.Windows.Forms.MessageBox.Show(message, caption, buttons);
+            }
+            else {
+                //https://amu.tkg.ovh/scripts/offer/secure_addOfferband.php 
+                //https://amu.tkg.ovh/json/offer/_getOfferBands.php?id=ID
+
+                Location location = (Location)(lstbxVeranstaltungsort.SelectedItem);
+                User user = (User)(lstbxVeranstalter.SelectedItem);
+
+                Offer offer = new Offer {
+                    LocationID = location.ID,
+                    OfferDate = date,
+                    UserID = user.ID,
+                    VeranstaltungName = location.Name
+                };
+
+                using (WebClient webClient = new WebClient())
+                {
+                    string response = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/offer/secure_addOffer.php?session_key=" + session_key + "&session_user=" + session_user, new NameValueCollection() {
+                        {"offer_date", offer.OfferDate + " " + txtbxDauer.Text},
+                        {"location_id", offer.LocationID.ToString()},
+                        {"user_id", offer.UserID.ToString()},
+                        {"offer_state", "0" }
+                    }));
+                    Console.ReadLine();
+                }
             }
         }
     }

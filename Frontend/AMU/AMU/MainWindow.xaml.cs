@@ -18,6 +18,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using AMU;
 using System.Windows.Forms;
+using System.Windows.Media;
 
 namespace AMU_WPF
 {
@@ -58,6 +59,7 @@ namespace AMU_WPF
             LoadVertraege();
             //Tabs end
 
+            
         }
 
         private void LoadVertraege()
@@ -419,7 +421,7 @@ namespace AMU_WPF
             if (!(lstbxOffeneAngebote.SelectedItem == null))
             {
                 Offer offer = ((Offer)lstbxVertraege.SelectedItem);
-                VertragErstellenWindow vertragErstellenWindow = new VertragErstellenWindow(offer);
+                VertragErstellenWindow vertragErstellenWindow = new VertragErstellenWindow(offer, session_key, session_user);
                 vertragErstellenWindow.Show();
                 
             }
@@ -431,6 +433,18 @@ namespace AMU_WPF
                 return;
             }
             
+        }
+
+        private void LstbxOffeneAngeboteSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Offer offer = ((Offer)lstbxOffeneAngebote.SelectedItem);
+            angebotBrowser.Navigate("https://amu.tkg.ovh/pdf/offer_pdf.php?id="+offer.ID);
+        }
+
+        private void LstbxVertraegeSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Contract contract = ((Contract)lstbxVertraege.SelectedItem);
+            vertragBrowser.Navigate("https://amu.tkg.ovh/pdf/offer_pdf.php?id=" + contract.ID);
         }
     }
 }

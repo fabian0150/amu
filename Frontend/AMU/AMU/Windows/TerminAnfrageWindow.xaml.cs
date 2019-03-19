@@ -181,7 +181,11 @@ namespace AMU
             {
                 bandList.Add((Band)item);
             }
-            AngebotErstellenWindow angebotErstellenWindow = new AngebotErstellenWindow(bandList, session_key, session_user);
+            string date = DateTime.ParseExact(datePickerAnfrage.Text, "dd.MM.yyyy",
+                                CultureInfo.InvariantCulture
+                                ).ToString("yyyy-MM-dd");
+            
+            AngebotErstellenWindow angebotErstellenWindow = new AngebotErstellenWindow(date, bandList, session_key, session_user);
             angebotErstellenWindow.Show();
         }
         private int GetBandMembersCount(int id)
