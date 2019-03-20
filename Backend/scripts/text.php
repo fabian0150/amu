@@ -55,4 +55,32 @@
 	$user_registered					= "User registriert";
 	$user_no_registered					= "User nicht registriert";
 	$user_no_bands						= "Kein Mitglied einer Band";
+
+	$offer_not_created 					= "Angebot nicht erstellt";
+	$offer_created 						= "Angebot erstellt";
+	$offer_not_given 					= "Angebot nicht angegebent";
+	$offer_no_exist 					= "Angebot existiert nicht";
+
+	$offer_band_not_created 			= "Band nicht zum Angebot hinzugefügt";
+	$offer_no_bands 					= "Keine Bands beim Angebot";
+	$offer_band_created 				= "Band zum Angebot hinzugefügt";
+	$offer_band_already_in_offer		= "Band bereits im Angebot";
+	$offer_no_offers_found				= "Keine Angebote gefunden";
+	$offer_no_offer_found				= "Kein Angebot gefunden";
+
+
+	$contract_not_created				= "Vertrag nicht erstellt";
+	$contract_created					= "Vertrag erstellt";
+	$contract_not_found 				= "Vertrag existiert nicht";
+	$contract_not_made_yet				= "Vertrag nocht nicht erstellt";
+	$contract_price_not_given	 		= "Vertragsbandpreis nicht angegeben";
+	$contract_band_not_given	 		= "Vertragsband nicht angegeben";
+	$contract_band_no_exist	 			= "Vertragsbandpreis existiert nicht";
+	$contract_text_not_given	 		= "Ein Text wurde nicht angegeben";
+
+	$invoice_not_found 					= "Rechnung existiert nicht";
+	$invoice_not_created				= "Rechnung nicht erstellt";
+	$invoice_created					= "Rechnung erstellt";
+	$invoice_number_not_given			= "Rechnungsnummer nicht angegeben";
+	$invoice_date_not_given				= "Rechnungsdatum nicht angegeben";
 ?>

@@ -17,6 +17,8 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using AMU;
+using System.Windows.Forms;
+using System.Windows.Media;
 
 namespace AMU_WPF
 {
@@ -52,16 +54,76 @@ namespace AMU_WPF
             LoginUser();
             //Tabs
             LoadBands();
-            LoadVeranstalter();
+            LoadVeranstaltungen();
+            LoadAngebote();
+            LoadVertraege();
             //Tabs end
+
             
+        }
+
+        private void LoadVertraege()
+        {
+            //lstbxVertraege
+            //https://amu.tkg.ovh/json/contract/_getContracts.php 
+            JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/contract/_getContracts.php", "");
+            Contract contract;
+            for (int i = 0; i < arrayJSON.Count; i++)
+            {
+                JObject item = (JObject)arrayJSON[i];
+                contract = new Contract
+                {
+                    ID = item.Value<int?>("contract") ?? -1,
+                    BandID = item.Value<int?>("band_id") ?? -1,
+                    LocationID = item.Value<int?>("location_id") ?? -1,
+                    UserID = item.Value<int?>("user_id") ?? -1,
+                    OfferState = item.Value<int?>("offer_state") ?? -1,
+                    OfferDate = (string)item.GetValue("offer_date"),
+                    Price = item.Value<double?>("price") ?? -1,
+                    RecordDate = (DateTime)item.GetValue("record_date"),
+                    VeranstaltungName = GetVeranstaltungName((string)item.GetValue("location_id"))
+                };
+                lstbxVertraege.Items.Add(contract);
+
+            }
+        }
+
+        private void LoadAngebote()
+        {
+            //List<Offer> offerList = new List<Offer>();
+            JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/offer/_getOffers.php?type=", "1");
+            Offer offer;
+            for (int i = 0; i < arrayJSON.Count; i++)
+            {
+                JObject item = (JObject)arrayJSON[i];
+
+                offer = new Offer
+                {
+                    ID = item.Value<int?>("offer_id") ?? -1,
+                    LocationID = item.Value<int?>("location_id") ?? -1,
+                    UserID = item.Value<int?>("user_id") ?? -1,
+                    OfferDate = (string)item.GetValue("offer_date"),
+                    Record_Date = (DateTime)item.GetValue("record_date"),
+                    VeranstaltungName = GetVeranstaltungName((string)item.GetValue("location_id")),
+                };
+
+                //offerList.Add(offer);
+                lstbxOffeneAngebote.Items.Add(offer);
+            }
+        }
+
+        private string GetVeranstaltungName(string v)
+        {
+            JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/location/_getLocation.php?id=", v);
+            JObject item = (JObject)arrayJSON[0];
+            return (string)item.GetValue("name");
         }
 
         private void LoginUser()
         {
             using (WebClient webClient = new WebClient())
             {
-                    string response = Encoding.ASCII.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/user/secure_login.php", new NameValueCollection() {
+                string response = Encoding.ASCII.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/user/secure_login.php", new NameValueCollection() {
                     {"username", "robin"},
                     {"password", "1234"}
                 }));
@@ -79,7 +141,7 @@ namespace AMU_WPF
             Console.WriteLine("---");
         }
 
-        private void LoadVeranstalter()
+        private void LoadVeranstaltungen()
         {
             JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/location/_getLocations.php", "");
             JObject item;
@@ -184,7 +246,7 @@ namespace AMU_WPF
 
         private void Termin_Anfrage_Button_Clicked(object sender, RoutedEventArgs e)
         {
-            TerminAnfrageWindow taw = new TerminAnfrageWindow();
+            TerminAnfrageWindow taw = new TerminAnfrageWindow(session_key, session_user);
             taw.Show();
 
         }
@@ -195,6 +257,7 @@ namespace AMU_WPF
             band = (Band)gruppen_listbox.SelectedItem;
             if (!(band.Leader_ID == -1))
             {
+                //Get Users
                 JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/user/_getUser.php?id=", band.Leader_ID.ToString());
                 JObject item = (JObject)arrayJSON[0];
 
@@ -223,11 +286,9 @@ namespace AMU_WPF
                 txtbx_telefon.Text = "Keine Ansprechperson";
                 txtbx_website.Text = "Keine Ansprechperson";
             }
-            var rawJSONBandMembers = new WebClient().DownloadString("https://amu.tkg.ovh/json/band/_getBandMember.php?id=" + band.ID);
-            var resultObjectsBandMembers = JsonConvert.DeserializeObject(rawJSONBandMembers);
-            JArray arrayJSONBandMembers = JArray.Parse(rawJSONBandMembers);
+            //Anzahl der Bandmembers
             txtbx_bandname.Text = band.Name;
-            lbl_besetzung.Content = "Besetzung: " + arrayJSONBandMembers.Count;
+            lbl_besetzung.Content = "Besetzung: " + GetBandMembersCount(band.ID);
             txtblock_notizen.Text = band.Notes;
             LoadAppointments(); //lstbx_appointments
         }
@@ -304,7 +365,8 @@ namespace AMU_WPF
 
         private void Btn_add_default_appointment_Click(object sender, RoutedEventArgs e)
         {
-            if (!datepicker_default_appointment.Text.Equals("")) {
+            if (!datepicker_default_appointment.Text.Equals(""))
+            {
                 string date = DateTime.ParseExact(datepicker_default_appointment.Text, "dd.MM.yyyy",
                                 CultureInfo.InvariantCulture
                                 ).ToString("yyyy-MM-dd HH:mm:ss");
@@ -323,6 +385,67 @@ namespace AMU_WPF
                 LoadAppointments();
             }
         } //Externe Veranstaltung hinzufügen
+
+        private void Delete_Appointment_Click(object sender, RoutedEventArgs e)
+        {
+            if (System.Windows.MessageBox.Show("Veranstaltung löschen?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+            {
+                //nein, nichts tun
+            }
+            else
+            {
+                using (WebClient webClient = new WebClient())
+                {
+                    string response = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/appointment/secure_deleteAppointment.php?session_key=" + session_key + "&session_user=" + session_user, new NameValueCollection() {
+                        {"appointment_id", ((Appointment)lstbx_appointments.SelectedItem).ID.ToString()}
+                    }));
+                }
+            }
+
+        }
+        private int GetBandMembersCount(int id)
+        {
+            var rawJSONBandMembers = new WebClient().DownloadString("https://amu.tkg.ovh/json/band/_getBandMember.php?id=" + id);
+            var resultObjectsBandMembers = JsonConvert.DeserializeObject(rawJSONBandMembers);
+            JArray arrayJSONBandMembers = JArray.Parse(rawJSONBandMembers);
+            return arrayJSONBandMembers.Count;
+        }
+
+        private void GruppeSpeichern(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void VertragErstellen(object sender, RoutedEventArgs e)
+        {
+            if (!(lstbxOffeneAngebote.SelectedItem == null))
+            {
+                Offer offer = ((Offer)lstbxVertraege.SelectedItem);
+                VertragErstellenWindow vertragErstellenWindow = new VertragErstellenWindow(offer, session_key, session_user);
+                vertragErstellenWindow.Show();
+                
+            }
+            else {
+                string message = "Bitte ein Angebot auswählen";
+                string caption = "Kein Angebot ausgewählt";
+                MessageBoxButtons buttons = MessageBoxButtons.OK;
+                DialogResult result = System.Windows.Forms.MessageBox.Show(message, caption, buttons);
+                return;
+            }
+            
+        }
+
+        private void LstbxOffeneAngeboteSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Offer offer = ((Offer)lstbxOffeneAngebote.SelectedItem);
+            angebotBrowser.Navigate("https://amu.tkg.ovh/pdf/offer_pdf.php?id="+offer.ID);
+        }
+
+        private void LstbxVertraegeSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Contract contract = ((Contract)lstbxVertraege.SelectedItem);
+            vertragBrowser.Navigate("https://amu.tkg.ovh/pdf/offer_pdf.php?id=" + contract.ID);
+        }
     }
 }
 //POST REQUEST CODE

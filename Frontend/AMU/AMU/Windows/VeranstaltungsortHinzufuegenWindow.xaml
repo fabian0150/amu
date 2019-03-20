@@ -1,0 +1,72 @@
+﻿<Window x:Class="AMU.Windows.VeranstaltungsortHinzufuegenWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AMU.Windows"
+        mc:Ignorable="d"
+        Title="VeranstaltungsortHinzufuegenWindow" Height="350" Width="400">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <!--#region Definitions Region-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <!--<ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>-->
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*"/>
+            <!--<RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />-->
+            <!--Height="Auto" Auto macht es so groß wie nötig-->
+        </Grid.RowDefinitions>
+        <!--#endregion-->
+        <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="10" Grid.RowSpan="2" FontSize="25" Padding="0">Veranstaltungsort hinzufügen</Label>
+        <TextBox Name="txtbxVeranstaltungsname" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1">Veranstaltungsname</TextBox>
+        <TextBox Name="txtbxAdresse" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="3">Adresse</TextBox>
+        
+        <Button Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="2" Click="Button_Click">Speichern</Button>
+
+
+    </Grid>
+</Window>
