@@ -30,14 +30,14 @@
 	
 	
 		
-	$query = "UPDATE TBL_APPOINTMENTS 
-			  (band_id, location_id, appointment_date) 
-			  VALUES 
-			  (" . intval($band_id) . ", " . intval($location_id) . ", '" . $appointment_date . "',)
+	$query = "UPDATE TBL_APPOINTMENTS SET
+			  band_id = " . intval($band_id) . ",
+			  location_id = " . intval($location_id) . ",
+			  appointment_date = '" . $appointment_date . "'
 			  WHERE ID = " . intval($id) . ";";
 	
 	
-	if ($db->query($sql) === TRUE) {
+	if ($db->query($query) === TRUE) {
 		$row_array['code'] =  1;
 		$row_array['status'] =  $data_updated;
 		array_push($return_arr, $row_array);

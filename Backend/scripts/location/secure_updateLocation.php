@@ -26,18 +26,15 @@
 		echo json_encode($return_arr);
 		exit();
 	}
-
-	
-	
 		
-	$query = "UPDATE TBL_LOCATIONS 
-			  (name, address, contact_person_id) 
-			  VALUES 
-			  ('" . $name . "', '" . $phone_number . "', " . intval($contact_person_id) . ")
+	$query = "UPDATE TBL_LOCATIONS SET
+			  name = '" . $name . "', 
+			  address = '" . $address . "', 
+			  contact_person_id = " . intval($contact_person_id) . " 
 			  WHERE ID = " . intval($id) . ";";
 	
 	
-	if ($db->query($sql) === TRUE) {
+	if ($db->query($query) === TRUE) {
 		$row_array['code'] =  1;
 		$row_array['status'] =  $data_updated;
 		array_push($return_arr, $row_array);

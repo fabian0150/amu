@@ -87,6 +87,10 @@
 	$data_not_given 					= "Ein Feld wurde nicht angeben";
 	$data_updated						= "Daten aktualisiert";
 	$data_not_updated					= "Daten nicht aktualisiert";
+	$data_deleted						= "Daten wurden gelöscht";
+	$data_not_deleted					= "Daten wurden nicht gelöscht";
+	$data_not_found						= "Daten wurden nicht gefunden";
+	$data_no_id 						= "Keine ID angegeben";
 
 	$text_not_given 					= "Kopf/Fußtext wurde nicht angegeben";
 ?>

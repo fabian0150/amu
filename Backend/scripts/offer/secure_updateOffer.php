@@ -47,27 +47,46 @@
 	$text_head = mysqli_real_escape_string($db, $_POST['text_head']);
 	$text_foot = mysqli_real_escape_string($db, $_POST['text_foot']);
 
+	
 
-	if (empty($id) || empty($location_id) || empty($user_id) || empty($offer_state) || empty($offer_date) || empty($invoice_number) || empty($invoice_date) || empty($text_gage) || empty($text_paytype) || empty($text_more_hours) || empty($text_breakfast)|| empty($text_food)|| empty($text_punitive)|| empty($text_fees)|| empty($text_replacement) || empty($text_other)|| empty($text_head)|| empty($text_foot)) { 
+	if (empty($id) || 
+		empty($location_id) || 
+		empty($user_id)) { 
+
 		$row_array['code'] =  2;
 		$row_array['error'] =  $data_not_given;
 		array_push($return_arr, $row_array);
 		logData("update Offer FAIL", "UPDATE ACTION", basename(__FILE__, '.php') , 0);
 		echo json_encode($return_arr);
 		exit();
-	}
+		}
 
 	
 	
 		
-	$query = "UPDATE TBL_OFFER 
-			  (location_id , user_id , offer_state , offer_date , invoice_number , invoice_date , record_date , text_gage , text_paytype , text_more_hours , text_breakfast , text_food , text_punitive , text_fees , text_replacement , text_other, text_head, text_foot) 
-			  VALUES 
-			  ('" . $location_id . "', '" . $user_id . "', " . intval($offer_state) . ", '" . $offer_date . "', '" . $invoice_number . "', '" . $invoice_date . "', '" . $record_date . "', '" . $text_gage . "', '" . $text_paytype . "', '" . $text_more_hours . "', '" . $text_breakfast . "', '" . $text_food . "', '" . $text_punitive . "', '" . $text_fees . "', '" . $text_replacement . "', '" . $text_other . "', '" . $text_head . "', '" . $text_food . "')
+	$query = "UPDATE TBL_OFFER SET
+			  	location_id= '" . intval($location_id) . "', 
+				user_id= '" . intval($user_id) . "', 
+				offer_state= " . intval($offer_state) . ", 
+				offer_date= '" . $offer_date . "', 
+				invoice_number= '" . $invoice_number . "', 
+				invoice_date= '" . $invoice_date . "', 
+				record_date= '" . $record_date . "', 
+				text_gage= '" . $text_gage . "', 
+				text_paytype=  '" . $text_paytype . "', 
+				text_more_hours= '" . $text_more_hours . "', 
+				text_breakfast= '" . $text_breakfast . "', 
+				text_food= '" . $text_food . "', 
+				text_punitive= '" . $text_punitive . "', 
+				text_fees=  '" . $text_fees . "', 
+				text_replacement= '" . $text_replacement . "',
+				text_other= '" . $text_other . "', 
+				text_head= '" . $text_head . "', 
+				text_foot= '" . $text_foot . "'
 			  WHERE ID = " . intval($id) . ";";
+
 	
-	
-	if ($db->query($sql) === TRUE) {
+	if ($db->query($query) === TRUE) {
 		$row_array['code'] =  1;
 		$row_array['status'] =  $data_updated;
 		array_push($return_arr, $row_array);

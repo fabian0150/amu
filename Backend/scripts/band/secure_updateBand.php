@@ -34,14 +34,16 @@
 	
 	
 		
-	$query = "UPDATE TBL_BANDINFO 
-			  (name, logo_path, website_url, notes, leader_id) 
-			  VALUES 
-			  ('" . $name . "', '" . $logo_path . "',, '" . $website_url . "', '" . $notes . "', " . intval($leader_id) . ")
+	$query = "UPDATE TBL_BANDINFO SET
+			  name = '" . $name . "',
+			  logo_path = '" . $logo_path . "',
+			  website_url = '" . $website_url . "',
+			  notes = '" . $notes . "',
+			  leader_id = " . intval($leader_id) . "
 			  WHERE ID = " . intval($id) . ";";
 	
 	
-	if ($db->query($sql) === TRUE) {
+	if ($db->query($query) === TRUE) {
 		$row_array['code'] =  1;
 		$row_array['status'] =  $data_updated;
 		array_push($return_arr, $row_array);

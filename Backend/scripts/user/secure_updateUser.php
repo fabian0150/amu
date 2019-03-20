@@ -41,14 +41,19 @@
 	
 	
 		
-	$query = "UPDATE TBL_USERS 
-			  (name, phone_number, address, mail, notes, user_type, user_description, username) 
-			  VALUES 
-			  ('" . $username . "', '" . $phone_number . "', '" . $address . "', '" . $mail . "', '" . $notes . "', " . intval($user_type) . ", '" . $user_description . "', '" . $username . "')
+	$query = "UPDATE TBL_USERS SET
+			  name='" . $username . "', 
+			  phone_number='" . $phone_number . "', 
+			  address='" . $address . "', 
+			  mail= '" . $mail . "', 
+			  notes='" . $notes . "', 
+			  user_type=" . intval($user_type) . ", 
+			  user_description= '" . $user_description . "', 
+			  username='" . $username . "'
 			  WHERE ID = " . intval($id) . ";";
 	
 	
-	if ($db->query($sql) === TRUE) {
+	if ($db->query($query) === TRUE) {
 		$row_array['code'] =  1;
 		$row_array['status'] =  $data_updated;
 		array_push($return_arr, $row_array);
