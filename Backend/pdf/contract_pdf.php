@@ -4,7 +4,7 @@
 
     require_once('../scripts/config.php');
 
-    $mpdf = new \Mpdf\Mpdf(['tempDir' => '../pdf']);
+    $mpdf = new \Mpdf\Mpdf(['tempDir' => '../pdf/data']);
 
     if(isset($_GET['id'])) {
 		$id = $_GET['id'];

@@ -58,7 +58,7 @@
 
 	$offer_not_created 					= "Angebot nicht erstellt";
 	$offer_created 						= "Angebot erstellt";
-	$offer_not_given 					= "Angebot nicht angegebent";
+	$offer_not_given 					= "Angebot nicht angegeben";
 	$offer_no_exist 					= "Angebot existiert nicht";
 
 	$offer_band_not_created 			= "Band nicht zum Angebot hinzugefügt";
@@ -83,4 +83,10 @@
 	$invoice_created					= "Rechnung erstellt";
 	$invoice_number_not_given			= "Rechnungsnummer nicht angegeben";
 	$invoice_date_not_given				= "Rechnungsdatum nicht angegeben";
+
+	$data_not_given 					= "Ein Feld wurde nicht angeben";
+	$data_updated						= "Daten aktualisiert";
+	$data_not_updated					= "Daten nicht aktualisiert";
+
+	$text_not_given 					= "Kopf/Fußtext wurde nicht angegeben";
 ?>
