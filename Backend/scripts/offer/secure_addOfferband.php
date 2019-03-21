@@ -11,7 +11,7 @@
 		
 		$offer_id = $_POST['offer_id'];
 		$offer_id = mysqli_real_escape_string($db, $offer_id);
-		if($user_id == ""){
+		if($offer_id == ""){
 			$row_array['code'] =  2;
 			$row_array['message'] =  $offer_band_not_created;
 			$row_array['error'] = $offer_not_given;
@@ -59,7 +59,7 @@
 	if ($result->num_rows > 0) { } else {
 		$row_array['code'] =  2;
 		$row_array['message'] =  $offer_band_not_created;
-		$row_array['error'] = $user_no_exist;
+		$row_array['error'] = $offer_not_given;
 		array_push($return_arr, $row_array);
 		echo json_encode($return_arr);
 		exit();
@@ -100,7 +100,7 @@
 	}
 	
 	
-	$sql = "INSERT INTO TBL_BANDMEMBERS (offer_id, band_id, price) 
+	$sql = "INSERT INTO TBL_OFFER_BANDS (offer_id, band_id, price) 
 			VALUES (" . $offer_id . ", " . $band_id . ", " . $price . ");";
 
 	if ($db->query($sql) === TRUE) {

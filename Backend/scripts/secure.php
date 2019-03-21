@@ -19,6 +19,7 @@
 	} else {
 		$id = $_SESSION['session_user'];
 	}
+
 	
 	$query = "SELECT ID FROM TBL_USERS WHERE session_key='$session_key' AND ID='$id' LIMIT 1;";
 		
