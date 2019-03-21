@@ -19,6 +19,7 @@ using System.Net.Http.Headers;
 using AMU;
 using System.Windows.Forms;
 using System.Windows.Media;
+using Day = Jarloo.Calendar.Day;
 
 namespace AMU_WPF
 {
@@ -37,6 +38,7 @@ namespace AMU_WPF
         public MainWindow()
         {
             InitializeComponent();
+            LoginUser();
             List<string> months = new List<string> { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
             cboMonth.ItemsSource = months;
 
@@ -51,7 +53,7 @@ namespace AMU_WPF
 
             cboMonth.SelectionChanged += (o, e) => RefreshCalendar();
             cboYear.SelectionChanged += (o, e) => RefreshCalendar();
-            LoginUser();
+            
             //Tabs
             LoadBands();
             LoadVeranstaltungen();
@@ -135,7 +137,7 @@ namespace AMU_WPF
                 {
                     item = (JObject)arrayJSON[i];
                     session_key = (string)item.GetValue("session_key");
-                    session_user = (string)item.GetValue("user_id"); //username ist redundant, weil ja nur ein User Applikation hat
+                    session_user = (string)item.GetValue("user_id");
                 }
             }
             Console.WriteLine("---");
@@ -193,7 +195,6 @@ namespace AMU_WPF
         private void LoadAppointments() //lstbx_appointments
         {
             lstbx_appointments.Items.Clear();
-            List<Appointment> appointmentList = new List<Appointment>();
             JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/appointment/_getAppointments.php?band_id=", band.ID.ToString());
 
             for (int i = 0; i < arrayJSON.Count; i++)
@@ -213,7 +214,6 @@ namespace AMU_WPF
                         Record_Date = (DateTime)item.GetValue("record_date")
                     };
 
-                    appointmentList.Add(appointment);
                     lstbx_appointments.Items.Add(appointment);
                 }
                 else
@@ -238,10 +238,19 @@ namespace AMU_WPF
 
         } //Termine Tab
 
+        private Day currentDay = null;
         private void Calendar_DayChanged(object sender, DayChangedEventArgs e)
         {
+            //if ( currentDay!=null) currentDay.PropertyChanged -= Day_PropertyChanged;
+            currentDay = e.Day;
+            currentDay.PropertyChanged += Day_PropertyChanged;
+        }
 
-            //save the text edits to persistant storage
+        private void Day_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != "Notes") return;
+            var notes = (sender as Day).Notes;
+            Console.WriteLine();
         }
 
         private void Termin_Anfrage_Button_Clicked(object sender, RoutedEventArgs e)
@@ -296,8 +305,8 @@ namespace AMU_WPF
         private void Veranstaltungen_listbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             lstbx_veranstalter_gruppen.Items.Clear();
+            Appointment appointment = (Appointment)lstbx_appointments.SelectedItem;
             //Zum Testen contact_person_id = 1 gesetzt, in der DB = null
-            location.Contact_Person_ID = 1;
             if (!(location.Contact_Person_ID == -1))
             {
                 User contactPerson;
@@ -317,7 +326,7 @@ namespace AMU_WPF
                     User_Type = item.Value<int?>("user_type") ?? -1
                 };
                 txtbx_veranstalter_name.Text = contactPerson.Name;
-                txtbx_veranstalter_adresse.Text = contactPerson.Address;
+                txtbx_veranstaltung_adresse.Text = location.Address;
                 txtbx_veranstalter_email.Text = contactPerson.Mail;
                 txtbx_veranstalter_telefon.Text = contactPerson.Phone_Number;
                 txtblck_veranstalter_notizen.Text = contactPerson.Notes;
@@ -420,7 +429,7 @@ namespace AMU_WPF
         {
             if (!(lstbxOffeneAngebote.SelectedItem == null))
             {
-                Offer offer = ((Offer)lstbxVertraege.SelectedItem);
+                Offer offer = ((Offer)lstbxOffeneAngebote.SelectedItem);
                 VertragErstellenWindow vertragErstellenWindow = new VertragErstellenWindow(offer, session_key, session_user);
                 vertragErstellenWindow.Show();
                 
@@ -444,7 +453,30 @@ namespace AMU_WPF
         private void LstbxVertraegeSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Contract contract = ((Contract)lstbxVertraege.SelectedItem);
-            vertragBrowser.Navigate("https://amu.tkg.ovh/pdf/offer_pdf.php?id=" + contract.ID);
+            vertragBrowser.Navigate("https://amu.tkg.ovh/pdf/contract_pdf.php?id=" + contract.ID);
+        }
+
+        private void VeranstaltungLöschen(object sender, RoutedEventArgs e)
+        {
+            Appointment appointment = (Appointment)lstbx_appointments.SelectedItem;
+            using (WebClient webClient = new WebClient())
+            {
+                string response = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/appointment/secure_deleteAppointment.php?session_key="+session_key+"&session_user="+session_user, new NameValueCollection() {
+                    {"appointment_id", appointment.ID.ToString()}
+                }));
+            }
+        }
+
+        private void VeranstaltungBearbeiten(object sender, RoutedEventArgs e)
+        {
+            //Appointment appointment = (Appointment)lstbx_appointments.SelectedItem;
+            //using (WebClient webClient = new WebClient())
+            //{
+            //    string response = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/appointment/secure_updateAppointment.php?session_key=" + session_key + "&session_user=" + session_user, new NameValueCollection() {
+            //        {"id", appointment.ID.ToString()},
+            //        {"appointment_date" }
+            //    }));
+            //}
         }
     }
 }

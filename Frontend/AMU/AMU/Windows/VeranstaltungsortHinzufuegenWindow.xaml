@@ -63,7 +63,7 @@
         <!--#endregion-->
         <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="10" Grid.RowSpan="2" FontSize="25" Padding="0">Veranstaltungsort hinzufügen</Label>
         <TextBox Name="txtbxVeranstaltungsname" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1">Veranstaltungsname</TextBox>
-        <TextBox Name="txtbxAdresse" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="3">Adresse</TextBox>
+        <TextBox Name="txtbxAdresse" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="3" AcceptsReturn="True" AcceptsTab="true" TextWrapping="Wrap">Adresse</TextBox>
         
         <Button Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="2" Click="Button_Click">Speichern</Button>
 

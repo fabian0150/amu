@@ -40,6 +40,8 @@ namespace AMU.Windows
             LoadBands();
             LoadUsers();
             LoadVeranstaltungsorte();
+            txtbxKopftext.Text = "Sehr geehrter Veranstalter!\r\n\r\nFolgende Gruppen sind an diesem Termin noch vorläufig verfügbar und würden sich freuen bei Ihrer Veranstaltung musikalisch dabei zu sein:";
+            txtbxFußtext.Text = "Nähere Infos und Demos finden Sie auf den angeführten Hompages der Bands. Ton -und Lichttechnik ist im Preis inkludiert. Außer Verköstigung der Musiker kommen keine weiteren Kosten auf Sie zu!\r\n\r\nFür genaue Auskünfte über die einzelnen Bands stehe ich jederzeit gerne unter der Nummer 0664 161 334 0 zur Verfügung. \r\n\r\nMit freundlichen Grüßen,\r\nMusic-Live Künstleragentur\r\nManfred Stehrlein\r\nA-4722 Peuerbach, Steindlbachweg 4\r\nTel.: 0664 161 334 0\r\nE-Mail: office@music-live.at \r\nHomepage: http://www.music-live.at/ \r\nUID-Nr.: ATU5177204";
         }
 
         private void FillBandList(List<Band> bands)
@@ -152,7 +154,7 @@ namespace AMU.Windows
                 BandGage bandGage = ((BandGage)lstbxBand.SelectedItem);
                 LoadUser(bandGage.Band.Leader_ID);
                 lblWebsite.Content = bandGage.Band.Website_Url;
-                lblBesetzung.Content = "Besetzung: "+GetBandMembersCount(bandGage.Band.ID);
+                lblBesetzung.Content = "Besetzung: " + GetBandMembersCount(bandGage.Band.ID);
                 txtbxGage.Text = bandGage.Gage ?? "";
             }
         }
@@ -213,8 +215,14 @@ namespace AMU.Windows
 
         private void AngebotErstellen(object sender, RoutedEventArgs e)
         {
-            bandGageList.ForEach(x => {
-                if (x.Gage.Equals("")) {
+            string head = txtbxKopftext.Text;
+            string foot = txtbxFußtext.Text;
+            Console.WriteLine();
+            
+            bandGageList.ForEach(x =>
+            {
+                if (x.Gage.Equals(""))
+                {
                     string message = "Bitte Gage zu den Gruppen hinzufügen";
                     string caption = "Fehlende Daten";
                     MessageBoxButtons buttons = MessageBoxButtons.OK;
@@ -236,29 +244,48 @@ namespace AMU.Windows
                 MessageBoxButtons buttons = MessageBoxButtons.OK;
                 DialogResult result = System.Windows.Forms.MessageBox.Show(message, caption, buttons);
             }
-            else {
+            else
+            {
                 //https://amu.tkg.ovh/scripts/offer/secure_addOfferband.php 
                 //https://amu.tkg.ovh/json/offer/_getOfferBands.php?id=ID
 
                 Location location = (Location)(lstbxVeranstaltungsort.SelectedItem);
                 User user = (User)(lstbxVeranstalter.SelectedItem);
 
-                Offer offer = new Offer {
+                Offer offer = new Offer
+                {
                     LocationID = location.ID,
                     OfferDate = date,
                     UserID = user.ID,
                     VeranstaltungName = location.Name
                 };
 
+                //Angebot erstellen
+                string responseOffer;
                 using (WebClient webClient = new WebClient())
                 {
-                    string response = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/offer/secure_addOffer.php?session_key=" + session_key + "&session_user=" + session_user, new NameValueCollection() {
+                    responseOffer = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/offer/secure_addOffer.php?session_key=" + session_key + "&session_user=" + session_user, new NameValueCollection() {
                         {"offer_date", offer.OfferDate + " " + txtbxDauer.Text},
                         {"location_id", offer.LocationID.ToString()},
                         {"user_id", offer.UserID.ToString()},
-                        {"offer_state", "0" }
+                        {"text_head", txtbxKopftext.Text },
+                        {"text_foot", txtbxFußtext.Text }
                     }));
-                    Console.ReadLine();
+                }
+                JArray arrayJSON = JArray.Parse(responseOffer);
+                JObject responseItem = (JObject)arrayJSON[0];
+                string offer_id = (string)responseItem.GetValue("offer_id");
+                //Bands zu Angebot hinzufügen
+                using (WebClient webClient = new WebClient())
+                {
+                    foreach (BandGage item in bandGageList)
+                    {
+                        string response = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/offer/secure_addOfferband.php?session_key=" + session_key + "&session_user=" + session_user, new NameValueCollection() {
+                        {"offer_id", offer_id },
+                        {"band_id", item.Band.ID.ToString()},
+                        {"price", item.Gage}
+                    }));
+                    }
                 }
             }
         }
