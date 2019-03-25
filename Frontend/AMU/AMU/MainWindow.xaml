@@ -148,7 +148,8 @@
                         <!--Height="Auto" Auto macht es so groß wie nötig-->
                     </Grid.RowDefinitions>
                     <!--#endregion-->
-                    <ListBox Name="gruppen_listbox" Grid.Row="3" Grid.Column="1" Grid.RowSpan="20" Grid.ColumnSpan="6" SelectionChanged="Gruppen_listbox_SelectionChanged" Padding="0"/>
+                    <ListBox Name="gruppen_listbox" Grid.Row="3" Grid.Column="1" Grid.RowSpan="17" Grid.ColumnSpan="6" SelectionChanged="Gruppen_listbox_SelectionChanged" Padding="0"/>
+                    <Button Grid.Row="21" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0" Click="GruppeLöschen">Gruppe löschen</Button>
                     <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="30" Padding="0">Gruppen</Label>
                     <Label Grid.Row="1" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="30" Padding="0">Band Infos</Label>
                     <Button Grid.Row="1" Grid.Column="12" Grid.ColumnSpan="2" Grid.RowSpan="2" FontSize="20" Click="GruppeSpeichern">Speichern</Button>
@@ -174,7 +175,7 @@
                     <DatePicker Name="datepicker_default_appointment" Grid.Row="3" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0"></DatePicker>
                     <Button Name="btn_add_default_appointment" Grid.Row="6" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2" Click="Btn_add_default_appointment_Click">Hinzufügen</Button>
                     <ListBox Name="lstbx_appointments" Grid.Row="9" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="6"></ListBox>
-                    <Button Grid.Row="16" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2" Click="Delete_Appointment_Click">Eintrag löschen</Button>
+                    <Button Grid.Row="16" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2" Click="DeleteAppointmentClick">Eintrag löschen</Button>
 
                     <Button Content="Neue Gruppe hinzufügen"  Grid.ColumnSpan="6" Grid.Column="15"  Grid.Row="19" Grid.RowSpan="4" Click="Add_New_Band"></Button>
                     
@@ -238,7 +239,7 @@
                     <!--#endregion-->
                     <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="30" Padding="0">Veranstaltungen</Label>
                     <ListBox Name="veranstaltungen_listbox" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="17" SelectionChanged="Veranstaltungen_listbox_SelectionChanged"/>
-                    <Button Grid.Row="21" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="2" Click="VeranstaltungBearbeiten">Löschen</Button>
+                    <Button Grid.Row="21" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="2" Click="VeranstaltungLöschen">Löschen</Button>
 
                     <Label Grid.Row="1" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="30" Padding="0">Veranstaltung Infos</Label>
                     <Label Grid.Row="3" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0">Ansprechperson</Label>
