@@ -42,17 +42,18 @@ namespace AMU.Windows
 
             using (WebClient webClient = new WebClient()) //name, phone_number, address, wird nicht gespeichert.
             {
-                string response = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/user/secure_register.php", new NameValueCollection() {
+                string response = Encoding.UTF8.GetString(webClient
+                    .UploadValues("https://amu.tkg.ovh/scripts/user/secure_register.php", 
+                    new NameValueCollection() {
                     {"name", user.Name},
                     {"address", user.Address },
                     {"phone_number",user.Phone_Number },
                     {"notes", user.Notes },
                     {"email", user.Mail},
                     {"username", user.Username},
-                    {"password_1", txtbx_user_hinzufuegen_passwort.Text },
+                    {"password_1", txtbx_user_hinzufuegen_passwort.Text},
                     {"password_2", txtbx_user_hinzufuegen_passwort.Text}
                 }));
-                Console.WriteLine(response+"----------------------------");
             }
         }
     }

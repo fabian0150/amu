@@ -75,19 +75,19 @@
 
                     <Label Content="Veranstalter Infos" Grid.Row="1" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0" FontSize="30" />
                     <Label Content="Veranstaltung" Grid.Row="3" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0" FontSize="18"/>
-                    <Label Name="lblVeranstalter" Content="Veranstalter_" Grid.Row="4" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0" FontSize="18"/>
+                    <Label Name="lblVeranstalter" Grid.Row="4" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0" FontSize="18"/>
                     <Label Content="Veranstaltungsort" Grid.Row="5" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0" FontSize="18"/>
-                    <Label Name="lblVeranstaltungsort" Content="Veranstaltungsort_" Grid.Row="6" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0" FontSize="18"/>
+                    <Label Name="lblVeranstaltungsort" Grid.Row="6" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0" FontSize="18"/>
 
                     <Label Content="Ansprechperson" Grid.Row="7" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0" FontSize="18"/>
-                    <Label Name="lblAnsprechperson" Content="Ansprechperson_" Grid.Row="8" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0" FontSize="18"/>
+                    <Label Name="lblAnsprechperson" Grid.Row="8" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0" FontSize="18"/>
                     
                     <Label Content="Adresse" Grid.Row="9" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0" FontSize="18"/>
-                    <Label Name="lblAdresse" Content="Adresse_" Grid.Row="10" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0" FontSize="18"/>
-                    <Label Content="Telefonnummer" Grid.Row="12" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0" FontSize="18"/>
-                    <Label Name="lblTelefonnummer" Content="Telefonnummer_" Grid.Row="13" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0" FontSize="18"/>
-                    <Label Content="E-Mail" Grid.Row="14" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0" FontSize="18"/>
-                    <Label Name="lblMail" Content="E-Mail_" Grid.Row="15" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0" FontSize="18"/>
+                    <Label Name="lblAdresse" Grid.Row="10" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="4" Padding="0" FontSize="18"/>
+                    <Label Content="Telefonnummer" Grid.Row="14" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0" FontSize="18"/>
+                    <Label Name="lblTelefonnummer" Grid.Row="15" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0" FontSize="18"/>
+                    <Label Content="E-Mail" Grid.Row="16" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0" FontSize="18"/>
+                    <Label Name="lblMail" Grid.Row="17" Grid.Column="18" Grid.ColumnSpan="6" Grid.RowSpan="1" Padding="0" FontSize="18"/>
                     <Button Content="Termin Anfrage" Grid.Row="19" Grid.Column="18" Grid.ColumnSpan="5" Grid.RowSpan="4" Padding="0" Click="Termin_Anfrage_Button_Clicked"/>
                 </Grid>
             </TabItem>
@@ -174,7 +174,9 @@
                     <Label Grid.Row="1" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0">Besetztes Datum hinzufügen</Label>
                     <DatePicker Name="datepicker_default_appointment" Grid.Row="3" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0"></DatePicker>
                     <Button Name="btn_add_default_appointment" Grid.Row="6" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2" Click="Btn_add_default_appointment_Click">Hinzufügen</Button>
-                    <ListBox Name="lstbx_appointments" Grid.Row="9" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="6"></ListBox>
+                    <Label Grid.Row="9" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="30" Padding="0">Veranstaltungen</Label>
+
+                    <ListBox Name="lstbx_appointments" Grid.Row="11" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="4"></ListBox>
                     <Button Grid.Row="16" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2" Click="DeleteAppointmentClick">Eintrag löschen</Button>
 
                     <Button Content="Neue Gruppe hinzufügen"  Grid.ColumnSpan="6" Grid.Column="15"  Grid.Row="19" Grid.RowSpan="4" Click="Add_New_Band"></Button>
@@ -314,10 +316,11 @@
                     <!--#endregion-->
                     <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0" FontSize="30">Offene Rechnungen</Label>
 
-                    <ListBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="10"></ListBox>
+                    <ListBox Name="lstbxOffeneRechnung" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="10" SelectionChanged="LstbxRechnungSelectionChanged"></ListBox>
                     <Label Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="2" Padding="0" FontSize="30">Bez. Rechnungen</Label>
 
                     <ListBox Grid.Row="16" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="7"></ListBox>
+                    
                     <WebBrowser  Name="rechnungBrowser" Grid.Row="1" Grid.Column="8" Grid.ColumnSpan="13" Grid.RowSpan="22"/>
 
                 </Grid>

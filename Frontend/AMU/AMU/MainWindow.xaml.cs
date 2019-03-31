@@ -57,6 +57,7 @@ namespace AMU_WPF
             //Tabs
             LoadBands();
             LoadVeranstaltungen();
+            LoadRechnungen();
             LoadAngebote();
             LoadVertraege();
             //Tabs end
@@ -64,10 +65,32 @@ namespace AMU_WPF
 
         }
 
+        private void LoadRechnungen()
+        {
+            JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/invoice/_getInvoices.php", "");
+            Bill bill;
+            for (int i = 0; i < arrayJSON.Count; i++)
+            {
+                JObject item = (JObject)arrayJSON[i];
+                bill = new Bill
+                {
+                    OfferBandID = item.Value<int?>("offer_band_id") ?? -1,
+                    BandID = item.Value<int?>("band_id") ?? -1,
+                    LocationID = item.Value<int?>("location_id") ?? -1,
+                    UserID = item.Value<int?>("user_id") ?? -1,
+                    OfferState = item.Value<int?>("offer_state") ?? -1,
+                    OfferDate = (string)item.GetValue("offer_date"),
+                    Price = item.Value<double?>("price") ?? -1,
+                    InvoiceDate = item.Value<DateTime>("invoice_date"),
+                    InvoiceNumber = (string)item.GetValue("invoice_number")                    
+                };
+                lstbxOffeneRechnung.Items.Add(bill);
+
+            }
+        }
+
         private void LoadVertraege()
         {
-            //lstbxVertraege
-            //https://amu.tkg.ovh/json/contract/_getContracts.php 
             JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/contract/_getContracts.php", "");
             Contract contract;
             for (int i = 0; i < arrayJSON.Count; i++)
@@ -145,25 +168,28 @@ namespace AMU_WPF
 
         private void LoadVeranstaltungen()
         {
-            JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/location/_getLocations.php", "");
+            JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/appointment/_getAppointments.php", "");
             JObject item;
             for (int i = 0; i < arrayJSON.Count; i++)
             {
                 item = (JObject)arrayJSON[i];
-                Location location = new Location
+                Appointment appointment = new Appointment
                 {
                     ID = (int)item.GetValue("ID"),
-                    Name = (string)item.GetValue("name") ?? "Kein Bandname",
-                    Address = (string)item.GetValue("address"),
-                    Contact_Person_ID = item.Value<int?>("contact_person_id") ?? -1,
-                    Record_Date = (DateTime)item.GetValue("record_date")
+                    Band_ID = (int)item.GetValue("ID"),
+                    Band_Name = (string)item.GetValue("band_name"),
+                    Location_ID = item.Value<int?>("location_id") ?? -1,
+                    Location_Address = (string)item.GetValue("location_address"),
+                    Location_Name = (string)item.GetValue("location_name"),
+                    Appointment_Date = (DateTime)item.GetValue("appointment_date")
                 };
-                veranstaltungen_listbox.Items.Add(location);
+                veranstaltungen_listbox.Items.Add(appointment);
             }
         } //Veranstalter Tab
 
         private void LoadBands()
         {
+            gruppen_listbox.Items.Clear();
             JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/band/_getBands.php", "");
 
             for (int i = 0; i < arrayJSON.Count; i++)
@@ -284,6 +310,7 @@ namespace AMU_WPF
                 txtbx_telefon.Text = user.Phone_Number;
                 txtbx_website.Text = band.Website_Url;
                 txtbx_ansprechperson.Text = user.Name;
+                txtblock_ansprechperson_notizen.Text = user.Notes;
             }
             else
             {
@@ -300,22 +327,30 @@ namespace AMU_WPF
 
         private void Veranstaltungen_listbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            txtbx_veranstalter_name.Text = "";
+            txtbx_veranstaltung_adresse.Text = "";
+            txtbx_veranstalter_email.Text = "";
+            txtbx_veranstalter_telefon.Text = "";
+            txtblck_veranstalter_notizen.Text = "";
             lstbx_veranstalter_gruppen.Items.Clear();
+
             Appointment appointment = (Appointment)veranstaltungen_listbox.SelectedItem;
-            JArray arrayJSONLocation = GET_Request("https://amu.tkg.ovh/json/location/_getLocation.php?id=", appointment.Location_ID.ToString());
+            JArray arrayJSONLocation = GET_Request("https://amu.tkg.ovh/json/location/_getLocation.php?id=", 
+                appointment.Location_ID.ToString());
             JObject itemLocation = (JObject)arrayJSONLocation[0];
             Location location = new Location
             {
                 ID = itemLocation.Value<int>("ID"),
                 Address = (string)itemLocation.GetValue("address"),
-                Contact_Person_ID = itemLocation.Value<int>("contact_person_id"),
+                Contact_Person_ID = itemLocation.Value<int?>("contact_person_id") ?? -1,
                 Name = (string)itemLocation.GetValue("name")
             };
 
             if (!(location.Contact_Person_ID == -1))
             {
                 User contactPerson;
-                JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/user/_getUser.php?id=", location.Contact_Person_ID.ToString());
+                JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/user/_getUser.php?id=", 
+                    location.Contact_Person_ID.ToString());
                 JObject item = (JObject)arrayJSON[0];
                 contactPerson = new User
                 {
@@ -336,14 +371,16 @@ namespace AMU_WPF
                 txtblck_veranstalter_notizen.Text = contactPerson.Notes;
 
                 //lstbx_veranstalter_gruppen Gruppen anzeigen
-                arrayJSON = GET_Request("https://amu.tkg.ovh/json/appointment/_getLocationAppointments.php?id=", location.ID.ToString());
+                arrayJSON = GET_Request("https://amu.tkg.ovh/json/appointment/_getLocationAppointments.php?id=", 
+                    location.ID.ToString());
                 JArray arrayJSONBands;
                 JObject itemBand;
                 for (int i = 0; i < arrayJSON.Count; i++)
                 {
                     item = (JObject)arrayJSON[i];
 
-                    arrayJSONBands = GET_Request("https://amu.tkg.ovh/json/band/_getBand.php?id=", (string)item.GetValue("band_id"));
+                    arrayJSONBands = GET_Request("https://amu.tkg.ovh/json/band/_getBand.php?id=", 
+                        (string)item.GetValue("band_id"));
                     itemBand = (JObject)arrayJSONBands[0];
                     if ((itemBand.Value<int?>("code") ?? -1) == 1)
                     {
@@ -374,6 +411,12 @@ namespace AMU_WPF
         {
             GruppeHinzufuegenWindow gruppeHinzufuegenWindow = new GruppeHinzufuegenWindow(session_key, session_user);
             gruppeHinzufuegenWindow.Show();
+            gruppeHinzufuegenWindow.Closing += GruppeHinzufuegenWindow_Closing;
+        }
+
+        private void GruppeHinzufuegenWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            LoadBands();
         }
 
         private void Btn_add_default_appointment_Click(object sender, RoutedEventArgs e)
@@ -385,13 +428,14 @@ namespace AMU_WPF
                                 ).ToString("yyyy-MM-dd HH:mm:ss");
                 using (WebClient webClient = new WebClient())
                 {
-                    string response = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/appointment/secure_addAppointment.php?session_key=" + session_key + "&session_user=" + session_user, new NameValueCollection() {
+                    string response = Encoding.UTF8.GetString(webClient
+                        .UploadValues("https://amu.tkg.ovh/scripts/appointment/secure_addAppointment.php?session_key=" + 
+                        session_key + "&session_user=" + session_user, new NameValueCollection() {
                     {"band_id", ((Band)gruppen_listbox.SelectedItem).ID.ToString()},
                     {"location_id", "5"}, //5 steht für externe Veranstaltung
                     {"appointment_date", date},
                     { "location_name","[EXT.]" } //Externe Veranstaltung -> Termin wurde von Gruppe selber vermittelt
                 }));
-                    Console.WriteLine(response);
                 }
             }
         } //Externe Veranstaltung hinzufügen
@@ -418,46 +462,52 @@ namespace AMU_WPF
 
         private void GruppeSpeichern(object sender, RoutedEventArgs e)
         {
-            Band band = ((Band)gruppen_listbox.SelectedItem);
-            band.Name = txtbx_bandname.Text;
-            band.Website_Url = txtbx_website.Text;
-            band.Notes = txtblock_notizen.Text;
-            //Get Users
-            JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/user/_getUser.php?id=", band.Leader_ID.ToString());
-            JObject item = (JObject)arrayJSON[0];
-
-            User user = new User
+            if (!(gruppen_listbox.SelectedIndex == -1))
             {
-                Name = (string)item.GetValue("name"),
-                Mail = (string)item.GetValue("mail"),
-                Phone_Number = (string)item.GetValue("phone_number"),
-                Address = (string)item.GetValue("address"),
-                Notes = (string)item.GetValue("notes"),
-                User_Description = (string)item.GetValue("user_description"),
-                ID = item.Value<int?>("ID") ?? -1,
-                User_Type = item.Value<int?>("user_type") ?? -1,
-                Record_Date = (DateTime)item.GetValue("record_date"),
-            };
-            user.Name = txtbx_ansprechperson.Text;
-            user.Phone_Number = txtbx_telefon.Text;
-            user.Mail = txtbx_email.Text;
-            user.Notes = txtblock_ansprechperson_notizen.Text;
+                Band band = ((Band)gruppen_listbox.SelectedItem);
+                band.Name = txtbx_bandname.Text;
+                band.Website_Url = txtbx_website.Text;
+                band.Notes = txtblock_notizen.Text;
+                //Get Users
+                JArray arrayJSON = GET_Request("https://amu.tkg.ovh/json/user/_getUser.php?id=",
+                    band.Leader_ID.ToString());
+                JObject item = (JObject)arrayJSON[0];
+                User user = new User
+                {
+                    Name = (string)item.GetValue("name"),
+                    Mail = (string)item.GetValue("mail"),
+                    Phone_Number = (string)item.GetValue("phone_number"),
+                    Address = (string)item.GetValue("address"),
+                    Notes = (string)item.GetValue("notes"),
+                    User_Description = (string)item.GetValue("user_description"),
+                    ID = item.Value<int?>("ID") ?? -1,
+                    User_Type = item.Value<int?>("user_type") ?? -1,
+                    Record_Date = (DateTime)item.GetValue("record_date"),
+                };
+                user.Name = txtbx_ansprechperson.Text;
+                user.Phone_Number = txtbx_telefon.Text;
+                user.Mail = txtbx_email.Text;
+                user.Notes = txtblock_ansprechperson_notizen.Text;
 
-            using (WebClient webClient = new WebClient())
-            {
-                string response = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/band/secure_updateBand.php?session_key=" + session_key + "&session_user=" + session_user, new NameValueCollection() {
+                using (WebClient webClient = new WebClient())
+                {
+                    string response = Encoding.UTF8.GetString(webClient
+                        .UploadValues("https://amu.tkg.ovh/scripts/band/secure_updateBand.php?session_key=" +
+                        session_key + "&session_user=" + session_user, new NameValueCollection() {
                     {"id", band.ID.ToString()},
                     {"name", band.Name},
                     {"logo_path", band.Logo_Path},
                     {"website_url", band.Website_Url},
                     {"notes", band.Notes},
                     {"leader_id", band.Leader_ID.ToString()}
-                }));
-            }
+                    }));
+                }
 
-            using (WebClient webClient = new WebClient())
-            {
-                string response = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/user/secure_updateUser.php?session_key=" + session_key + "&session_user=" + session_user, new NameValueCollection() {
+                using (WebClient webClient = new WebClient())
+                {
+                    string response = Encoding.UTF8.GetString(webClient.
+                        UploadValues("https://amu.tkg.ovh/scripts/user/secure_updateUser.php?session_key=" +
+                        session_key + "&session_user=" + session_user, new NameValueCollection() {
                     {"id", user.ID.ToString()},
                     {"name", user.Name},
                     {"phone_number", user.Phone_Number},
@@ -467,7 +517,8 @@ namespace AMU_WPF
                     {"user_type", user.User_Type.ToString() },
                     {"user_description", user.User_Description.ToString() },
                     {"username", user.Username }
-                }));
+                    }));
+                }
             }
         }
 
@@ -476,7 +527,8 @@ namespace AMU_WPF
             if (!(lstbxOffeneAngebote.SelectedItem == null))
             {
                 Offer offer = ((Offer)lstbxOffeneAngebote.SelectedItem);
-                VertragErstellenWindow vertragErstellenWindow = new VertragErstellenWindow(offer, session_key, session_user);
+                VertragErstellenWindow vertragErstellenWindow = new VertragErstellenWindow(offer, 
+                    session_key, session_user);
                 vertragErstellenWindow.Show();
 
             }
@@ -488,6 +540,7 @@ namespace AMU_WPF
                 DialogResult result = System.Windows.Forms.MessageBox.Show(message, caption, buttons);
                 return;
             }
+
 
         }
 
@@ -501,6 +554,12 @@ namespace AMU_WPF
         {
             Contract contract = ((Contract)lstbxVertraege.SelectedItem);
             vertragBrowser.Navigate("https://amu.tkg.ovh/pdf/contract_pdf.php?id=" + contract.ID);
+        }
+
+        private void LstbxRechnungSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Bill bill = ((Bill)lstbxOffeneRechnung.SelectedItem);
+            rechnungBrowser.Navigate("https://amu.tkg.ovh/pdf/invoice_pdf.php?id=" + bill.OfferBandID);
         }
 
         private void VeranstaltungLöschen(object sender, RoutedEventArgs e)

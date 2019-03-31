@@ -26,6 +26,7 @@ namespace AMU.Windows
         private string session_key;
         private string session_user;
         Offer offer;
+        List<string> textListe = new List<string>();
 
         public VertragErstellenWindow(Offer offerParam, string sessionKey, string sessionUser)
         {
@@ -33,9 +34,10 @@ namespace AMU.Windows
             session_key = sessionKey;
             session_user = sessionUser;
             offer = offerParam;
-            LoadTexte(offer);
+            LoadTexte();
             LoadBands(offer.ID.ToString());
-            txtbxUhrzeit.Text = offer.OfferDate;
+            txtbxUhrzeit.Text = offer.OfferDate.Remove(0,11);
+            lblVeranstaltung.Content = offer.VeranstaltungName;
         }
 
         private void LoadBands(string id)
@@ -67,9 +69,9 @@ namespace AMU.Windows
             
         }
 
-        private void LoadTexte(Offer offer)
+        private void LoadTexte()
         {
-            List<string> textListe = new List<string>();
+            lstbxTexte.Items.Clear();
             textListe.Add("Die Gage beträgt \t € XXX in Worten: EURO/XXX x x x");
             textListe.Add("Die Gage wird spätestens nach Beendigung des Engagements in bar ausbezahlt.");
             textListe.Add("Die Spielvergütung beträgt für jede weitere Spielstunde € XXX inkl.13% Ust..");
@@ -84,24 +86,43 @@ namespace AMU.Windows
 
         private void VertragErstellen(object sender, RoutedEventArgs e)
         {
-            string s = txtbxAdresse.Text;
-            Console.WriteLine();
-            //https://amu.tkg.ovh/scripts/offer/secure_addOfferband.php 
-            //https://amu.tkg.ovh/json/offer/_getOfferBands.php?id=ID
-            //Contract contract = new Contract {
-            //    lstbx 
-            //};
-            //https://amu.tkg.ovh/scripts/contract/secure_addContract.php
-            //offer_id offer_band_id price
-            //using (WebClient webClient = new WebClient())
-            //{
-            //    string response = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/appointment/secure_addAppointment.php?session_key=" + session_key + "&session_user=" + session_user, new NameValueCollection() {
-            //        {"band_id", offer.},
-            //        {"location_id", "5"}, //5 steht für externe Veranstaltung
-            //        {"appointment_date", date},
-            //        { "location_name","[EXT.]" } //Externe Veranstaltung -> Termin wurde von Gruppe selber vermittelt
-            //    }));
-            //}
+            using (WebClient webClient = new WebClient())
+            {
+                string response = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/contract/secure_addContract.php?session_key=" + session_key + "&session_user=" + session_user, new NameValueCollection() {
+                    {"offer_id", offer.ID.ToString()},
+                    {"offer_band_id", ((BandGage)lstbxBands.SelectedItem).Band.ID.ToString()},
+                    {"price", txtbxGage.Text},
+                    { "text_gage",textListe[0] },
+                    { "text_paytype",textListe[1] },
+                    { "text_more_hours",textListe[2] },
+                    { "text_breakfast",textListe[3] },
+                    { "text_food",textListe[4] },
+                    { "text_punitive",textListe[5] },
+                    { "text_fees",textListe[6] },
+                    { "text_replacement",textListe[7] },
+                    { "text_other",textListe[8] }
+                }));
+                Console.WriteLine();
+            }
+
+            using (WebClient webClient = new WebClient())
+            {
+                string response = Encoding.UTF8.GetString(webClient.UploadValues("https://amu.tkg.ovh/scripts/contract/secure_addContract.php?session_key=" + session_key + "&session_user=" + session_user, new NameValueCollection() {
+                    {"offer_id", offer.ID.ToString()},
+                    {"offer_band_id", ((BandGage)lstbxBands.SelectedItem).Band.ID.ToString()}, 
+                    {"price", txtbxGage.Text},
+                    { "text_gage",textListe[0] },
+                    { "text_paytype",textListe[1] },
+                    { "text_more_hours",textListe[2] },
+                    { "text_breakfast",textListe[3] },
+                    { "text_food",textListe[4] },
+                    { "text_punitive",textListe[5] },
+                    { "text_fees",textListe[6] },
+                    { "text_replacement",textListe[7] },
+                    { "text_other",textListe[8] }
+                }));
+                Console.WriteLine();
+            }
         }
 
         private void LstbxTexteSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -120,9 +141,13 @@ namespace AMU.Windows
             txtbxGage.Text = ((BandGage)lstbxBands.SelectedItem).Gage;
         }
 
-        private void DetailsSpeichern(object sender, RoutedEventArgs e)
-        {
 
+        private void TextSpeichern(object sender, RoutedEventArgs e)
+        {
+            int index = (int)lstbxTexte.SelectedIndex;
+            textListe[index] = txtbxVertragsinfos.Text;
+            lstbxTexte.Items.Clear();
+            textListe.ForEach(x => lstbxTexte.Items.Add(x));
         }
     }
 }
