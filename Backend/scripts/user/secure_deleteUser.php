@@ -42,7 +42,8 @@
 		exit();
 	} 
 	
-	
+	$query = "SET FOREIGN_KEY_CHECKS=0;";
+	$db->query($query);
 	$sql = "DELETE FROM TBL_USERS WHERE ID=" . $id . " LIMIT 1;";
 
 	if ($db->query($sql) === TRUE) {
@@ -62,7 +63,8 @@
 	    
 		array_push($return_arr, $row_array);
 	}
-	
+	$query = "SET FOREIGN_KEY_CHECKS=1;";
+	$db->query($query);
 	$db->close();
 	
 	echo json_encode($return_arr);

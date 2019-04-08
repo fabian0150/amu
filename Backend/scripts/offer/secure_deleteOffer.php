@@ -41,7 +41,8 @@
 		echo json_encode($return_arr);
 		exit();
 	} 
-	
+	$query = "SET FOREIGN_KEY_CHECKS=0;";
+	$db->query($query);
 
 	$sql = "DELETE FROM TBL_OFFER_BANDS WHERE offer_id=" . $id . ";";
 
@@ -67,7 +68,8 @@
 	    
 		array_push($return_arr, $row_array);
 	}
-	
+	$query = "SET FOREIGN_KEY_CHECKS=1;";
+	$db->query($query);
 	$db->close();
 	
 	echo json_encode($return_arr);

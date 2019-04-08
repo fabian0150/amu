@@ -1,3 +1,3 @@
-<div class="navbar fixed-bottom">
-<p>TEXT</p>
+<div class="footer">
+<p>© 2019, Fabian Ortner</p>
 </div>

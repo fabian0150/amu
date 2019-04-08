@@ -217,24 +217,25 @@
 	}
 	
 	$error = false;
-	$sql = "UPDATE TBL_OFFER SET offer_state = 1 WHERE ID = " . $offer_id . ";";
+	$sql = "UPDATE TBL_OFFER SET offer_state = 1, text_gage = " . $text_gage . ",
+	text_paytype = " . $text_paytype . ",
+	text_more_hours = " . $text_more_hours . ",
+	text_breakfast = " . $text_breakfast . ",
+	text_food = " . $text_food . ",
+	text_punitive = " . $text_punitive . ",
+	text_fees = " . $text_fees . ",
+	text_replacement = " . $text_replacement . ",
+	text_other = " . $text_other . " WHERE ID = " . $offer_id . ";";
 	if ($db->query($sql) === TRUE) {
 
 	} else {
 		$error = true;
 	}
-	$sql = "UPDATE TBL_OFFER_BANDS SET price = " . $price . ", offer_band_chosen = 1,
-				text_gage = " . $text_gage . ",
-				text_paytype = " . $text_paytype . ",
-				text_more_hours = " . $text_more_hours . ",
-				text_breakfast = " . $text_breakfast . ",
-				text_food = " . $text_food . ",
-				text_punitive = " . $text_punitive . ",
-				text_fees = " . $text_fees . ",
-				text_replacement = " . $text_replacement . ",
-				text_other = " . $text_other . "
+	$sql = "UPDATE TBL_OFFER_BANDS SET price = " . $price . ", offer_band_chosen = 1
+			
 			WHERE offer_id = " . $offer_id . " AND band_id = " . $offer_band_id . ";";
-	if ($db->query($sql) === TRUE) {
+			echo $sql;
+if ($db->query($sql) === TRUE) {
 
 	} else {
 		$error = true;

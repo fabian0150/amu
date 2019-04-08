@@ -29,10 +29,10 @@
 		<div class="input-group" id="login_btn">
 			<a  class="btn" name="login_user" id="login_user">Einloggen</a>
 		</div>
-		<hr>
-		<p>
+		
+		<!--<hr><p>
 			Noch nicht registriert? <a href="register.php">Registrieren</a>
-		</p>
+		</p>-->
 		<div id="result">
 		
 		</div>

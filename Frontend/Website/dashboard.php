@@ -57,7 +57,7 @@
 					<tr>
 					  <th scope="col">Veranstaltungsort</th>
 					  <th scope="col">Datum</th>
-					  <th scope="col"></th>
+				
 					</tr>
 				  </thead>
 				  <tbody id="next_appointments">

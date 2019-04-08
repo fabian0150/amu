@@ -84,10 +84,9 @@
        
         $fees = $band_price * 0.2;
     
+        $fees = number_format($fees, 2, ',', ' ');
+        $band_price = number_format($band_price, 2, ',', ' ');
 
-
-        echo "FEES: " . $fees;
-        echo " PRICE: " . $band_price;
         $date_location_str = $offer_date . ' ' . $offer_time . ' - ' . $location_name;
 
         $add_arr = preg_split('/\r\n|\r|\n/', $user_address);
@@ -133,7 +132,7 @@
                 <tr style="height: 13px;">
                 <td style="width: 152px; height: 13px;">Brutto</td>
                 <td style="width: 152px; text-align: right; height: 13px;">&euro;</td>
-                <td style="width: 153px; height: 13px; text-align: right;">' . ($band_price + $fees) . '</td>
+                <td style="width: 153px; height: 13px; text-align: right;">' . number_format(($band_price + $fees), 2, ",", " ") . '</td>
                 </tr>
                 </tbody>
             </table>

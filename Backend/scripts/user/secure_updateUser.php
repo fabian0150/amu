@@ -29,7 +29,7 @@
 	$username = mysqli_real_escape_string($db, $_POST['username']);
 
 
-	if (empty($id) || empty($name) || empty($phone_number) || empty($address) || empty($mail) || empty($notes) || empty($user_type) || empty($user_description) || empty($username)) { 
+	if (empty($id)) { 
 		$row_array['code'] =  2;
 		$row_array['error'] =  $data_not_given;
 		array_push($return_arr, $row_array);
@@ -38,11 +38,12 @@
 		exit();
 	}
 
-	
+	$query = "SET FOREIGN_KEY_CHECKS=0;";
+	$db->query($query);
 	
 		
 	$query = "UPDATE TBL_USERS SET
-			  name='" . $username . "', 
+			  name='" . $name . "', 
 			  phone_number='" . $phone_number . "', 
 			  address='" . $address . "', 
 			  mail= '" . $mail . "', 
@@ -65,7 +66,8 @@
 		logData("Update User failed " . $username, "UPDATE ACTION", basename(__FILE__, '.php') , 0);
 		array_push($return_arr, $row_array);
 	}
-
+	$query = "SET FOREIGN_KEY_CHECKS=1;";
+	$db->query($query);
 	$db->close();
 	
 	echo json_encode($return_arr);

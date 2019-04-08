@@ -47,7 +47,7 @@
 		<hr>
 		<div class="row" id="user_bands"></div>
 		
-		<h2 class="mt-5">Band beitreten</h2>
+		<!--<h2 class="mt-5">Band beitreten</h2>
 		<hr>
 		<div class="row row-centered" id="user_joinband">
 				<div class='col-md-12'>
@@ -62,18 +62,7 @@
 						
 						<a href='#user_joinband' class='btn float-right' onClick="addUserToBand(<?php echo $_SESSION['session_user']; ?>);">Beitreten</a>
 				  </form>
-						<!--<div class='card card-inline'>
-							<div class='card-body'>
-								
-								<h5 class='card-title' style='height: 80px;'>${obj_info[0].name}</h5>
-								<div class='card-text'>
-									<p><span class='span-bold'>Website: </span><br>
-									<span class='span-bold'>Besitzer: </span>${obj_info[0].leader_username}</p>
-								</div>
-								
-								<a href='#' class='btn btn-primary'>Verlassen</a>
-							</div>
-						</div>-->
+						
 				</div>
 		
 		</div>
@@ -103,7 +92,7 @@
 			<a href='#user_createband' class='btn float-right' onClick="createBand(<?php echo $_SESSION['session_user']; ?>);">Erstellen</a>
 			
 	
-		</form>
+</form>-->
 		<?php include_once('includes/footer.php'); ?>
 	</div>
 		
@@ -124,7 +113,7 @@
 	function init() { 
 		$("#groups").addClass("active");
 		loadUserBands(session_user_id);
-		loadBandsSelect();
+		//loadBandsSelect();
 	}
 </script>
 </html>

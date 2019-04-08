@@ -62,7 +62,8 @@
 		}
 
 	
-	
+	$query = "SET FOREIGN_KEY_CHECKS=0;";
+	$db->query($query);
 		
 	$query = "UPDATE TBL_OFFER SET
 			  	location_id= '" . intval($location_id) . "', 
@@ -98,7 +99,8 @@
 		logData("Update offer failed " . $id, "UPDATE ACTION", basename(__FILE__, '.php') , 0);
 		array_push($return_arr, $row_array);
 	}
-
+	$query = "SET FOREIGN_KEY_CHECKS=1;";
+	$db->query($query);
 	$db->close();
 	
 	echo json_encode($return_arr);

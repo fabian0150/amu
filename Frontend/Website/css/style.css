@@ -188,3 +188,16 @@ p {
 	color: #00000080;
     background-color: #d6d0d03d;
 }
+
+/* Footer */
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #AC0114;
+  color: white;
+  text-align: center;
+	z-index:100;
+}

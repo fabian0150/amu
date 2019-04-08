@@ -30,11 +30,9 @@ function loadUserBands(php_user_id) {
 									<span class='span-bold'>Besitzer: </span>${obj_info[0].leader_username}</p>
 								</div>`;
 								
-					if(php_user_id == obj_info[0].leader_id) {	
-						html_str += `<a href='#' class='btn-blue btn-primary'>Verwalten</a>`;
-					}			
+							
 					html_str += `			
-								<a href='#' class='btn-blue btn-primary'>Termine</a>
+								<a href='appointments.php?id=${obj_info[0].ID}' class='btn-blue btn-primary'>Termine</a>
 								
 								<a href='#' class='btn btn-primary' onClick='deleteUserFromBand(${php_user_id}, ${obj_info[0].ID});'>Verlassen</a>
 							</div>
@@ -63,7 +61,7 @@ function loadUserBands(php_user_id) {
 	});	
 }
 
-function loadBandsSelect() {
+/*function loadBandsSelect() {
 	$('#bands_select').empty();
 	var html_str = "";
 	$.ajax({url: "json/band/_getBands.php"}).done(function( data ) {
@@ -195,4 +193,4 @@ function createBand(php_user_id) {
 		}
 		
 	});
-}
+}*/

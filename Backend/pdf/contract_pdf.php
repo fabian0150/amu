@@ -77,8 +77,9 @@
             }
         }
 
-        $query = "SELECT ob.band_id, ob.price, b.website_url, b.name, b.logo_path FROM TBL_OFFER_BANDS ob JOIN TBL_BANDINFO b ON b.ID = ob.band_id WHERE offer_id=" . $id . " AND offer_band_chosen = 1 LIMIT 1;";
-		if ($result = mysqli_query($db, $query)){
+        $query = "SELECT ob.band_id, ob.price, b.website_url, b.name, b.logo_path FROM TBL_OFFER_BANDS ob JOIN TBL_BANDINFO b ON b.ID = ob.band_id WHERE ob.offer_id=" . $id . " AND offer_band_chosen = 1 LIMIT 1;";
+        
+        if ($result = mysqli_query($db, $query)){
 
             
 			while ($row = mysqli_fetch_assoc($result)) {

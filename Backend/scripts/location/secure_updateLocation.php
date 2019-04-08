@@ -26,7 +26,10 @@
 		echo json_encode($return_arr);
 		exit();
 	}
-		
+	
+	$query = "SET FOREIGN_KEY_CHECKS=0;";
+	$db->query($query);
+
 	$query = "UPDATE TBL_LOCATIONS SET
 			  name = '" . $name . "', 
 			  address = '" . $address . "', 
@@ -46,7 +49,8 @@
 		logData("Update location failed " . $id, "UPDATE ACTION", basename(__FILE__, '.php') , 0);
 		array_push($return_arr, $row_array);
 	}
-
+	$query = "SET FOREIGN_KEY_CHECKS=1;";
+	$db->query($query);
 	$db->close();
 	
 	echo json_encode($return_arr);

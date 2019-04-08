@@ -3,7 +3,7 @@
 	include_once('../../scripts/config.php');
 	$return_arr = array();
 
-	$query = "SELECT * FROM TBL_USERS;";
+	$query = "SELECT * FROM TBL_USERS WHERE user_type != 3;";
 	
 	if ($result = mysqli_query($db, $query)){
 	    while ($row = mysqli_fetch_assoc($result)) {

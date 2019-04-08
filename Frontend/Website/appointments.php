@@ -58,7 +58,7 @@
 					  <th scope="col">Band</th>
 					  <th scope="col">Veranstaltungsort</th>
 					  <th scope="col">Datum</th>
-					  <th scope="col"></th>
+				
 					</tr>
 				  </thead>
 				  <tbody id="next_appointments">
@@ -84,6 +84,12 @@
   
   <script>
 	var session_user_id = <?php echo $_SESSION['session_user']; ?>;
+	var php_band_id = 0;
+	<?php
+	  if(isset($_GET['id'])) {
+		echo "php_band_id = " . $_GET['id'] . ";";  
+	  }
+	 ?>
 	
 	$(function() {
 		init();
@@ -91,7 +97,12 @@
 	
 	function init() { 
 		$("#appointment").addClass("active");
-		loadAppointments(session_user_id, 0);
+		if(php_band_id > 0) {
+		   	loadBandAppointments(session_user_id, php_band_id, 0);
+		   } else {
+		   	loadAppointments(session_user_id, 0);
+		   }
+		
 		
 	}
 </script>

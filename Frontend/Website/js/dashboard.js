@@ -9,22 +9,27 @@ function loadAppointments(php_user_id, limit) {
 	if(limit > 0){
 		json_url += "&limit=" + limit;
 	}	
-	console.log(json_url);
+	
 	$.ajax({url: json_url}).done(function( data ) {
 			if(data.length > 0) {
+				
 				var obj = jQuery.parseJSON(JSON.stringify(data));
-			
+				if(obj[0].code != 6) {
 				var html_str = "";
 				for(var i = 0; i < obj.length; i++) {
-					
-					html_str += `<tr>
-								  <th scope="row">${obj[i].location_name} <br> ${obj[i].location_address}</th>
-								  <td>${obj[i].appointment_date}</td>
-								  <td><a href='#' class='btn btn-primary' onClick="">Absagen</a></td>
-								</tr>`;
-								
 					var now = new Date();
 					var json_date = new Date(obj[i].appointment_date);
+					var appointment_date = new Date(obj[i].appointment_date).toLocaleDateString();
+					var appointment_time = new Date(obj[i].appointment_date).toLocaleTimeString();
+					if(now < json_date) {
+						html_str += `<tr>
+								  <th scope="row">${obj[i].location_name} <br> ${obj[i].location_address}</th>
+								  <td>${appointment_date} ${appointment_time}</td>
+								
+								</tr>`;
+					}
+								
+					
 					if(now > json_date) {
 						date_disabled_arr.push(json_date);
 					} else {
@@ -45,9 +50,17 @@ function loadAppointments(php_user_id, limit) {
 						date_arr.push(highlight);
 					}
 				}
+				} else {
+					html_str += `<tr>
+								  <th scope="row">Keine Termine</th>
+								  <td></td>
+								
+								</tr>`;	
+				}
 				$('#next_appointments').html(html_str);
 				calendar.highlight = date_arr;
 				calendar.disabledDates = date_disabled_arr;
+				
 			}
 	});
 }
@@ -62,8 +75,4 @@ function initCalendar() {
 		range: true,
 		lang: 'de'
 	});
-	
-
-	
-	
 }

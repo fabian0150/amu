@@ -5,9 +5,9 @@
 	
 	$id = "NULL";
 	
-	if(isset($_POST['id'])) {
+	if(isset($_POST['band_id'])) {
 		
-		$id= $_POST['id'];
+		$id= $_POST['band_id'];
 		$id = mysqli_real_escape_string($db, $id);
 		if($id == ""){
 			$row_array['code'] =  2;
@@ -43,6 +43,15 @@
 	} 
 	
 	$sql = "DELETE FROM TBL_BANDMEMBERS WHERE band_id=" . $id . ";";
+
+	if ($db->query($sql) === TRUE) {
+	}
+
+	$sql = "DELETE FROM TBL_APPOINTMENTS WHERE band_id=" . $id . ";";
+
+	if ($db->query($sql) === TRUE) {
+	}
+	$sql = "DELETE FROM TBL_OFFER_BANDS WHERE band_id=" . $id . ";";
 
 	if ($db->query($sql) === TRUE) {
 	}
