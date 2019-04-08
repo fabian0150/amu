@@ -61,6 +61,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Dto\BandGage.cs" />
+    <Compile Include="Dto\Bill.cs" />
     <Compile Include="Dto\Contract.cs" />
     <Compile Include="Dto\Offer.cs" />
     <Compile Include="Windows\VeranstalterHinzufuegenWindow.xaml.cs">

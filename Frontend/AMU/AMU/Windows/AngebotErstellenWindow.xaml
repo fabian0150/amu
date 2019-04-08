@@ -89,7 +89,7 @@
         <Label Grid.Row="1" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="35" Padding="0">Kopftext</Label>
         <TextBox Name="txtbxKopftext" Grid.Row="3" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="6" AcceptsReturn="True" AcceptsTab="true" TextWrapping="Wrap"></TextBox>
         <Label Grid.Row="10" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2" FontSize="35" Padding="0">Fußtext</Label>
-        <TextBox Name="txtbxFußtext" Grid.Row="12" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="5" AcceptsReturn="True" AcceptsTab="true"></TextBox>
+        <TextBox Name="txtbxFußtext" Grid.Row="12" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="5" AcceptsReturn="True" AcceptsTab="true" TextWrapping="Wrap"></TextBox>
         
         <Button Grid.Row="18" Grid.Column="15" Grid.ColumnSpan="6" Grid.RowSpan="2" Click="AngebotErstellen">Angebot erstellen</Button>
         

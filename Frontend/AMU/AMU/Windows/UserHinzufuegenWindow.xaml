@@ -58,18 +58,27 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
             <!--Height="Auto" Auto macht es so groß wie nötig-->
         </Grid.RowDefinitions>
         <!--#endregion-->
         <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="2" FontSize="20">User hinzufügen</Label>
-        <TextBox Name="txtbx_user_hinzufuegen_name" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1">Name</TextBox>
-        <TextBox Name="txtbx_user_hinzufuegen_adresse" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1">Adresse</TextBox>
-        <TextBox Name="txtbx_user_hinzufuegen_telefonnummer" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1">Telefonnummer</TextBox>
-        <TextBox Name="txtbx_user_hinzufuegen_email" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1">Email</TextBox>
-        <TextBox Name="txtbx_user_hinzufuegen_username" Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1">Username</TextBox>
-        <TextBox Name="txtbx_user_hinzufuegen_passwort" Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1">Passwort</TextBox>
-        <TextBox Name="txtbx_user_hinzufuegen_notizen" Grid.Row="16" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="4">Notizen</TextBox>
-        <Button Name="btn_user_hinzufuegen" Grid.Row="21" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1" Click="Btn_user_hinzufuegen_Click">Speichern</Button>
+        <Label  Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1" Padding="0">Name</Label>
+        <TextBox Name="txtbx_user_hinzufuegen_name" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1"></TextBox>
+        <Label  Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1" Padding="0">Adresse</Label>
+        <TextBox Name="txtbx_user_hinzufuegen_adresse" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1"></TextBox>
+        <Label  Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1" Padding="0">Telefonnummer</Label>
+        <TextBox Name="txtbx_user_hinzufuegen_telefonnummer" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1"></TextBox>
+        <Label  Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1" Padding="0">Email</Label>
+        <TextBox Name="txtbx_user_hinzufuegen_email" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1"></TextBox>
+        <Label  Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1" Padding="0">Username</Label>
+        <TextBox Name="txtbx_user_hinzufuegen_username" Grid.Row="13" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1"></TextBox>
+        <Label  Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1" Padding="0">Passwort</Label>
+        <TextBox Name="txtbx_user_hinzufuegen_passwort" Grid.Row="15" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1"></TextBox>
+        <Label  Grid.Row="16" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="1" Padding="0">Notizen</Label>
+
+        <TextBox Name="txtbx_user_hinzufuegen_notizen" Grid.Row="17" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="4" AcceptsReturn="True" AcceptsTab="true" TextWrapping="Wrap"></TextBox>
+        <Button Name="btn_user_hinzufuegen" Grid.Row="22" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="2" Click="Btn_user_hinzufuegen_Click">Speichern</Button>
 
 
     </Grid>
